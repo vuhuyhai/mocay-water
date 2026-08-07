@@ -394,3 +394,4 @@ td b{color:var(--ink)}td .muted{color:var(--muted)}
   background:var(--surface-2);color:var(--muted);border:1px solid var(--border-soft)}
 .tc-msg.tc-err{background:rgba(198,57,55,.09);border-color:rgba(198,57,55,.28);color:#b3312f}
 .tc-msg b{color:inherit}
+.tc-note-pay{margin-top:8px;color:var(--dim);font-size:12.5px;text-align:center}

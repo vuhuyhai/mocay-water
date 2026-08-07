@@ -55,7 +55,7 @@ function traCuuHoaDon(rawCode, elResult) {
   const paid = rec.trangthai === "Đã thanh toán";
   const mauTT = paid ? "#0e9f6e" : "var(--teal)";
 
-  elResult.innerHTML =
+  var html =
     '<div class="mk-result">' +
       '<div class="mk-row"><span>Khách hàng</span><b>' + rec.ten + '</b></div>' +
       '<div class="mk-row"><span>Kỳ hóa đơn</span><b>' + rec.ky + '</b></div>' +
@@ -67,6 +67,16 @@ function traCuuHoaDon(rawCode, elResult) {
       '<div class="mk-row"><span>Trạng thái</span><b style="color:' + mauTT + '">' + rec.trangthai + '</b></div>' +
       '<div class="mk-total"><span style="color:var(--muted)">Tổng phải trả</span><span class="big">' + dg(tong) + ' đ</span></div>' +
     '</div>';
+
+  if (paid) {
+    html += '<div class="tc-msg" style="margin-top:12px;color:#0e9f6e;background:rgba(14,159,110,.08);border-color:rgba(14,159,110,.28)">' +
+      'Hóa đơn kỳ này đã thanh toán. Cảm ơn quý khách.</div>';
+  } else {
+    html += '<a class="btn btn-primary" href="dich-vu-khach-hang.html#thanh-toan" ' +
+      'style="width:100%;justify-content:center;margin-top:14px">Thanh toán ' + dg(tong) + ' đ →</a>' +
+      '<div class="tc-note-pay">Chọn cổng thanh toán ở bước tiếp theo. (Bản demo dẫn tới danh sách cổng; khi tích hợp sẽ chuyển thẳng sang VNPAY/MoMo kèm số tiền.)</div>';
+  }
+  elResult.innerHTML = html;
 }
 
 // Cho phép gọi từ input (Enter) và nút
