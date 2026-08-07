@@ -94,8 +94,35 @@
         <div class="row" style="border-color:var(--border)"><span class="n">3</span><div><b>Ký hợp đồng</b><p>Nộp phí theo bảng hiện hành.</p></div></div>
         <div class="row"><span class="n">4</span><div><b>Thi công &amp; cấp nước</b><p>Lắp đặt và cấp nước.</p></div></div>
       </div>
-      <a class="btn btn-primary" href="lien-he.html" style="margin-top:18px;width:100%;justify-content:center">Đăng ký lắp đặt →</a>
+      <a class="btn btn-primary" href="#form-dang-ky" style="margin-top:18px;width:100%;justify-content:center">Đăng ký lắp đặt →</a>
     </div>
+  </div>
+
+  <div class="price-card" id="form-dang-ky" style="margin-top:22px">
+    <span class="badge" style="color:var(--teal)">Gửi đăng ký online</span>
+    <h3 style="font-size:22px;margin:14px 0 6px">Đăng ký lắp đặt đồng hồ nước</h3>
+    <p style="color:var(--muted);margin:0 0 20px">Điền thông tin bên dưới, công ty sẽ liên hệ khảo sát thực tế và báo chi phí. Ô có dấu * là bắt buộc.</p>
+    <form name="dang-ky-lap-dat" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="form-grid" onsubmit="return guiDangKy(event)">
+      <input type="hidden" name="form-name" value="dang-ky-lap-dat">
+      <p hidden><label>Bỏ trống ô này: <input name="bot-field"></label></p>
+      <div class="field"><label for="dk-hoten">Họ tên chủ hộ / đại diện *</label><input id="dk-hoten" name="hoten" required placeholder="Nguyễn Văn A"></div>
+      <div class="field"><label for="dk-sdt">Số điện thoại *</label><input id="dk-sdt" name="sodienthoai" type="tel" required placeholder="09xx xxx xxx"></div>
+      <div class="field full"><label for="dk-diachi">Địa chỉ lắp đặt *</label><input id="dk-diachi" name="diachi" required placeholder="Số nhà, ấp/khu, xã — khu vực Mỏ Cày"></div>
+      <div class="field"><label for="dk-doituong">Đối tượng sử dụng *</label>
+        <select id="dk-doituong" name="doituong" required>
+          <option value="">— Chọn nhóm —</option>
+          <option>Sinh hoạt hộ dân</option>
+          <option>Cơ quan hành chính, sự nghiệp</option>
+          <option>Sản xuất</option>
+          <option>Kinh doanh, dịch vụ</option>
+        </select>
+      </div>
+      <div class="field"><label for="dk-email">Email (không bắt buộc)</label><input id="dk-email" name="email" type="email" placeholder="email@example.com"></div>
+      <div class="field full"><label for="dk-ghichu">Ghi chú</label><textarea id="dk-ghichu" name="ghichu" placeholder="Thông tin thêm về vị trí, nhu cầu sử dụng..."></textarea></div>
+      <div class="field full"><button class="btn btn-primary" type="submit" style="width:100%;justify-content:center">Gửi đăng ký →</button></div>
+    </form>
+    <div id="dangKyResult"></div>
+    <p class="tc-note-pay" style="text-align:left;margin-top:12px">Thông tin gửi về công ty và lưu tại hệ thống Netlify Forms. Sau này có thể bật gửi tự động về email hoặc phần mềm nội bộ.</p>
   </div>
 </div></section>
 
@@ -191,5 +218,6 @@
   <div class="foot-bottom"><span>© 2026 Công ty TNHH Cấp Thoát Nước Mỏ Cày. Email: mocaywaco@gmail.com</span><span><a href="#">Điều khoản</a> · <a href="#">Chính sách bảo mật</a></span></div>
 </div></footer>
 
+<script src="assets/dang-ky.js"></script>
 </body>
 </html>
