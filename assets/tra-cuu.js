@@ -69,15 +69,80 @@ function traCuuHoaDon(rawCode, elResult) {
     '</div>';
 
   if (paid) {
+    window.__lastBill = null;
     html += '<div class="tc-msg" style="margin-top:12px;color:#0e9f6e;background:rgba(14,159,110,.08);border-color:rgba(14,159,110,.28)">' +
       'Hóa đơn kỳ này đã thanh toán. Cảm ơn quý khách.</div>';
   } else {
-    html += '<a class="btn btn-primary" href="dich-vu-khach-hang.html#thanh-toan" ' +
-      'style="width:100%;justify-content:center;margin-top:14px">Thanh toán ' + dg(tong) + ' đ →</a>' +
-      '<div class="tc-note-pay">Chọn cổng thanh toán ở bước tiếp theo. (Bản demo dẫn tới danh sách cổng; khi tích hợp sẽ chuyển thẳng sang VNPAY/MoMo kèm số tiền.)</div>';
+    window.__lastBill = { ma: code, ten: rec.ten, ky: rec.ky, tong: tong };
+    html += '<button type="button" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:14px" ' +
+      'onclick="moThanhToan()">Thanh toán ' + dg(tong) + ' đ →</button>' +
+      '<div class="tc-note-pay">Bấm để hiện mã QR và thông tin chuyển khoản BIDV.</div>';
   }
   elResult.innerHTML = html;
 }
+
+/* ===== Thanh toán: QR VietQR + thông tin chuyển khoản ===== */
+var NGAN_HANG = "BIDV CN Bến Tre - PGD Mỏ Cày";
+var SO_TK = "7290023381";
+var BIN_BIDV = "970418";
+
+function _boDau(s) {
+  return (s || "").normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/đ/g, "d").replace(/Đ/g, "D");
+}
+function _copy(text, btn) {
+  navigator.clipboard.writeText(text).then(function () {
+    var t = btn.textContent; btn.textContent = "Đã chép"; setTimeout(function () { btn.textContent = t; }, 1400);
+  }).catch(function () {});
+}
+function dongThanhToan() { var ov = document.getElementById("payOverlay"); if (ov) ov.classList.remove("open"); }
+
+function _taoModal() {
+  if (document.getElementById("payOverlay")) return;
+  var ov = document.createElement("div");
+  ov.id = "payOverlay"; ov.className = "pay-overlay";
+  ov.addEventListener("click", function (e) { if (e.target === ov) dongThanhToan(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") dongThanhToan(); });
+  ov.innerHTML =
+    '<div class="pay-card">' +
+      '<div class="pay-head"><h3>Thanh toán chuyển khoản</h3>' +
+        '<button class="pay-close" onclick="dongThanhToan()" aria-label="Đóng">&times;</button></div>' +
+      '<div class="pay-body">' +
+        '<div class="pay-amount"><span class="lbl">Số tiền cần thanh toán</span><span class="big" id="payAmount"></span></div>' +
+        '<img class="pay-qr" id="payQr" alt="Mã QR chuyển khoản VietQR">' +
+        '<div class="pay-qr-note">Mở app ngân hàng → quét QR: tự điền số tài khoản, số tiền và nội dung.</div>' +
+        '<div class="pay-info">' +
+          '<div class="pay-row"><span class="k">Ngân hàng</span><span class="v" id="payBank"></span></div>' +
+          '<div class="pay-row"><span class="k">Số tài khoản</span><span class="v"><span id="payAcc"></span>' +
+            '<button class="pay-copy" onclick="_copy(document.getElementById(\'payAcc\').textContent,this)">Sao chép</button></span></div>' +
+          '<div class="pay-row"><span class="k">Số tiền</span><span class="v" id="payAmount2"></span></div>' +
+          '<div class="pay-row"><span class="k">Nội dung</span><span class="v"><span id="payDesc"></span>' +
+            '<button class="pay-copy" onclick="_copy(document.getElementById(\'payDesc\').textContent,this)">Sao chép</button></span></div>' +
+        '</div>' +
+        '<div class="pay-note">Chuyển đúng nội dung để công ty đối soát nhanh. Giao dịch được ghi nhận trong giờ làm việc.</div>' +
+      '</div>' +
+    '</div>';
+  document.body.appendChild(ov);
+}
+
+function moThanhToan() {
+  var b = window.__lastBill; if (!b) return;
+  _taoModal();
+  var ky = (b.ky || "").replace("Tháng ", "T").replace(/\//g, "-"); // "T07-2026"
+  var noiDung = (b.ma + " " + _boDau(b.ten) + " " + ky).trim();
+  var soTien = Math.round(b.tong);
+  var qr = "https://img.vietqr.io/image/" + BIN_BIDV + "-" + SO_TK + "-compact2.png?amount=" + soTien +
+    "&addInfo=" + encodeURIComponent(noiDung);
+  document.getElementById("payAmount").textContent = dg(soTien) + " đ";
+  document.getElementById("payAmount2").textContent = dg(soTien) + " đ";
+  document.getElementById("payBank").textContent = NGAN_HANG;
+  document.getElementById("payAcc").textContent = SO_TK;
+  document.getElementById("payDesc").textContent = noiDung;
+  document.getElementById("payQr").src = qr;
+  document.getElementById("payOverlay").classList.add("open");
+}
+window.moThanhToan = moThanhToan;
+window.dongThanhToan = dongThanhToan;
+window._copy = _copy;
 
 // Cho phép gọi từ input (Enter) và nút
 window.traCuuHoaDon = traCuuHoaDon;

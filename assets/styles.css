@@ -395,3 +395,29 @@ td b{color:var(--ink)}td .muted{color:var(--muted)}
 .tc-msg.tc-err{background:rgba(198,57,55,.09);border-color:rgba(198,57,55,.28);color:#b3312f}
 .tc-msg b{color:inherit}
 .tc-note-pay{margin-top:8px;color:var(--dim);font-size:12.5px;text-align:center}
+
+/* ===== Cửa sổ thanh toán (QR + chuyển khoản) ===== */
+.pay-overlay{position:fixed;inset:0;z-index:100;background:rgba(8,32,60,.55);backdrop-filter:blur(3px);
+  display:none;align-items:center;justify-content:center;padding:18px}
+.pay-overlay.open{display:flex}
+.pay-card{background:var(--surface);border:1px solid var(--border);border-radius:18px;max-width:420px;width:100%;
+  box-shadow:var(--sh-lg);max-height:94vh;overflow:auto}
+.pay-head{display:flex;align-items:center;justify-content:space-between;padding:16px 20px;border-bottom:1px solid var(--border-soft)}
+.pay-head h3{margin:0;font-size:18px;color:var(--ink)}
+.pay-close{background:none;border:0;color:var(--muted);cursor:pointer;font-size:24px;line-height:1;padding:0 4px}
+.pay-close:hover{color:var(--ink)}
+.pay-body{padding:20px}
+.pay-amount{text-align:center;margin-bottom:14px}
+.pay-amount .lbl{color:var(--muted);font-size:13px}
+.pay-amount .big{color:var(--teal);font-weight:800;font-size:30px;letter-spacing:-.01em;display:block;margin-top:2px}
+.pay-qr{display:block;width:230px;max-width:72%;height:auto;margin:0 auto 8px;border:1px solid var(--border);border-radius:12px;background:#fff}
+.pay-qr-note{text-align:center;color:var(--dim);font-size:12.5px;margin-bottom:16px}
+.pay-info{border:1px solid var(--border);border-radius:12px;overflow:hidden}
+.pay-row{display:flex;justify-content:space-between;gap:10px;padding:11px 14px;border-bottom:1px solid var(--border-soft);font-size:14px;align-items:center}
+.pay-row:last-child{border-bottom:0}
+.pay-row .k{color:var(--muted);flex:none}
+.pay-row .v{color:var(--ink);font-weight:600;text-align:right;word-break:break-word;display:flex;align-items:center;gap:8px;justify-content:flex-end}
+.pay-copy{background:var(--teal-dim);color:var(--teal);border:1px solid var(--teal-line);border-radius:8px;
+  cursor:pointer;font-size:12px;font-weight:600;padding:3px 9px;white-space:nowrap}
+.pay-copy:hover{filter:brightness(.98)}
+.pay-note{color:var(--dim);font-size:12.5px;margin-top:14px;text-align:center}
