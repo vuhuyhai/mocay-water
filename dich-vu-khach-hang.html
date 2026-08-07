@@ -56,20 +56,15 @@
       <span class="badge">Tra cứu hóa đơn tiền nước</span>
       <h2 style="font-size:clamp(26px,4vw,38px)">Nhập mã khách hàng, xem ngay.</h2>
       <p class="lead">Mã khách hàng in trên hóa đơn hoặc hợp đồng. Nhập vào để xem kỳ hóa đơn, số nước tiêu thụ và số tiền phải trả.</p>
-      <p class="note">Chức năng cần tích hợp với hệ thống ghi thu của công ty.</p>
+      <p class="note">Bản demo dùng dữ liệu mẫu. Thử với mã: <b>MC-000001</b>, <b>MC-000002</b>, <b>MC-000003</b>, <b>MC-000123</b>, <b>MC-000456</b>. Khi tích hợp hệ thống ghi thu, kết quả sẽ là hóa đơn thật.</p>
     </div>
     <div class="mockup">
       <div class="mk-head"><i class="d"></i><i class="d"></i><i class="d"></i><span>Tra cứu hóa đơn tiền nước</span></div>
       <div class="mk-body">
-        <div class="mk-label">Mã khách hàng</div>
-        <div class="mk-input"><span class="code">MC-•••••••</span><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#566d86" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></div>
-        <a class="btn btn-primary mk-btn" href="#tra-cuu">Tra cứu ngay</a>
-        <div class="mk-result">
-          <div class="mk-row"><span>Kỳ hóa đơn</span><b>Tháng 07/2026</b></div>
-          <div class="mk-row"><span>Chỉ số tiêu thụ</span><b>18 m³</b></div>
-          <div class="mk-row"><span>Trạng thái</span><b style="color:var(--teal)">Chưa thanh toán</b></div>
-          <div class="mk-total"><span style="color:var(--muted)">Số tiền phải trả</span><span class="big">174.600 đ</span></div>
-        </div>
+        <label class="mk-label" for="mkInput2">Mã khách hàng</label>
+        <input id="mkInput2" class="mk-field" placeholder="VD: MC-000001" autocomplete="off" onkeydown="if(event.key==='Enter'){traCuuHoaDon(this.value,document.getElementById('mkResult2'))}">
+        <button type="button" class="btn btn-primary mk-btn" onclick="traCuuHoaDon(document.getElementById('mkInput2').value,document.getElementById('mkResult2'))">Tra cứu ngay</button>
+        <div id="mkResult2"><div class="tc-msg">Nhập mã khách hàng rồi bấm “Tra cứu ngay” để xem số nước và tiền phải đóng.</div></div>
       </div>
     </div>
   </div>
@@ -164,5 +159,6 @@
   <div class="foot-bottom"><span>© 2026 Công ty TNHH Cấp Thoát Nước Mỏ Cày. Email: mocaywaco@gmail.com</span><span><a href="#">Điều khoản</a> · <a href="#">Chính sách bảo mật</a></span></div>
 </div></footer>
 
+<script src="assets/tra-cuu.js"></script>
 </body>
 </html>

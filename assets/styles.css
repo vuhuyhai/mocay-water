@@ -384,3 +384,13 @@ td b{color:var(--ink)}td .muted{color:var(--muted)}
   .quick{grid-template-columns:1fr 1fr}
   .stats{gap:14px}
 }
+
+/* ===== Ô tra cứu hóa đơn (chức năng) ===== */
+.mk-field{width:100%;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);
+  padding:12px 14px;color:var(--text);font:inherit;font-size:15px}
+.mk-field::placeholder{color:var(--dim)}
+.mk-field:focus{outline:none;border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-glow)}
+.tc-msg{margin-top:16px;padding:12px 14px;border-radius:10px;font-size:14px;
+  background:var(--surface-2);color:var(--muted);border:1px solid var(--border-soft)}
+.tc-msg.tc-err{background:rgba(198,57,55,.09);border-color:rgba(198,57,55,.28);color:#b3312f}
+.tc-msg b{color:inherit}
