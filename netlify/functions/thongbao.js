@@ -60,6 +60,6 @@ exports.handler = async (event) => {
     return { statusCode: 405, headers, body: JSON.stringify({ error: "Method not allowed" }) };
   } catch (e) {
     console.error("thongbao error", e);
-    return { statusCode: 500, headers, body: JSON.stringify({ error: "Lỗi máy chủ" }) };
+    return { statusCode: 500, headers, body: JSON.stringify({ error: "Lỗi máy chủ", detail: String((e && e.message) || e) }) };
   }
 };
