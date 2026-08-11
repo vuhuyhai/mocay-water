@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Quản trị — Cấp Thoát Nước Mỏ Cày</title>
+<link rel="icon" type="image/png" href="../assets/logo-mo-cay.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/styles.css">
+<style>
+  body{background:var(--bg-2)}
+  .adm-top{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:0;z-index:20}
+  .adm-top .in{max-width:1100px;margin:0 auto;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+  .adm-logo{display:flex;align-items:center;gap:10px;color:var(--ink);font-weight:800}
+  .adm-logo img{width:38px;height:38px;border-radius:9px}
+  .adm-logo small{display:block;color:var(--dim);font-size:11px;font-weight:500}
+  .wrap{max-width:1100px;margin:0 auto;padding:26px 20px}
+  .login-box{max-width:400px;margin:8vh auto;padding:32px}
+  .tabs{display:flex;gap:8px;border-bottom:1px solid var(--border);margin-bottom:24px;flex-wrap:wrap}
+  .tab{background:none;border:0;border-bottom:2px solid transparent;padding:12px 6px;margin-bottom:-1px;color:var(--muted);
+    font:inherit;font-weight:600;font-size:15px;cursor:pointer}
+  .tab.active{color:var(--teal);border-bottom-color:var(--teal)}
+  .grid-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media(max-width:640px){.grid-form{grid-template-columns:1fr}}
+  .tb-item{display:flex;gap:14px;justify-content:space-between;align-items:flex-start;padding:16px;border:1px solid var(--border);
+    border-radius:12px;background:var(--surface);margin-bottom:10px}
+  .tb-item .meta{color:var(--dim);font-size:12.5px;margin-bottom:4px}
+  .tb-item h4{margin:0 0 4px;color:var(--ink);font-size:16px}
+  .tb-item p{margin:0;color:var(--muted);font-size:14px;white-space:pre-wrap}
+  .pill{display:inline-block;background:var(--teal-dim);color:var(--teal);border:1px solid var(--teal-line);
+    border-radius:999px;font-size:11.5px;font-weight:600;padding:2px 9px;margin-right:6px}
+  .btn-del{background:rgba(198,57,55,.09);color:#b3312f;border:1px solid rgba(198,57,55,.28);border-radius:8px;
+    cursor:pointer;font-size:12.5px;font-weight:600;padding:6px 10px;white-space:nowrap}
+  .btn-del:hover{filter:brightness(.98)}
+  .hidden{display:none}
+  .muted-note{color:var(--dim);font-size:13px}
+  table.adm{width:100%;border-collapse:collapse;min-width:640px}
+  table.adm th,table.adm td{text-align:left;padding:11px 12px;font-size:14px;border-bottom:1px solid var(--border-soft);vertical-align:top}
+  table.adm th{color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.03em;background:var(--surface-2)}
+</style>
+</head>
+<body>
+
+<!-- ĐĂNG NHẬP -->
+<div id="loginView">
+  <div class="card login-box">
+    <div class="adm-logo" style="margin-bottom:18px"><img src="../assets/logo-mo-cay.png" alt="Logo"><span>Quản trị<small>Cấp Thoát Nước Mỏ Cày</small></span></div>
+    <div class="field" style="margin-bottom:12px">
+      <label for="pw">Mật khẩu quản trị</label>
+      <input id="pw" class="mk-field" type="password" placeholder="Nhập mật khẩu" onkeydown="if(event.key==='Enter')dangNhap()">
+    </div>
+    <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="dangNhap()">Đăng nhập</button>
+    <div id="loginMsg" style="margin-top:12px"></div>
+    <p class="muted-note" style="margin-top:16px">Trang nội bộ. Mật khẩu do công ty đặt trên Netlify (biến môi trường <b>ADMIN_PASSWORD</b>).</p>
+  </div>
+</div>
+
+<!-- BẢNG ĐIỀU KHIỂN -->
+<div id="dashView" class="hidden">
+  <div class="adm-top"><div class="in">
+    <div class="adm-logo"><img src="../assets/logo-mo-cay.png" alt="Logo"><span>Quản trị website<small>Cấp Thoát Nước Mỏ Cày</small></span></div>
+    <div style="display:flex;gap:10px;align-items:center">
+      <a class="btn btn-ghost" href="../index.html" target="_blank" style="padding:8px 14px">Xem web ↗</a>
+      <button class="btn btn-ghost" style="padding:8px 14px" onclick="dangXuat()">Đăng xuất</button>
+    </div>
+  </div></div>
+
+  <div class="wrap">
+    <div class="tabs">
+      <button class="tab active" id="tabTb" onclick="chonTab('tb')">Thông báo / Lịch cúp nước</button>
+      <button class="tab" id="tabDk" onclick="chonTab('dk')">Đăng ký lắp đồng hồ</button>
+    </div>
+
+    <!-- TAB THÔNG BÁO -->
+    <div id="paneTb">
+      <div class="card" style="margin-bottom:22px">
+        <h3 style="margin:0 0 4px;color:var(--ink)">Đăng thông báo mới</h3>
+        <p class="muted-note" style="margin:0 0 16px">Thông báo sẽ hiện ngay trên trang chủ và trang Tin tức.</p>
+        <div class="grid-form">
+          <div class="field"><label for="f-loai">Loại</label>
+            <select id="f-loai" class="mk-field">
+              <option value="thong-bao">Thông báo khách hàng</option>
+              <option value="lich-cup-nuoc">Lịch cúp nước</option>
+              <option value="kiem-nghiem">Kết quả kiểm nghiệm nước</option>
+              <option value="hoat-dong">Hoạt động công ty</option>
+              <option value="dau-thau">Chào hàng – Đấu thầu</option>
+            </select>
+          </div>
+          <div class="field"><label for="f-ngay">Ngày</label><input id="f-ngay" class="mk-field" placeholder="dd/mm/yyyy"></div>
+          <div class="field" style="grid-column:1/-1"><label for="f-tieude">Tiêu đề *</label><input id="f-tieude" class="mk-field" placeholder="VD: Tạm ngừng cấp nước khu vực ấp Phú Quới"></div>
+          <div class="field" style="grid-column:1/-1"><label for="f-khuvuc">Khu vực ảnh hưởng (nếu có)</label><input id="f-khuvuc" class="mk-field" placeholder="VD: Ấp Phú Quới, xã Mỏ Cày"></div>
+          <div class="field" style="grid-column:1/-1"><label for="f-noidung">Nội dung</label><textarea id="f-noidung" class="mk-field" style="min-height:110px" placeholder="Chi tiết: lý do, thời gian bắt đầu – kết thúc dự kiến..."></textarea></div>
+          <div class="field" style="grid-column:1/-1"><button class="btn btn-primary" style="width:100%;justify-content:center" onclick="dangThongBao()">Đăng thông báo →</button></div>
+        </div>
+        <div id="tbFormMsg" style="margin-top:12px"></div>
+      </div>
+
+      <h3 style="color:var(--ink)">Thông báo đã đăng</h3>
+      <div id="tbList" style="margin-top:12px"><p class="muted-note">Đang tải…</p></div>
+    </div>
+
+    <!-- TAB ĐĂNG KÝ -->
+    <div id="paneDk" class="hidden">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px;flex-wrap:wrap">
+        <h3 style="color:var(--ink);margin:0">Danh sách đăng ký lắp đồng hồ</h3>
+        <button class="btn btn-ghost" style="padding:8px 14px" onclick="taiDangKy()">Tải lại</button>
+      </div>
+      <div id="dkBody"><p class="muted-note">Đang tải…</p></div>
+    </div>
+  </div>
+</div>
+
+<script src="admin.js"></script>
+</body>
+</html>
