@@ -20,6 +20,10 @@ exports.handler = async (event) => {
   };
   const ma = ((event.queryStringParameters && event.queryStringParameters.ma) || "").trim();
   if (!ma) return { statusCode: 400, headers, body: JSON.stringify({ error: "Thiếu mã khách hàng" }) };
+  // Chỉ nhận mã hợp lệ (chữ, số, . _ -) để tránh truyền chuỗi rác/độc sang CityWork
+  if (!/^[A-Za-z0-9._-]{2,30}$/.test(ma)) {
+    return { statusCode: 400, headers, body: JSON.stringify({ error: "Mã khách hàng không hợp lệ" }) };
+  }
 
   const BASE  = process.env.CITYWORK_API_BASE;
   const TOKEN = process.env.CITYWORK_TOKEN;
@@ -45,7 +49,8 @@ exports.handler = async (event) => {
       return { statusCode: 200, headers, body: JSON.stringify({ configured: true, found: false }) };
     }
     if (!res.ok) {
-      return { statusCode: 502, headers, body: JSON.stringify({ error: "CityWork trả về lỗi " + res.status }) };
+      console.error("CityWork error status", res.status);
+      return { statusCode: 502, headers, body: JSON.stringify({ error: "Không tra cứu được, vui lòng thử lại sau." }) };
     }
 
     const data = await res.json();
@@ -56,7 +61,8 @@ exports.handler = async (event) => {
       body: JSON.stringify({ configured: true, found: !!rec, rec: rec || null })
     };
   } catch (e) {
-    return { statusCode: 502, headers, body: JSON.stringify({ error: "Không gọi được CityWork: " + String(e) }) };
+    console.error("CityWork call failed", e);
+    return { statusCode: 502, headers, body: JSON.stringify({ error: "Không tra cứu được, vui lòng thử lại sau." }) };
   }
 };
 

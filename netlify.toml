@@ -4,3 +4,12 @@
 
 [functions]
   directory = "netlify/functions"
+
+# Header bảo mật cơ bản (an toàn, không phá layout hiện tại)
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "SAMEORIGIN"                       # chống clickjacking (nhúng site vào iframe lạ)
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(), microphone=(), camera=()"

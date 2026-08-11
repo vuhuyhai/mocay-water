@@ -31,6 +31,13 @@ function tinhTienNuoc(m3, nhom) {
 
 function dg(n) { return Math.round(n).toLocaleString("vi-VN"); }
 
+// Thoát ký tự HTML để chống XSS khi ghép dữ liệu (mã KH người dùng nhập, tên KH từ API) vào innerHTML
+function esc(s) {
+  return String(s == null ? "" : s).replace(/[&<>"']/g, function (c) {
+    return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+  });
+}
+
 // === Nguồn dữ liệu: ưu tiên API CityWork (qua Netlify Function); lỗi/chưa cấu hình -> dùng dữ liệu mẫu ===
 function layHoaDon(ma) {             // demo (fallback)
   return HOA_DON[ma] || null;
@@ -41,7 +48,7 @@ async function layHoaDonAPI(ma) {    // proxy giữ token phía server
   return r.json();                   // { configured, found, rec }
 }
 function _khongThay(code) {
-  return '<div class="tc-msg tc-err">Không tìm thấy mã khách hàng <b>' + code +
+  return '<div class="tc-msg tc-err">Không tìm thấy mã khách hàng <b>' + esc(code) +
     '</b>. Kiểm tra lại mã in trên hóa đơn/hợp đồng.</div>';
 }
 
@@ -72,14 +79,14 @@ async function traCuuHoaDon(rawCode, elResult) {
 
   var html =
     '<div class="mk-result">' +
-      '<div class="mk-row"><span>Khách hàng</span><b>' + rec.ten + '</b></div>' +
-      '<div class="mk-row"><span>Kỳ hóa đơn</span><b>' + rec.ky + '</b></div>' +
-      '<div class="mk-row"><span>Nhóm sử dụng</span><b>' + (NHOM_LABEL[rec.nhom] || rec.nhom) + '</b></div>' +
-      '<div class="mk-row"><span>Số tiêu thụ</span><b>' + rec.m3 + ' m³</b></div>' +
+      '<div class="mk-row"><span>Khách hàng</span><b>' + esc(rec.ten) + '</b></div>' +
+      '<div class="mk-row"><span>Kỳ hóa đơn</span><b>' + esc(rec.ky) + '</b></div>' +
+      '<div class="mk-row"><span>Nhóm sử dụng</span><b>' + esc(NHOM_LABEL[rec.nhom] || rec.nhom) + '</b></div>' +
+      '<div class="mk-row"><span>Số tiêu thụ</span><b>' + (Number(rec.m3) || 0) + ' m³</b></div>' +
       '<div class="mk-row"><span>Tiền nước</span><b>' + dg(tienNuoc) + ' đ</b></div>' +
       '<div class="mk-row"><span>Thuế GTGT (5%)</span><b>' + dg(vat) + ' đ</b></div>' +
       '<div class="mk-row"><span>Phí BVMT nước thải (10%)</span><b>' + dg(bvmt) + ' đ</b></div>' +
-      '<div class="mk-row"><span>Trạng thái</span><b style="color:' + mauTT + '">' + rec.trangthai + '</b></div>' +
+      '<div class="mk-row"><span>Trạng thái</span><b style="color:' + mauTT + '">' + esc(rec.trangthai) + '</b></div>' +
       '<div class="mk-total"><span style="color:var(--muted)">Tổng phải trả</span><span class="big">' + dg(tong) + ' đ</span></div>' +
     '</div>';
 
