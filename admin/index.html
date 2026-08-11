@@ -40,6 +40,23 @@
   table.adm{width:100%;border-collapse:collapse;min-width:640px}
   table.adm th,table.adm td{text-align:left;padding:11px 12px;font-size:14px;border-bottom:1px solid var(--border-soft);vertical-align:top}
   table.adm th{color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.03em;background:var(--surface-2)}
+  /* Trình soạn thảo */
+  .editor{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--surface)}
+  .ed-toolbar{display:flex;flex-wrap:wrap;gap:4px;padding:8px;border-bottom:1px solid var(--border-soft);background:var(--surface-2)}
+  .ed-toolbar button{background:var(--surface);border:1px solid var(--border);border-radius:7px;min-width:32px;height:30px;padding:0 9px;
+    cursor:pointer;color:var(--text);font-size:14px;font-family:inherit;display:inline-flex;align-items:center;justify-content:center}
+  .ed-toolbar button:hover{background:var(--teal-dim);border-color:var(--teal-line)}
+  .ed-sep{width:1px;background:var(--border);margin:2px 3px}
+  .ed-area{min-height:190px;max-height:460px;overflow:auto;padding:14px 16px;color:var(--text);font-size:15px;line-height:1.65;outline:none}
+  .ed-area:empty::before{content:attr(data-ph);color:var(--dim)}
+  .ed-area h2{font-size:20px;margin:.6em 0 .3em;color:var(--ink)}
+  .ed-area h3{font-size:17px;margin:.6em 0 .3em;color:var(--ink)}
+  .ed-area blockquote{border-left:3px solid var(--teal);margin:.6em 0;padding:6px 14px;background:var(--teal-dim);border-radius:0 8px 8px 0}
+  .ed-area ul,.ed-area ol{padding-left:1.4em;margin:.5em 0}
+  .ed-area img{max-width:100%;border-radius:8px}
+  .ed-area a{color:var(--teal)}
+  .edit-flag{display:inline-block;background:#fff6e0;color:#8a5a00;border:1px solid #f0d488;border-radius:999px;
+    font-size:12px;font-weight:600;padding:3px 10px;margin-left:8px}
 </style>
 </head>
 <body>
@@ -76,9 +93,9 @@
 
     <!-- TAB THÔNG BÁO -->
     <div id="paneTb">
-      <div class="card" style="margin-bottom:22px">
-        <h3 style="margin:0 0 4px;color:var(--ink)">Đăng thông báo mới</h3>
-        <p class="muted-note" style="margin:0 0 16px">Thông báo sẽ hiện ngay trên trang chủ và trang Tin tức.</p>
+      <div class="card" id="tbFormCard" style="margin-bottom:22px">
+        <h3 style="margin:0 0 4px;color:var(--ink)" id="tbFormTitle">Đăng bài / thông báo mới <span id="editFlag" class="edit-flag hidden">Đang sửa</span></h3>
+        <p class="muted-note" style="margin:0 0 16px">Bài đăng hiện ngay trên trang chủ và trang Tin tức. Tin mới nhất là thẻ nổi bật.</p>
         <div class="grid-form">
           <div class="field"><label for="f-loai">Loại</label>
             <select id="f-loai" class="mk-field">
@@ -92,8 +109,35 @@
           <div class="field"><label for="f-ngay">Ngày</label><input id="f-ngay" class="mk-field" placeholder="dd/mm/yyyy"></div>
           <div class="field" style="grid-column:1/-1"><label for="f-tieude">Tiêu đề *</label><input id="f-tieude" class="mk-field" placeholder="VD: Tạm ngừng cấp nước khu vực ấp Phú Quới"></div>
           <div class="field" style="grid-column:1/-1"><label for="f-khuvuc">Khu vực ảnh hưởng (nếu có)</label><input id="f-khuvuc" class="mk-field" placeholder="VD: Ấp Phú Quới, xã Mỏ Cày"></div>
-          <div class="field" style="grid-column:1/-1"><label for="f-noidung">Nội dung</label><textarea id="f-noidung" class="mk-field" style="min-height:110px" placeholder="Chi tiết: lý do, thời gian bắt đầu – kết thúc dự kiến..."></textarea></div>
-          <div class="field" style="grid-column:1/-1"><button class="btn btn-primary" style="width:100%;justify-content:center" onclick="dangThongBao()">Đăng thông báo →</button></div>
+          <div class="field" style="grid-column:1/-1"><label for="f-anhbia">Ảnh bìa — URL (không bắt buộc)</label><input id="f-anhbia" class="mk-field" placeholder="https://…/anh.jpg"></div>
+          <div class="field" style="grid-column:1/-1">
+            <label>Nội dung</label>
+            <div class="editor">
+              <div class="ed-toolbar">
+                <button type="button" title="Đậm" onclick="ed('bold')"><b>B</b></button>
+                <button type="button" title="Nghiêng" onclick="ed('italic')"><i>I</i></button>
+                <button type="button" title="Gạch chân" onclick="ed('underline')"><u>U</u></button>
+                <span class="ed-sep"></span>
+                <button type="button" title="Tiêu đề" onclick="edBlock('H2')">H2</button>
+                <button type="button" title="Tiêu đề phụ" onclick="edBlock('H3')">H3</button>
+                <button type="button" title="Đoạn thường" onclick="edBlock('P')">¶</button>
+                <span class="ed-sep"></span>
+                <button type="button" title="Danh sách chấm" onclick="ed('insertUnorderedList')">•—</button>
+                <button type="button" title="Danh sách số" onclick="ed('insertOrderedList')">1.—</button>
+                <button type="button" title="Trích dẫn" onclick="edBlock('BLOCKQUOTE')">❝</button>
+                <span class="ed-sep"></span>
+                <button type="button" title="Chèn liên kết" onclick="edLink()">🔗</button>
+                <button type="button" title="Chèn ảnh" onclick="edImg()">🖼</button>
+                <span class="ed-sep"></span>
+                <button type="button" title="Xóa định dạng" onclick="ed('removeFormat')">✕</button>
+              </div>
+              <div id="f-editor" class="ed-area" contenteditable="true" data-ph="Nhập nội dung bài viết / thông báo…"></div>
+            </div>
+          </div>
+          <div class="field" style="grid-column:1/-1;flex-direction:row;gap:10px">
+            <button class="btn btn-primary" id="btnSave" style="flex:1;justify-content:center" onclick="dangThongBao()">Đăng bài →</button>
+            <button class="btn btn-ghost hidden" id="btnCancel" style="justify-content:center" onclick="huySua()">Hủy sửa</button>
+          </div>
         </div>
         <div id="tbFormMsg" style="margin-top:12px"></div>
       </div>
