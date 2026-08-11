@@ -61,6 +61,7 @@ export default async (req) => {
 
     return json({ error: "Method not allowed" }, 405);
   } catch (e) {
-    return json({ error: "Lỗi máy chủ", detail: String((e && e.message) || e) }, 500);
+    console.error("thongbao error", e);
+    return json({ error: "Lỗi máy chủ" }, 500);
   }
 };
