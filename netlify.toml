@@ -1,0 +1,6 @@
+# Cấu hình Netlify cho website Cấp Thoát Nước Mỏ Cày (site tĩnh + serverless functions)
+[build]
+  publish = "."          # index.html nằm ở gốc repo
+
+[functions]
+  directory = "netlify/functions"

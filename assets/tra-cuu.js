@@ -31,23 +31,38 @@ function tinhTienNuoc(m3, nhom) {
 
 function dg(n) { return Math.round(n).toLocaleString("vi-VN"); }
 
-// Điểm thay thế khi tích hợp thật: gọi API và trả về bản ghi hoặc null
-function layHoaDon(ma) {
+// === Nguồn dữ liệu: ưu tiên API CityWork (qua Netlify Function); lỗi/chưa cấu hình -> dùng dữ liệu mẫu ===
+function layHoaDon(ma) {             // demo (fallback)
   return HOA_DON[ma] || null;
 }
+async function layHoaDonAPI(ma) {    // proxy giữ token phía server
+  const r = await fetch('/.netlify/functions/tra-cuu?ma=' + encodeURIComponent(ma), { headers: { 'Accept': 'application/json' } });
+  if (!r.ok) throw new Error('HTTP ' + r.status);
+  return r.json();                   // { configured, found, rec }
+}
+function _khongThay(code) {
+  return '<div class="tc-msg tc-err">Không tìm thấy mã khách hàng <b>' + code +
+    '</b>. Kiểm tra lại mã in trên hóa đơn/hợp đồng.</div>';
+}
 
-function traCuuHoaDon(rawCode, elResult) {
+async function traCuuHoaDon(rawCode, elResult) {
   const code = (rawCode || "").trim().toUpperCase();
   if (!code) {
     elResult.innerHTML = '<div class="tc-msg">Vui lòng nhập mã khách hàng.</div>';
     return;
   }
-  const rec = layHoaDon(code);
-  if (!rec) {
-    elResult.innerHTML = '<div class="tc-msg tc-err">Không tìm thấy mã khách hàng <b>' + code +
-      '</b>. Kiểm tra lại mã in trên hóa đơn/hợp đồng.</div>';
-    return;
-  }
+  elResult.innerHTML = '<div class="tc-msg">Đang tra cứu…</div>';
+  let rec = null;
+  try {
+    const api = await layHoaDonAPI(code);
+    if (api && api.configured) {
+      if (api.found && api.rec) rec = api.rec;
+      else { elResult.innerHTML = _khongThay(code); return; }
+    }
+  } catch (e) { /* rơi xuống dùng dữ liệu mẫu */ }
+  if (!rec) rec = layHoaDon(code);
+  if (!rec) { elResult.innerHTML = _khongThay(code); return; }
+
   const tienNuoc = tinhTienNuoc(rec.m3, rec.nhom);
   const vat  = tienNuoc * 0.05;
   const bvmt = tienNuoc * 0.10;
