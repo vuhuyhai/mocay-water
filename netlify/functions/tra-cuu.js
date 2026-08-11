@@ -13,11 +13,30 @@
    Trả về cho front-end: { configured:boolean, found:boolean, rec:{ten,ky,m3,nhom,trangthai} }
    ========================================================================== */
 
+// Giới hạn tần suất theo IP (chống dò quét). Lưu ý: bộ nhớ theo từng instance function;
+// khi go-live nên bật thêm rate limit ở tầng nền tảng Netlify cho chắc.
+const RL_WINDOW_MS = 60 * 1000;   // cửa sổ 60 giây
+const RL_MAX = 20;                // tối đa 20 lượt/phút/IP (điều chỉnh theo quota CityWork)
+const _hits = new Map();
+function _rateLimited(ip) {
+  const now = Date.now();
+  const arr = (_hits.get(ip) || []).filter(function (t) { return now - t < RL_WINDOW_MS; });
+  if (arr.length >= RL_MAX) { _hits.set(ip, arr); return true; }
+  arr.push(now); _hits.set(ip, arr);
+  if (_hits.size > 5000) _hits.clear(); // chống phình bộ nhớ
+  return false;
+}
+
 exports.handler = async (event) => {
   const headers = {
     "Content-Type": "application/json; charset=utf-8",
     "Cache-Control": "no-store"
   };
+  const h = event.headers || {};
+  const ip = ((h["x-nf-client-connection-ip"] || h["x-forwarded-for"] || "").split(",")[0] || "").trim() || "unknown";
+  if (_rateLimited(ip)) {
+    return { statusCode: 429, headers, body: JSON.stringify({ error: "Bạn tra cứu quá nhanh. Vui lòng thử lại sau ít phút." }) };
+  }
   const ma = ((event.queryStringParameters && event.queryStringParameters.ma) || "").trim();
   if (!ma) return { statusCode: 400, headers, body: JSON.stringify({ error: "Thiếu mã khách hàng" }) };
   // Chỉ nhận mã hợp lệ (chữ, số, . _ -) để tránh truyền chuỗi rác/độc sang CityWork
@@ -83,12 +102,23 @@ function mapCityWork(d) {
   const daTT = x.daThanhToan === true || x.trangThai === "DA_THANH_TOAN" || x.paid === true;
 
   return {
-    ten: x.tenKhachHang || x.hoTen || x.customerName || x.ten || "",
+    ten: maskTen(x.tenKhachHang || x.hoTen || x.customerName || x.ten || ""),
     ky: x.kyHoaDon || x.ky || x.period || "",
     m3: isFinite(m3) ? m3 : 0,
     nhom: mapNhom(x.nhomDoiTuong || x.doiTuong || x.nhom || x.loaiKH || ""),
     trangthai: daTT ? "Đã thanh toán" : "Chưa thanh toán"
   };
+}
+
+// Che tên: chỉ hiện chữ đầu của tên gọi + "**"  (vd "Nguyễn Văn An" -> "Nguyễn Văn A**").
+// Idempotent: che lại tên đã che vẫn ra kết quả cũ.
+function maskTen(name) {
+  const s = (name || "").toString().trim().replace(/\s+/g, " ");
+  if (!s) return "";
+  const parts = s.split(" ");
+  const last = parts[parts.length - 1].replace(/\*+$/, ""); // bỏ ** nếu đã che
+  parts[parts.length - 1] = (last.charAt(0) || "") + "**";
+  return parts.join(" ");
 }
 
 function mapNhom(s) {

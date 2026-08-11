@@ -44,8 +44,18 @@ function layHoaDon(ma) {             // demo (fallback)
 }
 async function layHoaDonAPI(ma) {    // proxy giữ token phía server
   const r = await fetch('/.netlify/functions/tra-cuu?ma=' + encodeURIComponent(ma), { headers: { 'Accept': 'application/json' } });
-  if (!r.ok) throw new Error('HTTP ' + r.status);
-  return r.json();                   // { configured, found, rec }
+  let data = {};
+  try { data = await r.json(); } catch (e) {}
+  return { status: r.status, data: data };   // data: { configured, found, rec } | { error }
+}
+// Che tên phía client (cho dữ liệu mẫu); idempotent với tên đã che từ server
+function maskTen(name) {
+  var s = (name == null ? "" : name).toString().trim().replace(/\s+/g, " ");
+  if (!s) return "";
+  var parts = s.split(" ");
+  var last = parts[parts.length - 1].replace(/\*+$/, "");
+  parts[parts.length - 1] = (last.charAt(0) || "") + "**";
+  return parts.join(" ");
 }
 function _khongThay(code) {
   return '<div class="tc-msg tc-err">Không tìm thấy mã khách hàng <b>' + esc(code) +
@@ -61,12 +71,16 @@ async function traCuuHoaDon(rawCode, elResult) {
   elResult.innerHTML = '<div class="tc-msg">Đang tra cứu…</div>';
   let rec = null;
   try {
-    const api = await layHoaDonAPI(code);
-    if (api && api.configured) {
-      if (api.found && api.rec) rec = api.rec;
+    const res = await layHoaDonAPI(code);
+    if (res.status === 429) {
+      elResult.innerHTML = '<div class="tc-msg tc-err">' + esc(res.data.error || "Bạn tra cứu quá nhanh, vui lòng thử lại sau ít phút.") + '</div>';
+      return;
+    }
+    if (res.data && res.data.configured) {
+      if (res.data.found && res.data.rec) rec = res.data.rec;
       else { elResult.innerHTML = _khongThay(code); return; }
     }
-  } catch (e) { /* rơi xuống dùng dữ liệu mẫu */ }
+  } catch (e) { /* mạng lỗi -> rơi xuống dùng dữ liệu mẫu */ }
   if (!rec) rec = layHoaDon(code);
   if (!rec) { elResult.innerHTML = _khongThay(code); return; }
 
@@ -79,7 +93,7 @@ async function traCuuHoaDon(rawCode, elResult) {
 
   var html =
     '<div class="mk-result">' +
-      '<div class="mk-row"><span>Khách hàng</span><b>' + esc(rec.ten) + '</b></div>' +
+      '<div class="mk-row"><span>Khách hàng</span><b>' + esc(maskTen(rec.ten)) + '</b></div>' +
       '<div class="mk-row"><span>Kỳ hóa đơn</span><b>' + esc(rec.ky) + '</b></div>' +
       '<div class="mk-row"><span>Nhóm sử dụng</span><b>' + esc(NHOM_LABEL[rec.nhom] || rec.nhom) + '</b></div>' +
       '<div class="mk-row"><span>Số tiêu thụ</span><b>' + (Number(rec.m3) || 0) + ' m³</b></div>' +
@@ -150,7 +164,9 @@ function moThanhToan() {
   var b = window.__lastBill; if (!b) return;
   _taoModal();
   var ky = (b.ky || "").replace("Tháng ", "T").replace(/\//g, "-"); // "T07-2026"
-  var noiDung = (b.ma + " " + _boDau(b.ten) + " " + ky).trim();
+  // Nội dung CK = Mã KH + Kỳ (bỏ tên để không lộ thông tin cá nhân trong bộ nhớ giao dịch công khai;
+  // công ty đối soát theo Mã KH + Kỳ). _boDau vẫn dùng cho các trường khác nếu cần.
+  var noiDung = (b.ma + " " + ky).trim();
   var soTien = Math.round(b.tong);
   var qr = "https://img.vietqr.io/image/" + BIN_BIDV + "-" + SO_TK + "-compact2.png?amount=" + soTien +
     "&addInfo=" + encodeURIComponent(noiDung);
