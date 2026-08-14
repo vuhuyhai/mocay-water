@@ -12,11 +12,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="assets/logo-mo-cay.png">
 <link rel="stylesheet" href="assets/styles.css">
+<style>
+  /* Trang chủ: dải đầu trang (thanh điều hướng + hero) rộng gần full màn hình */
+  .homewide{max-width:1720px;padding-left:clamp(20px,4vw,64px);padding-right:clamp(20px,4vw,64px)}
+</style>
 </head>
 <body>
 
 <!-- NAVBAR -->
-<nav class="nav"><div class="nav-inner">
+<nav class="nav"><div class="nav-inner homewide">
   <a class="logo" href="index.html">
     <span class="mark"><img src="assets/logo-mo-cay.png" alt="Logo Công ty Cấp Thoát Nước Mỏ Cày"></span>
     <span>Cấp Thoát Nước Mỏ Cày<small>Nước sạch · Mỏ Cày</small></span>
@@ -38,7 +42,7 @@
 </div></nav>
 
 <!-- HERO -->
-<header id="top" class="section glow"><div class="container hero-grid">
+<header id="top" class="section glow"><div class="container homewide hero-grid">
   <div>
     <span class="badge">Cuối nguồn Mê Kông · Giữ dòng nước ngọt qua mùa mặn</span>
     <h1>Nước sạch cho<br>Mỏ Cày, mỗi ngày.</h1>
@@ -84,90 +88,6 @@
   <p class="note" style="margin-top:18px">Số liệu vận hành cập nhật năm 2026 · 03 nhà máy nước · phục vụ 6 xã khu vực Mỏ Cày.</p>
 </div></section>
 
-<!-- BANNER ẢNH NHÀ MÁY -->
-<section class="section tight"><div class="container">
-  <div class="banner">
-    <img src="https://images.pexels.com/photos/5712211/pexels-photo-5712211.jpeg?auto=compress&cs=tinysrgb&w=1400" alt="Nhà máy xử lý và cấp nước sạch với bể lắng" loading="lazy">
-    <div class="ov">
-      <span class="badge">Nhà máy nước Mỏ Cày</span>
-      <h2>Vận hành liên tục, kiểm soát chất lượng từng ngày.</h2>
-      <p>Từ nguồn nước thô đến đồng hồ từng nhà, nước được xử lý và kiểm nghiệm kỹ theo chuẩn Bộ Y tế. Đội trực sự cố làm việc 24/7, kể cả ngày lễ và Tết.</p>
-      <a class="btn btn-ghost" href="gioi-thieu.html#nang-luc">Xem năng lực hệ thống →</a>
-    </div>
-  </div>
-</div></section>
-
-<!-- GIỚI THIỆU -->
-<section id="gioi-thieu" class="section alt"><div class="container">
-  <div class="sh">
-    <span class="badge">Giới thiệu</span>
-    <h2>Lo hai việc: đưa nước sạch tới nhà, và trả nước sạch về nguồn.</h2>
-    <p class="lead">Công ty Cấp Thoát Nước Mỏ Cày đưa nước sạch đến từng hộ gia đình, đồng thời thu gom và xử lý nước thải trước khi trả lại môi trường. Tại vùng đất cuối nguồn Mê Kông, giữ nguồn nước ngọt ổn định qua mùa mặn là ưu tiên hàng đầu của chúng tôi.</p>
-  </div>
-  <div class="grid-4">
-    <div class="card"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5S5 13 5 15a7 7 0 0 0 7 7Z"/></svg></div><h3>Trách nhiệm</h3><p>Nước là nhu cầu thiết yếu. Chúng tôi chịu trách nhiệm đến cùng về chất lượng và sự ổn định của dịch vụ.</p></div>
-    <div class="card"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></div><h3>Minh bạch</h3><p>Giá nước, chất lượng nước và hóa đơn đều rõ ràng, công khai, khách hàng dễ dàng tra cứu.</p></div>
-    <div class="card"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h3>Tiết kiệm</h3><p>Tiết kiệm nước giúp bảo vệ tài nguyên và giảm chi phí. Chúng tôi cũng tối ưu vận hành để giữ giá nước hợp lý.</p></div>
-    <div class="card"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13A4 4 0 0 1 16 11"/></svg></div><h3>Đoàn kết</h3><p>Đội ngũ gắn kết giúp dịch vụ luôn ổn định. Tại công ty, mỗi người một việc, cùng nhìn về một hướng.</p></div>
-  </div>
-  <div style="margin-top:28px"><a class="btn btn-ghost" href="gioi-thieu.html">Tìm hiểu về công ty →</a></div>
-</div></section>
-
-<!-- DỊCH VỤ -->
-<section id="dich-vu" class="section"><div class="container">
-  <div class="sh">
-    <span class="badge">Hai mảng dịch vụ chính</span>
-    <h2>Cấp nước và thoát nước, gọn trong một đầu mối.</h2>
-  </div>
-  <div class="svc">
-    <a class="pcard" href="cap-nuoc.html">
-      <div class="ph"><img src="https://images.pexels.com/photos/5051043/pexels-photo-5051043.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Nước sạch rót đầy ly" loading="lazy"></div>
-      <div class="pb">
-        <h3>Cấp nước</h3>
-        <p>Lắp đặt và cấp nước sinh hoạt, sản xuất. Giá cả minh bạch, chất lượng công bố định kỳ.</p>
-        <ul>
-          <li>Đăng ký lắp đồng hồ nước</li>
-          <li>Thủ tục và biểu mẫu tải về</li>
-          <li>Bảng giá nước theo từng nhóm khách hàng</li>
-          <li>Kết quả xét nghiệm chất lượng nước</li>
-          <li>Lịch tạm ngừng cấp nước và cách ứng phó mùa mặn</li>
-        </ul>
-        <span class="more">Xem dịch vụ cấp nước →</span>
-      </div>
-    </a>
-    <a class="pcard" href="thoat-nuoc.html">
-      <div class="ph"><img src="https://images.pexels.com/photos/19517566/pexels-photo-19517566.jpeg?auto=compress&cs=tinysrgb&w=800" alt="Nhà máy xử lý nước thải nhìn từ trên cao" loading="lazy"></div>
-      <div class="pb">
-        <h3>Thoát nước &amp; xử lý nước thải</h3>
-        <p>Đấu nối, thu gom và xử lý nước thải đạt chuẩn trước khi trả về nguồn. Chúng tôi chung tay giữ sạch dòng nước quê nhà cho mai sau.</p>
-        <ul>
-          <li>Dịch vụ đấu nối hệ thống thoát nước</li>
-          <li>Quy trình xử lý nước thải đạt chuẩn quốc gia (QCVN)</li>
-          <li>Thông tin phí bảo vệ môi trường và phí nước thải</li>
-          <li>Giải pháp bảo vệ nguồn nước và môi trường</li>
-        </ul>
-        <span class="more">Xem dịch vụ thoát nước →</span>
-      </div>
-    </a>
-  </div>
-</div></section>
-
-<!-- XÂM NHẬP MẶN -->
-<section class="section alt"><div class="container man">
-  <div>
-    <span class="badge">Điểm khác biệt vùng Bến Tre</span>
-    <h2>Chủ động ứng phó xâm nhập mặn.</h2>
-    <p class="lead">Mỏ Cày nằm ở cuối nguồn Mê Kông. Vào mùa khô, nước mặn lấn sâu vào sông rạch, ảnh hưởng trực tiếp đến nguồn nước thô. Giữ dòng nước ngọt ổn định qua mùa mặn là cam kết lớn nhất của chúng tôi với bà con.</p>
-    <a class="btn btn-ghost" href="cap-nuoc.html#xam-nhap-man" style="margin-top:24px">Xem tình hình độ mặn →</a>
-  </div>
-  <div class="warnbox">
-    <div class="row"><span class="n">1</span><div><b>Theo dõi hằng ngày</b><p>Đo độ mặn nguồn nước thô mỗi ngày trong suốt mùa khô.</p></div></div>
-    <div class="row"><span class="n">2</span><div><b>Vận hành linh hoạt</b><p>Trữ nước ngọt và điều tiết nguồn khi độ mặn tăng cao.</p></div></div>
-    <div class="row"><span class="n">3</span><div><b>Cập nhật công khai</b><p>Thông báo công khai độ mặn nước cấp để bà con nắm rõ.</p></div></div>
-    <div class="row"><span class="n">4</span><div><b>Hướng dẫn bà con</b><p>Hướng dẫn bà con cách trữ nước và sử dụng tiết kiệm trong thời gian cao điểm mặn.</p></div></div>
-  </div>
-</div></section>
-
 <!-- TIN TỨC -->
 <section id="tin-tuc" class="section"><div class="container">
   <div class="sh">
@@ -207,9 +127,9 @@
       <p>Công ty TNHH Cấp Thoát Nước Mỏ Cày. Địa chỉ: Ấp Phú Quới, Xã Mỏ Cày, tỉnh Vĩnh Long.</p>
       <div class="hotline">
         <span>Báo sự cố (24/7)</span><br>
-        <a href="tel:02753843993">☎ (0275) 3843 993 – 3662 893</a><br>
+        <a href="tel:02753843993">☎ (0275) 3843 993</a><br>
         <span style="display:inline-block;margin-top:8px">Tổng đài CSKH</span><br>
-        <a href="tel:02753843993">☎ (0275) 3843 993 – 3662 893</a>
+        <a href="tel:02753662893">☎ (0275) 3662 893</a>
       </div>
     </div>
     <div>
