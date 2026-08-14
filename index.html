@@ -20,9 +20,10 @@
   /* Khối số liệu 6 ô: 3 cột desktop, 2 cột điện thoại */
   .stats-6{grid-template-columns:repeat(3,1fr)}
   @media(max-width:860px){.stats-6{grid-template-columns:1fr 1fr}}
-  /* Tiêu đề khối gói gọn 1 dòng (bỏ giới hạn 60ch, giảm nhẹ cỡ chữ) */
+  /* Tiêu đề + câu giới thiệu khối gói gọn 1 dòng (bỏ giới hạn bề rộng, giảm nhẹ cỡ chữ) */
   .sh.oneline{max-width:none}
   .sh.oneline h2{font-size:clamp(26px,3.2vw,40px)}
+  .sh.oneline .lead{max-width:none}
 </style>
 </head>
 <body>
