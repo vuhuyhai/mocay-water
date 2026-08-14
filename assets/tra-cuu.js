@@ -42,8 +42,11 @@ function esc(s) {
 function layHoaDon(ma) {             // demo (fallback)
   return HOA_DON[ma] || null;
 }
+// Địa chỉ dịch vụ tra cứu (trạm trung chuyển CityWork chạy trên máy chủ IP tĩnh).
+// Chỉ cần đổi 1 dòng này khi chuyển sang tên miền chính thức (vd https://api.mocawaco.com/wp-json/mocay/v1/tra-cuu).
+const API_TRA_CUU_URL = 'https://vuhai.info/wp-json/mocay/v1/tra-cuu';
 async function layHoaDonAPI(ma) {    // proxy giữ token phía server
-  const r = await fetch('/.netlify/functions/tra-cuu?ma=' + encodeURIComponent(ma), { headers: { 'Accept': 'application/json' } });
+  const r = await fetch(API_TRA_CUU_URL + '?ma=' + encodeURIComponent(ma), { headers: { 'Accept': 'application/json' } });
   let data = {};
   try { data = await r.json(); } catch (e) {}
   return { status: r.status, data: data };   // data: { configured, found, rec } | { error }
@@ -56,6 +59,13 @@ function maskTen(name) {
   var last = parts[parts.length - 1].replace(/\*+$/, "");
   parts[parts.length - 1] = (last.charAt(0) || "") + "**";
   return parts.join(" ");
+}
+// Che địa chỉ: chỉ hiện cụm đầu (trước dấu phẩy) + "…" để không lộ vị trí chính xác.
+function maskDiaChi(dc) {
+  var s = (dc == null ? "" : dc).toString().trim().replace(/\s+/g, " ");
+  if (!s) return "";
+  var first = s.split(",")[0].trim();
+  return s.indexOf(",") !== -1 ? first + ", …" : first;
 }
 function _khongThay(code) {
   return '<div class="tc-msg tc-err">Không tìm thấy mã khách hàng <b>' + esc(code) +
@@ -77,23 +87,25 @@ async function traCuuHoaDon(rawCode, elResult) {
       return;
     }
     if (res.data && res.data.configured) {
-      if (res.data.found && res.data.rec) rec = res.data.rec;
+      if (res.data.found && res.data.rec) { rec = res.data.rec; rec._api = true; }
       else { elResult.innerHTML = _khongThay(code); return; }
     }
   } catch (e) { /* mạng lỗi -> rơi xuống dùng dữ liệu mẫu */ }
   if (!rec) rec = layHoaDon(code);
   if (!rec) { elResult.innerHTML = _khongThay(code); return; }
 
-  const tienNuoc = tinhTienNuoc(rec.m3, rec.nhom);
-  const vat  = tienNuoc * 0.05;
-  const bvmt = tienNuoc * 0.10;
-  const tong = tienNuoc + vat + bvmt;
+  // Số tiền: ưu tiên số chính thức từ CityWork; dữ liệu mẫu thì tự tính theo bậc.
+  const tienNuoc = rec._api ? (Number(rec.tienNuoc) || 0) : tinhTienNuoc(rec.m3, rec.nhom);
+  const vat  = rec._api ? (Number(rec.vat)  || 0) : tienNuoc * 0.05;
+  const bvmt = rec._api ? (Number(rec.bvmt) || 0) : tienNuoc * 0.10;
+  const tong = rec._api ? (Number(rec.tong) || 0) : (tienNuoc + vat + bvmt);
   const paid = rec.trangthai === "Đã thanh toán";
   const mauTT = paid ? "#0e9f6e" : "var(--teal)";
 
   var html =
     '<div class="mk-result">' +
       '<div class="mk-row"><span>Khách hàng</span><b>' + esc(maskTen(rec.ten)) + '</b></div>' +
+      (rec.dc ? '<div class="mk-row"><span>Địa chỉ</span><b>' + esc(maskDiaChi(rec.dc)) + '</b></div>' : '') +
       '<div class="mk-row"><span>Kỳ hóa đơn</span><b>' + esc(rec.ky) + '</b></div>' +
       '<div class="mk-row"><span>Nhóm sử dụng</span><b>' + esc(NHOM_LABEL[rec.nhom] || rec.nhom) + '</b></div>' +
       '<div class="mk-row"><span>Số tiêu thụ</span><b>' + (Number(rec.m3) || 0) + ' m³</b></div>' +
@@ -104,7 +116,10 @@ async function traCuuHoaDon(rawCode, elResult) {
       '<div class="mk-total"><span style="color:var(--muted)">Tổng phải trả</span><span class="big">' + dg(tong) + ' đ</span></div>' +
     '</div>';
 
-  if (paid) {
+  if (tong <= 0) {
+    window.__lastBill = null;
+    html += '<div class="tc-msg" style="margin-top:12px">Kỳ này chưa phát sinh tiền nước phải đóng.</div>';
+  } else if (paid) {
     window.__lastBill = null;
     html += '<div class="tc-msg" style="margin-top:12px;color:#0e9f6e;background:rgba(14,159,110,.08);border-color:rgba(14,159,110,.28)">' +
       'Hóa đơn kỳ này đã thanh toán. Cảm ơn quý khách.</div>';

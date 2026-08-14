@@ -56,13 +56,13 @@
       <span class="badge">Tra cứu hóa đơn tiền nước</span>
       <h2 style="font-size:clamp(26px,4vw,38px)">Nhập mã khách hàng, xem ngay.</h2>
       <p class="lead">Mã khách hàng in trên hóa đơn hoặc hợp đồng. Nhập vào để xem kỳ hóa đơn, số nước tiêu thụ và số tiền phải trả.</p>
-      <p class="note">Bản demo dùng dữ liệu mẫu. Thử với mã: <b>MC-000001</b>, <b>MC-000002</b>, <b>MC-000003</b>, <b>MC-000123</b>, <b>MC-000456</b>. Khi tích hợp hệ thống ghi thu, kết quả sẽ là hóa đơn thật.</p>
+      <p class="note">Nhập mã khách hàng in trên hóa đơn hoặc hợp đồng để xem kỳ hóa đơn, số nước tiêu thụ và số tiền cần đóng. Dữ liệu lấy trực tiếp từ hệ thống ghi thu của công ty.</p>
     </div>
     <div class="mockup">
       <div class="mk-head"><i class="d"></i><i class="d"></i><i class="d"></i><span>Tra cứu hóa đơn tiền nước</span></div>
       <div class="mk-body">
         <label class="mk-label" for="mkInput2">Mã khách hàng</label>
-        <input id="mkInput2" class="mk-field" placeholder="VD: MC-000001" autocomplete="off" onkeydown="if(event.key==='Enter'){traCuuHoaDon(this.value,document.getElementById('mkResult2'))}">
+        <input id="mkInput2" class="mk-field" placeholder="Nhập mã khách hàng" autocomplete="off" onkeydown="if(event.key==='Enter'){traCuuHoaDon(this.value,document.getElementById('mkResult2'))}">
         <button type="button" class="btn btn-primary mk-btn" onclick="traCuuHoaDon(document.getElementById('mkInput2').value,document.getElementById('mkResult2'))">Tra cứu ngay</button>
         <div id="mkResult2"><div class="tc-msg">Nhập mã khách hàng rồi bấm “Tra cứu ngay” để xem số nước và tiền phải đóng.</div></div>
       </div>
