@@ -20,6 +20,9 @@
   /* Khối số liệu 6 ô: 3 cột desktop, 2 cột điện thoại */
   .stats-6{grid-template-columns:repeat(3,1fr)}
   @media(max-width:860px){.stats-6{grid-template-columns:1fr 1fr}}
+  /* Tiêu đề khối gói gọn 1 dòng (bỏ giới hạn 60ch, giảm nhẹ cỡ chữ) */
+  .sh.oneline{max-width:none}
+  .sh.oneline h2{font-size:clamp(26px,3.2vw,40px)}
 </style>
 </head>
 <body>
@@ -72,42 +75,42 @@
 
 <!-- KHỐI 1: DỊCH VỤ TRỰC TUYẾN -->
 <section class="section"><div class="container">
-  <div class="sh">
+  <div class="sh oneline">
     <span class="badge">Trực tuyến 24/7</span>
-    <h2>Việc gì cũng làm được tại nhà.</h2>
-    <p class="lead">Sáu tiện ích cho khách hàng, không cần tới quầy giao dịch.</p>
+    <h2>Giải quyết mọi việc ngay tại nhà.</h2>
+    <p class="lead">Sáu tiện ích giúp bạn không cần đến quầy giao dịch.</p>
   </div>
   <div class="quick" style="margin-top:0">
-    <a class="qbtn" href="dich-vu-khach-hang.html#tra-cuu"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span><span>Tra cứu tiền nước</span><small>Xem số nước và tiền phải đóng</small></a>
-    <a class="qbtn" href="dich-vu-khach-hang.html#thanh-toan"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span><span>Thanh toán online</span><small>Chuyển khoản bằng mã QR</small></a>
-    <a class="qbtn" href="cap-nuoc.html#dang-ky"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span><span>Đăng ký lắp đồng hồ</span><small>Gửi hồ sơ lắp nước online</small></a>
-    <a class="qbtn" href="lien-he.html"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.3a2 2 0 0 1 3.4 0l8 14a2 2 0 0 1-1.7 3H4a2 2 0 0 1-1.7-3Z"/><path d="M12 9v4M12 17h.01"/></svg></span><span>Báo sự cố</span><small>Vỡ ống, nước yếu, nước đục</small></a>
-    <a class="qbtn" href="tin-tuc.html"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span>Lịch cúp nước</span><small>Xem trước lịch tạm ngừng</small></a>
-    <a class="qbtn" href="cap-nuoc.html#gia-nuoc"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><span>Bảng giá nước</span><small>Giá theo từng nhóm khách hàng</small></a>
+    <a class="qbtn" href="dich-vu-khach-hang.html#tra-cuu"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></span><span>Tra cứu tiền nước</span><small>Xem chỉ số nước và số tiền cần đóng.</small></a>
+    <a class="qbtn" href="dich-vu-khach-hang.html#thanh-toan"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20"/></svg></span><span>Thanh toán trực tuyến</span><small>Chuyển khoản nhanh bằng mã QR.</small></a>
+    <a class="qbtn" href="cap-nuoc.html#dang-ky"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg></span><span>Đăng ký lắp đồng hồ</span><small>Gửi hồ sơ đăng ký cấp nước trực tuyến.</small></a>
+    <a class="qbtn" href="lien-he.html"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.3 3.3a2 2 0 0 1 3.4 0l8 14a2 2 0 0 1-1.7 3H4a2 2 0 0 1-1.7-3Z"/><path d="M12 9v4M12 17h.01"/></svg></span><span>Báo sự cố</span><small>Thông báo ngay khi vỡ ống, nước yếu hoặc nước đục.</small></a>
+    <a class="qbtn" href="tin-tuc.html"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg></span><span>Lịch ngưng cấp nước</span><small>Xem trước lịch cúp nước để chủ động sinh hoạt.</small></a>
+    <a class="qbtn" href="cap-nuoc.html#gia-nuoc"><span class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span><span>Bảng giá nước</span><small>Xem giá nước chi tiết cho từng nhóm khách hàng.</small></a>
   </div>
 </div></section>
 
 <!-- KHỐI 2: NĂNG LỰC HỆ THỐNG -->
 <section class="section alt"><div class="container">
-  <div class="sh">
+  <div class="sh oneline">
     <span class="badge">Năng lực hệ thống</span>
-    <h2>Con số làm nên độ tin cậy.</h2>
-    <p class="lead">Hạ tầng cấp nước phục vụ khu vực Mỏ Cày, vận hành liên tục và kiểm soát chất lượng mỗi ngày.</p>
+    <h2>Uy tín qua những con số.</h2>
+    <p class="lead">Hạ tầng cấp nước khu vực Mỏ Cày vận hành liên tục và kiểm soát chất lượng mỗi ngày.</p>
   </div>
   <div class="stats stats-6">
     <div class="stat"><div class="num">15.900<span class="u">m³/ngày đêm</span></div><div class="lab">Công suất cấp nước</div></div>
     <div class="stat"><div class="num">27.186</div><div class="lab">Khách hàng đang phục vụ</div></div>
     <div class="stat"><div class="num">623<span class="u">km</span></div><div class="lab">Chiều dài mạng lưới đường ống</div></div>
-    <div class="stat"><div class="num">03</div><div class="lab">Nhà máy nước đang vận hành</div></div>
-    <div class="stat"><div class="num">06</div><div class="lab">Xã khu vực Mỏ Cày được phục vụ</div></div>
-    <div class="stat"><div class="num">24/7</div><div class="lab">Trực sự cố, không nghỉ lễ Tết</div></div>
+    <div class="stat"><div class="num">03</div><div class="lab">Nhà máy nước đang hoạt động</div></div>
+    <div class="stat"><div class="num">06</div><div class="lab">Xã khu vực Mỏ Cày đang phục vụ</div></div>
+    <div class="stat"><div class="num">24/7</div><div class="lab">Trực xử lý sự cố, làm việc cả ngày lễ Tết</div></div>
   </div>
   <p class="note" style="margin-top:18px">Số liệu vận hành cập nhật năm 2026. Công ty TNHH Cấp Thoát Nước Mỏ Cày thành lập năm 2011.</p>
 </div></section>
 
 <!-- TIN TỨC -->
 <section id="tin-tuc" class="section"><div class="container">
-  <div class="sh">
+  <div class="sh oneline">
     <span class="badge">Tin tức · Thông báo</span>
     <h2>Những thông tin bà con cần biết sớm.</h2>
     <p class="lead">Thông báo cúp nước, điều chỉnh giá, sự cố và kết quả kiểm nghiệm nước được ưu tiên đưa lên đầu.</p>
