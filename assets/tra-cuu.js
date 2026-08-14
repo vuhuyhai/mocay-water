@@ -87,8 +87,14 @@ async function traCuuHoaDon(rawCode, elResult) {
       return;
     }
     if (res.data && res.data.configured) {
-      if (res.data.found && res.data.rec) { rec = res.data.rec; rec._api = true; }
-      else { elResult.innerHTML = _khongThay(code); return; }
+      if (res.data.found && res.data.rec) {
+        // Nợ nhiều kỳ -> hiển thị danh sách công nợ theo từng tháng.
+        if (Array.isArray(res.data.no) && res.data.no.length > 1) {
+          hienThiCongNo(code, res.data, elResult);
+          return;
+        }
+        rec = res.data.rec; rec._api = true;
+      } else { elResult.innerHTML = _khongThay(code); return; }
     }
   } catch (e) { /* mạng lỗi -> rơi xuống dùng dữ liệu mẫu */ }
   if (!rec) rec = layHoaDon(code);
@@ -131,6 +137,58 @@ async function traCuuHoaDon(rawCode, elResult) {
   }
   elResult.innerHTML = html;
 }
+
+/* ===== Hiển thị danh sách công nợ (khách nợ nhiều kỳ) ===== */
+function hienThiCongNo(code, data, elResult) {
+  var ten = data.ten || "";
+  var dc  = data.dc || "";
+  var no  = data.no || [];
+  var tongNo = Number(data.tongNo) || 0;
+  var soKy   = Number(data.soKyNo) || no.length;
+
+  var rows = "";
+  for (var i = 0; i < no.length; i++) {
+    var it = no[i];
+    rows +=
+      '<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(0,0,0,.08)">' +
+        '<div style="flex:1;min-width:0"><b>' + esc(it.ky) + '</b>' +
+          (it.soHoaDon ? '<div style="font-size:12.5px;color:var(--muted)">HĐ ' + esc(it.soHoaDon) + ' · ' + (Number(it.m3) || 0) + ' m³</div>' : '') +
+        '</div>' +
+        '<div style="font-weight:700;white-space:nowrap">' + dg(it.tong) + ' đ</div>' +
+        '<button type="button" class="btn btn-primary" style="padding:7px 14px;font-size:13.5px;white-space:nowrap" ' +
+          'onclick="payKy(\'' + code + '\',\'' + esc(it.ky) + '\',' + Math.round(it.tong) + ')">Thanh toán</button>' +
+      '</div>';
+  }
+
+  var html =
+    '<div class="mk-result">' +
+      '<div class="mk-row"><span>Khách hàng</span><b>' + esc(ten) + '</b></div>' +
+      (dc ? '<div class="mk-row"><span>Địa chỉ</span><b>' + esc(dc) + '</b></div>' : '') +
+      '<div class="mk-total"><span style="color:var(--muted)">Đang nợ ' + soKy + ' kỳ · Tổng cộng</span>' +
+        '<span class="big" style="color:#b3312f">' + dg(tongNo) + ' đ</span></div>' +
+    '</div>' +
+    '<div style="margin-top:16px;font-weight:700">Chi tiết từng kỳ chưa thanh toán</div>' +
+    '<div style="margin-top:2px">' + rows + '</div>' +
+    '<button type="button" class="btn btn-primary" style="width:100%;justify-content:center;margin-top:14px" ' +
+      'onclick="payTatCa(\'' + code + '\',' + Math.round(tongNo) + ',' + soKy + ')">Thanh toán tất cả ' + dg(tongNo) + ' đ →</button>' +
+    '<div class="tc-note-pay">Có thể thanh toán từng kỳ, hoặc gộp tất cả trong một lần chuyển khoản.</div>';
+
+  window.__lastBill = null;
+  elResult.innerHTML = html;
+}
+
+// Thanh toán một kỳ cụ thể trong danh sách công nợ.
+function payKy(ma, ky, tong) {
+  window.__lastBill = { ma: ma, ky: ky, tong: Number(tong) || 0 };
+  moThanhToan();
+}
+// Thanh toán gộp toàn bộ công nợ trong một lần.
+function payTatCa(ma, tong, soKy) {
+  window.__lastBill = { ma: ma, ky: "cong no " + soKy + " ky", tong: Number(tong) || 0 };
+  moThanhToan();
+}
+window.payKy = payKy;
+window.payTatCa = payTatCa;
 
 /* ===== Thanh toán: QR VietQR + thông tin chuyển khoản ===== */
 var NGAN_HANG = "BIDV CN Bến Tre - PGD Mỏ Cày";
