@@ -10,6 +10,21 @@
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="assets/logo-mo-cay.png">
 <link rel="stylesheet" href="assets/styles.css">
+<style>
+  /* Khối Tầm nhìn – Sứ mệnh */
+  .vm{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:760px){.vm{grid-template-columns:1fr}}
+  .vm-card{background:var(--surface);border:1px solid var(--border);border-top:4px solid var(--teal);
+    border-radius:var(--radius);padding:34px 30px;box-shadow:var(--sh)}
+  .vm-ic{width:54px;height:54px;border-radius:15px;display:grid;place-items:center;
+    background:var(--teal-dim);color:var(--teal);margin-bottom:18px}
+  .vm-k{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--teal)}
+  .vm-card h3{font-size:22px;color:var(--ink);margin:6px 0 12px;line-height:1.25}
+  .vm-card p{color:var(--text);font-size:16.5px;line-height:1.68;margin:0}
+  /* Nhấn thẻ Giá trị cốt lõi */
+  #gia-tri .card{border-top:3px solid var(--teal-line);transition:transform .2s ease,box-shadow .2s ease}
+  #gia-tri .card:hover{transform:translateY(-4px);box-shadow:var(--sh)}
+</style>
 </head>
 <body>
 
@@ -33,8 +48,42 @@
   <div class="crumb"><a href="index.html">Trang chủ</a> / <span>Giới thiệu</span></div>
   <span class="badge">Về công ty</span>
   <h1>Lo hai việc: đưa nước sạch tới nhà, và trả nước sạch về nguồn.</h1>
-  <p class="lead">Công ty TNHH Cấp Thoát Nước Mỏ Cày phục vụ khu vực Mỏ Cày, tỉnh Bến Tre — vùng đất cuối nguồn Mê Kông. Bốn giá trị định hướng cách chúng tôi làm việc mỗi ngày: Trách nhiệm · Minh bạch · Tiết kiệm · Đoàn kết.</p>
+  <p class="lead">Công ty TNHH Cấp Thoát Nước Mỏ Cày phục vụ khu vực Mỏ Cày, tỉnh Vĩnh Long, vùng đất cuối nguồn Mê Kông. Tầm nhìn, sứ mệnh và bốn giá trị cốt lõi dẫn đường cho mọi việc chúng tôi làm mỗi ngày.</p>
 </div></header>
+
+<!-- TẦM NHÌN – SỨ MỆNH -->
+<section id="tam-nhin" class="section"><div class="container">
+  <div class="sh">
+    <span class="badge">Tầm nhìn · Sứ mệnh</span>
+    <h2>Vì dòng nước ngọt ổn định cho mọi nhà.</h2>
+    <p class="lead">Hai điều dẫn đường cho từng quyết định và việc làm của chúng tôi.</p>
+  </div>
+  <div class="vm">
+    <div class="vm-card">
+      <div class="vm-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></div>
+      <span class="vm-k">Tầm nhìn</span>
+      <h3>Đơn vị cấp thoát nước tin cậy của Mỏ Cày.</h3>
+      <p>Trở thành đơn vị cấp thoát nước tin cậy tại khu vực Mỏ Cày, giữ dòng nước ngọt ổn định cho mọi nhà qua từng mùa mặn.</p>
+    </div>
+    <div class="vm-card">
+      <div class="vm-ic"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><path d="m8 12 3 3 5-6"/></svg></div>
+      <span class="vm-k">Sứ mệnh</span>
+      <h3>Nước sạch tới nhà, nước sạch về nguồn.</h3>
+      <p>Đưa nước sạch đạt chuẩn tới từng hộ dân với giá minh bạch; thu gom và xử lý nước thải trả sạch về nguồn; phục vụ tận tâm và đồng hành cùng bà con dùng nước bền vững.</p>
+    </div>
+  </div>
+</div></section>
+
+<!-- GIÁ TRỊ CỐT LÕI -->
+<section id="gia-tri" class="section alt"><div class="container">
+  <div class="sh"><span class="badge">Giá trị cốt lõi</span><h2>Bốn giá trị định hướng mỗi ngày.</h2><p class="lead">Bốn điều chúng tôi giữ trong từng việc nhỏ: Trách nhiệm, Minh bạch, Tiết kiệm, Đoàn kết.</p></div>
+  <div class="grid-4">
+    <div class="card"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5S5 13 5 15a7 7 0 0 0 7 7Z"/></svg></div><h3>Trách nhiệm</h3><p>Nước là nhu cầu thiết yếu. Chúng tôi chịu trách nhiệm đến cùng về chất lượng và tính liên tục của dịch vụ.</p></div>
+    <div class="card"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></div><h3>Minh bạch</h3><p>Giá nước, chất lượng nước, hóa đơn: rõ ràng, công bố công khai, khách hàng tra cứu được.</p></div>
+    <div class="card"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h3>Tiết kiệm</h3><p>Tiết kiệm nước là tiết kiệm tài nguyên và chi phí. Chúng tôi cũng tiết kiệm trong vận hành để giữ giá hợp lý.</p></div>
+    <div class="card"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div><h3>Đoàn kết</h3><p>Một đội ngũ gắn kết thì phục vụ mới ổn định. Trong công ty, mỗi người một vai, cùng đi về một hướng.</p></div>
+  </div>
+</div></section>
 
 <!-- BANNER -->
 <section class="section tight"><div class="container">
@@ -52,10 +101,10 @@
 <!-- Mục lục con -->
 <section class="section tight"><div class="container">
   <div class="grid-3">
-    <a class="card" href="#lich-su"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Lịch sử hình thành</h3><p>Từ ngành nước Bến Tre tới công ty Mỏ Cày hôm nay.</p><span class="more">Xem mục →</span></a>
+    <a class="card" href="#tam-nhin"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/><circle cx="12" cy="12" r="3"/></svg></div><h3>Tầm nhìn – Sứ mệnh</h3><p>Định hướng dài hạn và lời hứa phục vụ.</p><span class="more">Xem mục →</span></a>
     <a class="card" href="#gia-tri"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6Z"/></svg></div><h3>Giá trị cốt lõi</h3><p>Trách nhiệm · Minh bạch · Tiết kiệm · Đoàn kết.</p><span class="more">Xem mục →</span></a>
+    <a class="card" href="#lich-su"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></div><h3>Lịch sử hình thành</h3><p>Từ ngành nước Bến Tre tới công ty Mỏ Cày hôm nay.</p><span class="more">Xem mục →</span></a>
     <a class="card" href="#thong-diep"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2Z"/></svg></div><h3>Thông điệp Ban Giám đốc</h3><p>Lời cam kết về sự ổn định và minh bạch.</p><span class="more">Xem mục →</span></a>
-    <a class="card" href="#so-do"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><path d="M14 7h3a2 2 0 0 1 2 2v3M6.5 10v4"/></svg></div><h3>Sơ đồ tổ chức</h3><p>Bốn khối chức năng vận hành thông suốt.</p><span class="more">Xem mục →</span></a>
     <a class="card" href="#nang-luc"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 20h20M4 20V8l8-5 8 5v12M9 20v-6h6v6"/></svg></div><h3>Năng lực hệ thống</h3><p>Nhà máy, mạng lưới, công suất, phạm vi phục vụ.</p><span class="more">Xem mục →</span></a>
     <a class="card" href="#cam-ket"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4"/><path d="M12 3 4 6v6c0 5 3.4 8.5 8 10 4.6-1.5 8-5 8-10V6Z"/></svg></div><h3>Cam kết chất lượng</h3><p>Nước cấp đạt QCVN của Bộ Y tế, công bố định kỳ.</p><span class="more">Xem mục →</span></a>
   </div>
@@ -78,17 +127,6 @@
     <li><span class="yr">Gần đây</span><p>Đầu tư hệ thống ứng phó xâm nhập mặn.</p></li>
     <li><span class="yr">Nay</span><p>27.186 khách hàng, 15.900 m³/ngày đêm, 03 nhà máy nước.</p></li>
   </ul>
-</div></section>
-
-<!-- Giá trị cốt lõi -->
-<section id="gia-tri" class="section"><div class="container">
-  <div class="sh"><span class="badge">Giá trị cốt lõi</span><h2>Bốn giá trị định hướng mỗi ngày.</h2></div>
-  <div class="grid-4">
-    <div class="card"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22a7 7 0 0 0 7-7c0-2-1-3.9-3-5.5s-3.5-4-4-6.5c-.5 2.5-2 4.9-4 6.5S5 13 5 15a7 7 0 0 0 7 7Z"/></svg></div><h3>Trách nhiệm</h3><p>Nước là nhu cầu thiết yếu. Chúng tôi chịu trách nhiệm đến cùng về chất lượng và tính liên tục của dịch vụ.</p></div>
-    <div class="card"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v4l3 2"/></svg></div><h3>Minh bạch</h3><p>Giá nước, chất lượng nước, hóa đơn: rõ ràng, công bố công khai, khách hàng tra cứu được.</p></div>
-    <div class="card"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div><h3>Tiết kiệm</h3><p>Tiết kiệm nước là tiết kiệm tài nguyên và chi phí. Chúng tôi cũng tiết kiệm trong vận hành để giữ giá hợp lý.</p></div>
-    <div class="card"><div class="card-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/></svg></div><h3>Đoàn kết</h3><p>Một đội ngũ gắn kết thì phục vụ mới ổn định. Trong công ty, mỗi người một vai, cùng đi về một hướng.</p></div>
-  </div>
 </div></section>
 
 <!-- Thông điệp lãnh đạo -->
