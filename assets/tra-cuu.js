@@ -7,11 +7,11 @@
 
 // === DỮ LIỆU MẪU (thay bằng API khi tích hợp) ===
 const HOA_DON = {
-  "MC-000001": { ten: "Nguyễn Văn An",        dc: "Ấp Phú Quới, xã Mỏ Cày", ky: "Tháng 07/2026", m3: 18, nhom: "sinh_hoat",  trangthai: "Chưa thanh toán" },
-  "MC-000002": { ten: "Trần Thị Bình",         dc: "Xã Mỏ Cày",              ky: "Tháng 07/2026", m3: 12, nhom: "sinh_hoat",  trangthai: "Đã thanh toán"   },
-  "MC-000003": { ten: "Hộ KD Lê Văn Cường",    dc: "Khu chợ Mỏ Cày",         ky: "Tháng 07/2026", m3: 40, nhom: "kinh_doanh", trangthai: "Chưa thanh toán" },
-  "MC-000123": { ten: "Cơ sở SX Đại Phát",     dc: "Xã Mỏ Cày",              ky: "Tháng 07/2026", m3: 85, nhom: "san_xuat",   trangthai: "Chưa thanh toán" },
-  "MC-000456": { ten: "UBND xã Mỏ Cày",        dc: "Xã Mỏ Cày",              ky: "Tháng 07/2026", m3: 30, nhom: "hanh_chinh", trangthai: "Đã thanh toán"   }
+  "MC-000001": { ten: "Nguyễn Văn An",        dc: "Ấp Phú Quới, xã Mỏ Cày", ky: "Kỳ 07/2026", m3: 18, nhom: "sinh_hoat",  trangthai: "Chưa thanh toán" },
+  "MC-000002": { ten: "Trần Thị Bình",         dc: "Xã Mỏ Cày",              ky: "Kỳ 07/2026", m3: 12, nhom: "sinh_hoat",  trangthai: "Đã thanh toán"   },
+  "MC-000003": { ten: "Hộ KD Lê Văn Cường",    dc: "Khu chợ Mỏ Cày",         ky: "Kỳ 07/2026", m3: 40, nhom: "kinh_doanh", trangthai: "Chưa thanh toán" },
+  "MC-000123": { ten: "Cơ sở SX Đại Phát",     dc: "Xã Mỏ Cày",              ky: "Kỳ 07/2026", m3: 85, nhom: "san_xuat",   trangthai: "Chưa thanh toán" },
+  "MC-000456": { ten: "UBND xã Mỏ Cày",        dc: "Xã Mỏ Cày",              ky: "Kỳ 07/2026", m3: 30, nhom: "hanh_chinh", trangthai: "Đã thanh toán"   }
 };
 
 const NHOM_LABEL = {
@@ -72,6 +72,9 @@ function _khongThay(code) {
     '</b>. Kiểm tra lại mã in trên hóa đơn/hợp đồng.</div>';
 }
 
+// Hiển thị "Kỳ MM/YYYY" thay cho "Tháng MM/YYYY".
+function fmtKy(k) { return String(k == null ? "" : k).replace("Tháng ", "Kỳ "); }
+
 async function traCuuHoaDon(rawCode, elResult) {
   const code = (rawCode || "").trim().toUpperCase();
   if (!code) {
@@ -110,9 +113,9 @@ async function traCuuHoaDon(rawCode, elResult) {
 
   var html =
     '<div class="mk-result">' +
-      '<div class="mk-row"><span>Khách hàng</span><b>' + esc(maskTen(rec.ten)) + '</b></div>' +
-      (rec.dc ? '<div class="mk-row"><span>Địa chỉ</span><b>' + esc(maskDiaChi(rec.dc)) + '</b></div>' : '') +
-      '<div class="mk-row"><span>Kỳ hóa đơn</span><b>' + esc(rec.ky) + '</b></div>' +
+      '<div class="mk-row"><span>Khách hàng</span><b>' + esc(rec.ten) + '</b></div>' +
+      (rec.dc ? '<div class="mk-row"><span>Địa chỉ</span><b>' + esc(rec.dc) + '</b></div>' : '') +
+      '<div class="mk-row"><span>Kỳ hóa đơn</span><b>' + esc(fmtKy(rec.ky)) + '</b></div>' +
       '<div class="mk-row"><span>Nhóm sử dụng</span><b>' + esc(NHOM_LABEL[rec.nhom] || rec.nhom) + '</b></div>' +
       '<div class="mk-row"><span>Số tiêu thụ</span><b>' + (Number(rec.m3) || 0) + ' m³</b></div>' +
       '<div class="mk-row"><span>Tiền nước</span><b>' + dg(tienNuoc) + ' đ</b></div>' +
@@ -151,7 +154,7 @@ function hienThiCongNo(code, data, elResult) {
     var it = no[i];
     rows +=
       '<div style="display:flex;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid rgba(0,0,0,.08)">' +
-        '<div style="flex:1;min-width:0"><b>' + esc(it.ky) + '</b>' +
+        '<div style="flex:1;min-width:0"><b>' + esc(fmtKy(it.ky)) + '</b>' +
           (it.soHoaDon ? '<div style="font-size:12.5px;color:var(--muted)">HĐ ' + esc(it.soHoaDon) + ' · ' + (Number(it.m3) || 0) + ' m³</div>' : '') +
         '</div>' +
         '<div style="font-weight:700;white-space:nowrap">' + dg(it.tong) + ' đ</div>' +
@@ -236,7 +239,7 @@ function _taoModal() {
 function moThanhToan() {
   var b = window.__lastBill; if (!b) return;
   _taoModal();
-  var ky = (b.ky || "").replace("Tháng ", "T").replace(/\//g, "-"); // "T07-2026"
+  var ky = (b.ky || "").replace("Kỳ ", "K").replace("Tháng ", "T").replace(/\//g, "-"); // "K07-2026"
   // Nội dung CK = Mã KH + Kỳ (bỏ tên để không lộ thông tin cá nhân trong bộ nhớ giao dịch công khai;
   // công ty đối soát theo Mã KH + Kỳ). _boDau vẫn dùng cho các trường khác nếu cần.
   var noiDung = (b.ma + " " + ky).trim();
