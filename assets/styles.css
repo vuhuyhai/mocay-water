@@ -427,3 +427,45 @@ td b{color:var(--ink)}td .muted{color:var(--muted)}
   cursor:pointer;font-size:12px;font-weight:600;padding:3px 9px;white-space:nowrap}
 .pay-copy:hover{filter:brightness(.98)}
 .pay-note{color:var(--dim);font-size:12.5px;margin-top:14px;text-align:center}
+
+/* ============ Thẻ bài viết có ảnh đại diện ============ */
+.posts{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.post{display:flex;flex-direction:column;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;box-shadow:var(--sh-sm);transition:.2s;color:var(--text)}
+.post:hover{border-color:var(--teal-line);transform:translateY(-3px);box-shadow:var(--sh)}
+.post-thumb{aspect-ratio:16/9;background:var(--surface-2);overflow:hidden;flex:none}
+.post-thumb img{width:100%;height:100%;object-fit:cover;display:block}
+.post-body{padding:20px 22px 22px;display:flex;flex-direction:column;flex:1}
+.post-kicker{color:var(--teal);font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase}
+.post h3{font-size:18px;font-weight:700;line-height:1.35;margin:8px 0 0;color:var(--ink)}
+.post p{color:var(--muted);font-size:14.5px;line-height:1.55;margin:8px 0 0}
+.post .more{color:var(--teal);font-size:14px;font-weight:600;margin-top:auto;padding-top:14px}
+
+/* Bài nổi bật: ảnh bên trái, chữ bên phải, chiếm trọn hàng */
+.post-lead{grid-column:1/-1;flex-direction:row;align-items:stretch}
+.post-lead .post-thumb{aspect-ratio:auto;width:46%;min-height:280px}
+.post-lead .post-body{padding:34px 38px;justify-content:center}
+.post-lead h3{font-size:clamp(22px,2.7vw,31px);line-height:1.22;margin-top:10px}
+.post-lead p{font-size:16px;margin-top:12px;max-width:52ch}
+
+@media(max-width:960px){
+  .posts{grid-template-columns:repeat(2,1fr)}
+  .post-lead{flex-direction:column}
+  .post-lead .post-thumb{width:100%;aspect-ratio:16/9;min-height:0}
+  .post-lead .post-body{padding:22px 24px 24px}
+}
+@media(max-width:620px){ .posts{grid-template-columns:1fr} }
+
+/* Ảnh đại diện trên đầu trang bài viết */
+.art-cover{margin:0 0 26px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);
+  box-shadow:var(--sh-sm);aspect-ratio:16/6.2;background:var(--surface-2)}
+.art-cover img{width:100%;height:100%;object-fit:cover;display:block}
+@media(max-width:620px){ .art-cover{aspect-ratio:16/9} }
+
+/* Dải chuyên mục gọn, thay cho lưới thẻ lớn */
+.topics{display:flex;flex-wrap:wrap;gap:10px}
+.topic{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:var(--radius-pill);
+  background:var(--surface);border:1px solid var(--border);font-size:14.5px;font-weight:600;color:var(--ink)}
+a.topic:hover{border-color:var(--teal-line);color:var(--teal);background:var(--teal-dim)}
+.topic.off{color:var(--dim);font-weight:500;background:transparent}
+.topic .st{font-size:12px;font-weight:600;color:var(--dim)}

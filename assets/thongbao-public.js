@@ -57,6 +57,12 @@
     el.innerHTML = html;
   }
 
+  // Ẩn hoặc hiện cả section bọc ngoài (không chỉ phần ruột).
+  function hienKhoi(el, hien) {
+    var sec = el.closest ? el.closest("section") : null;
+    if (sec) sec.hidden = !hien;
+  }
+
   async function load() {
     var noibat = document.getElementById("tb-noibat");
     var home = document.getElementById("tb-home");
@@ -67,11 +73,12 @@
       var items = j.items || [];
       if (home && items.length) home.innerHTML = items.slice(0, 3).map(card).join("");
       if (noibat) {
-        if (items.length) renderNoiBat(noibat, items);
-        else noibat.innerHTML = '<p class="note">Chưa có thông báo mới. Thông tin sẽ hiển thị tại đây khi công ty đăng.</p>';
+        // Chưa có thông báo thì ẩn hẳn cả khối, để bài viết nằm ngay dưới hero.
+        if (items.length) { renderNoiBat(noibat, items); hienKhoi(noibat, true); }
+        else hienKhoi(noibat, false);
       }
     } catch (e) {
-      if (noibat) noibat.innerHTML = '<p class="note">Không tải được thông báo.</p>';
+      if (noibat) hienKhoi(noibat, false);
     }
   }
   load();
