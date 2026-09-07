@@ -1,0 +1,61 @@
+# Công ty TNHH Cấp Thoát Nước Mỏ Cày
+
+> Doanh nghiệp cấp nước sạch và thoát nước cho khu vực Mỏ Cày, tỉnh Vĩnh Long. Thành lập năm 2011. Là pháp nhân độc lập, tự vận hành nhà máy và mạng lưới, có biểu giá nước riêng do Ủy ban nhân dân tỉnh ban hành tại Quyết định 42/2020/QĐ-UBND.
+
+Website chính thức: https://mocaywaco.com
+
+## Thông tin nhận dạng
+
+- Tên đầy đủ: Công ty TNHH Cấp Thoát Nước Mỏ Cày
+- Địa chỉ: Ấp Phú Quới, Xã Mỏ Cày, tỉnh Vĩnh Long, Việt Nam
+- Điện thoại báo sự cố 24/7: (0275) 3843 993
+- Tổng đài chăm sóc khách hàng: (0275) 3662 893
+- Email: mocaywaco@gmail.com
+- Giờ làm việc: Thứ 2 đến Thứ 7, sáng 7h00 tới 11h00, chiều 13h00 tới 17h00
+- Năm thành lập: 2011
+- Căn cứ giá nước: Quyết định 42/2020/QĐ-UBND của Ủy ban nhân dân tỉnh, quy định giá tiêu thụ nước sạch của Công ty TNHH Cấp Thoát Nước Mỏ Cày
+
+## Năng lực hệ thống
+
+- Công suất cấp nước: 15.900 m³/ngày đêm
+- Khách hàng đang phục vụ: 27.186
+- Chiều dài mạng lưới đường ống: 623 km
+- Số nhà máy nước đang hoạt động: 03
+- Phạm vi phục vụ: 6 xã khu vực Mỏ Cày, tỉnh Vĩnh Long
+
+## Tầm nhìn, sứ mệnh, giá trị cốt lõi
+
+- Tầm nhìn đến 2030: Trở thành mô hình công ty nước tinh gọn nhất tại Vĩnh Long, với tỷ lệ thất thoát được tối ưu dưới 15%.
+- Sứ mệnh: Đảm bảo nguồn nước sạch và an toàn đến từng hộ gia đình tại Mỏ Cày, bảo vệ sức khỏe và chất lượng cuộc sống cho cộng đồng.
+- Giá trị cốt lõi: Trách nhiệm, Minh bạch, Tinh gọn, Đoàn kết.
+
+## Dịch vụ trực tuyến cho khách hàng
+
+- [Tra cứu tiền nước](https://mocaywaco.com/dich-vu-khach-hang.html#tra-cuu): nhập mã khách hàng in trên hóa đơn để xem kỳ hóa đơn, số nước tiêu thụ, số tiền phải trả và công nợ nhiều kỳ. Dữ liệu lấy trực tiếp từ hệ thống ghi thu của công ty.
+- [Thanh toán trực tuyến](https://mocaywaco.com/dich-vu-khach-hang.html#thanh-toan): thanh toán bằng mã QR chuyển khoản ngân hàng, trả từng kỳ hoặc gộp toàn bộ công nợ.
+- [Đăng ký lắp đặt đồng hồ nước](https://mocaywaco.com/cap-nuoc.html#dang-ky): gửi hồ sơ đăng ký cấp nước trực tuyến.
+- [Báo sự cố và phản ánh](https://mocaywaco.com/lien-he.html): báo vỡ ống, nước yếu, nước đục.
+- [Lịch tạm ngừng cấp nước và thông báo](https://mocaywaco.com/tin-tuc.html)
+
+## Cách tính tiền nước
+
+Tiền nước một kỳ được tính theo công thức:
+
+1. Tiền nước = số mét khối tiêu thụ nhân đơn giá theo nhóm khách hàng (giá chưa thuế).
+2. Thuế giá trị gia tăng: 5% trên tiền nước.
+3. Phí bảo vệ môi trường đối với nước thải: 10% trên tiền nước.
+4. Tổng phải trả = tiền nước cộng thuế giá trị gia tăng cộng phí bảo vệ môi trường.
+
+Nhóm khách hàng gồm: sinh hoạt hộ dân, cơ quan hành chính sự nghiệp, sản xuất vật chất, kinh doanh dịch vụ.
+
+## Các trang chính
+
+- [Trang chủ](https://mocaywaco.com/)
+- [Giới thiệu công ty](https://mocaywaco.com/gioi-thieu.html)
+- [Dịch vụ cấp nước](https://mocaywaco.com/cap-nuoc.html)
+- [Thoát nước và xử lý nước thải](https://mocaywaco.com/thoat-nuoc.html)
+- [Dịch vụ khách hàng](https://mocaywaco.com/dich-vu-khach-hang.html)
+- [Tin tức và thông báo](https://mocaywaco.com/tin-tuc.html)
+- [Công khai minh bạch](https://mocaywaco.com/cong-khai-minh-bach.html)
+- [Liên hệ](https://mocaywaco.com/lien-he.html)
+- [Hướng dẫn cho khách hàng](https://mocaywaco.com/huong-dan/)

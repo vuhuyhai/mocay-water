@@ -2,15 +2,39 @@
    Netlify Function: proxy tra cứu hóa đơn nước từ CityWork (eKMap).
    Chạy phía server nên GIỮ TOKEN BÍ MẬT (không lộ ra trình duyệt) và tránh CORS.
 
-   Cấu hình bằng Environment variables trên Netlify
-   (Project configuration > Environment variables) — KHÔNG ghi vào mã nguồn:
-     CITYWORK_API_BASE     URL gốc API do eKMap/CityWork cấp
-     CITYWORK_TOKEN        API key / token xác thực
-     CITYWORK_LOOKUP_PATH  đường dẫn tra cứu (vd: /api/v1/hoa-don), có thể để trống
-     CITYWORK_MA_PARAM     tên tham số mã KH (mặc định "ma")
+   ---- CẤU HÌNH BẰNG ENVIRONMENT VARIABLES TRÊN NETLIFY ----
+   (Project configuration > Environment variables. KHÔNG ghi vào mã nguồn.)
 
-   Khi CHƯA cấu hình -> trả {configured:false} để front-end dùng dữ liệu mẫu.
-   Trả về cho front-end: { configured:boolean, found:boolean, rec:{ten,ky,m3,nhom,trangthai} }
+   Bắt buộc để bật API thật:
+     CITYWORK_API_BASE      URL gốc API do eKMap/CityWork cấp
+     CITYWORK_TOKEN         API key / token xác thực
+
+   Đường dẫn tra cứu:
+     CITYWORK_LOOKUP_PATH   đường dẫn tra cứu (vd: /api/v1/hoa-don). Để trống nếu base đã đủ.
+     CITYWORK_MA_PARAM      tên tham số mã KH trên URL (mặc định "ma")
+
+   Kiểu xác thực (chọn đúng theo tài liệu CityWork — bỏ hardcode Bearer):
+     CITYWORK_AUTH_STYLE    "bearer" (mặc định) | "header" | "query"
+       - bearer : gửi header  Authorization: Bearer <token>
+       - header : gửi header  <CITYWORK_AUTH_HEADER>: <token>   (vd apikey: <token>)
+       - query  : gắn <CITYWORK_TOKEN_PARAM>=<token> vào URL
+     CITYWORK_AUTH_HEADER   tên header khi AUTH_STYLE=header (mặc định "apikey")
+     CITYWORK_TOKEN_PARAM   tên tham số token khi AUTH_STYLE=query (mặc định "token")
+
+   Ánh xạ tên trường trong JSON response (tùy chọn — có thể là "dot path", vd "data.hoaDon.ky").
+   Nếu bỏ trống, dùng bộ tên đoán sẵn (đủ cho nhiều hệ). Chỉ đặt khi biết tên thật:
+     CITYWORK_DATA_PATH     đường dẫn tới bản ghi hóa đơn trong response (vd "data" hoặc "result.hoaDon")
+     CITYWORK_FIELD_TEN     trường tên khách hàng
+     CITYWORK_FIELD_KY      trường kỳ hóa đơn
+     CITYWORK_FIELD_M3      trường số tiêu thụ (m3)
+     CITYWORK_FIELD_NHOM    trường nhóm đối tượng sử dụng
+     CITYWORK_FIELD_DC      trường địa chỉ (tùy chọn; để trống nếu không dùng)
+     CITYWORK_FIELD_TT      trường trạng thái thanh toán
+     CITYWORK_PAID_VALUES   danh sách giá trị nghĩa "đã thanh toán", ngăn cách bởi dấu phẩy
+                            (vd "DA_THANH_TOAN,PAID,true"). Không phân biệt hoa thường.
+
+   Khi CHƯA cấu hình (thiếu BASE hoặc TOKEN) -> trả {configured:false} để front-end dùng dữ liệu mẫu.
+   Trả về cho front-end: { configured, found, rec:{ten,ky,m3,nhom,dc,trangthai} }
    ========================================================================== */
 
 // Giới hạn tần suất theo IP (chống dò quét). Lưu ý: bộ nhớ theo từng instance function;
@@ -54,15 +78,22 @@ exports.handler = async (event) => {
     return { statusCode: 200, headers, body: JSON.stringify({ configured: false }) };
   }
 
-  try {
-    const url = BASE.replace(/\/+$/, "") + PATH + (PATH.includes("?") ? "&" : "?") +
-      PARAM + "=" + encodeURIComponent(ma);
+  const AUTH_STYLE  = (process.env.CITYWORK_AUTH_STYLE || "bearer").toLowerCase();
+  const AUTH_HEADER = process.env.CITYWORK_AUTH_HEADER || "apikey";
+  const TOKEN_PARAM = process.env.CITYWORK_TOKEN_PARAM || "token";
 
-    // TODO(eKMap): chỉnh header xác thực đúng theo tài liệu CityWork.
-    // Có thể là: Authorization: Bearer <token>  |  hoặc  apikey: <token>  |  hoặc  ?token=<token>
-    const res = await fetch(url, {
-      headers: { "Authorization": "Bearer " + TOKEN, "Accept": "application/json" }
-    });
+  try {
+    // Ghép URL: mã KH luôn có; nếu auth theo query thì gắn token vào URL.
+    const qs = [PARAM + "=" + encodeURIComponent(ma)];
+    if (AUTH_STYLE === "query") qs.push(TOKEN_PARAM + "=" + encodeURIComponent(TOKEN));
+    const url = BASE.replace(/\/+$/, "") + PATH + (PATH.includes("?") ? "&" : "?") + qs.join("&");
+
+    // Header xác thực theo cấu hình (thay cho hardcode Bearer trước đây).
+    const reqHeaders = { "Accept": "application/json" };
+    if (AUTH_STYLE === "bearer") reqHeaders["Authorization"] = "Bearer " + TOKEN;
+    else if (AUTH_STYLE === "header") reqHeaders[AUTH_HEADER] = TOKEN;
+
+    const res = await fetch(url, { headers: reqHeaders });
 
     if (res.status === 404) {
       return { statusCode: 200, headers, body: JSON.stringify({ configured: true, found: false }) };
@@ -85,29 +116,68 @@ exports.handler = async (event) => {
   }
 };
 
+/* ---- Đọc trường theo "dot path" (vd "data.hoaDon.ky"). Trả về undefined nếu không có. ---- */
+function getPath(obj, path) {
+  if (!obj || !path) return undefined;
+  return String(path).split(".").reduce(function (o, k) {
+    return (o == null) ? undefined : o[k];
+  }, obj);
+}
+// Lấy giá trị: ưu tiên tên trường do env chỉ định; nếu không có thì thử lần lượt các tên đoán sẵn.
+function pick(rootForOverride, record, overridePath, guesses) {
+  if (overridePath) {
+    var v = getPath(rootForOverride, overridePath);
+    if (v !== undefined && v !== null && v !== "") return v;
+  }
+  for (var i = 0; i < guesses.length; i++) {
+    if (record[guesses[i]] != null) return record[guesses[i]];
+  }
+  return undefined;
+}
+
 /* Ánh xạ response CityWork -> khuôn dữ liệu website dùng.
-   TODO(eKMap): sửa tên trường cho khớp response THẬT của CityWork
-   (dựa trên 1 mẫu JSON tra cứu do eKMap cung cấp). */
+   Tên trường lấy từ env (CITYWORK_FIELD_*) nếu có; nếu không, dùng bộ đoán sẵn.
+   Override path tính từ GỐC response, còn bộ đoán tính từ bản ghi đã gỡ lớp bọc. */
 function mapCityWork(d) {
   if (!d) return null;
-  const x = d.data || d.result || d.hoaDon || d;   // gỡ lớp bọc thường gặp
+
+  const DATA_PATH = process.env.CITYWORK_DATA_PATH || "";
+  const F_TEN  = process.env.CITYWORK_FIELD_TEN  || "";
+  const F_KY   = process.env.CITYWORK_FIELD_KY   || "";
+  const F_M3   = process.env.CITYWORK_FIELD_M3   || "";
+  const F_NHOM = process.env.CITYWORK_FIELD_NHOM || "";
+  const F_DC   = process.env.CITYWORK_FIELD_DC   || "";
+  const F_TT   = process.env.CITYWORK_FIELD_TT   || "";
+
+  // Bản ghi: theo DATA_PATH nếu đặt; nếu không, gỡ các lớp bọc thường gặp.
+  const x = DATA_PATH ? getPath(d, DATA_PATH) : (d.data || d.result || d.hoaDon || d);
   if (!x || typeof x !== "object") return null;
 
-  const m3 = Number(
-    x.tieuThu != null ? x.tieuThu :
-    x.soTieuThu != null ? x.soTieuThu :
-    x.sanLuong != null ? x.sanLuong :
-    x.consumption != null ? x.consumption : 0
-  );
-  const daTT = x.daThanhToan === true || x.trangThai === "DA_THANH_TOAN" || x.paid === true;
+  const m3raw = pick(d, x, F_M3, ["tieuThu", "soTieuThu", "sanLuong", "consumption"]);
+  const m3 = Number(m3raw);
+
+  const tt = pick(d, x, F_TT, ["daThanhToan", "trangThai", "paid", "status"]);
+  const daTT = isPaid(tt);
 
   return {
-    ten: maskTen(x.tenKhachHang || x.hoTen || x.customerName || x.ten || ""),
-    ky: x.kyHoaDon || x.ky || x.period || "",
+    ten: maskTen(String(pick(d, x, F_TEN, ["tenKhachHang", "hoTen", "customerName", "ten"]) || "")),
+    ky: String(pick(d, x, F_KY, ["kyHoaDon", "ky", "period"]) || ""),
     m3: isFinite(m3) ? m3 : 0,
-    nhom: mapNhom(x.nhomDoiTuong || x.doiTuong || x.nhom || x.loaiKH || ""),
+    nhom: mapNhom(String(pick(d, x, F_NHOM, ["nhomDoiTuong", "doiTuong", "nhom", "loaiKH"]) || "")),
+    dc: F_DC ? maskDiaChi(String(getPath(d, F_DC) || "")) : "",
     trangthai: daTT ? "Đã thanh toán" : "Chưa thanh toán"
   };
+}
+
+// Xác định "đã thanh toán". Nhận danh sách giá trị paid từ env, kèm các mặc định thường gặp.
+function isPaid(v) {
+  if (v === true) return true;
+  const s = String(v == null ? "" : v).trim().toLowerCase();
+  if (!s) return false;
+  const defaults = ["true", "1", "da_thanh_toan", "da thanh toan", "paid", "đã thanh toán"];
+  const extra = (process.env.CITYWORK_PAID_VALUES || "")
+    .split(",").map(function (t) { return t.trim().toLowerCase(); }).filter(Boolean);
+  return defaults.concat(extra).indexOf(s) !== -1;
 }
 
 // Che tên: chỉ hiện chữ đầu của tên gọi + "**"  (vd "Nguyễn Văn An" -> "Nguyễn Văn A**").
@@ -119,6 +189,15 @@ function maskTen(name) {
   const last = parts[parts.length - 1].replace(/\*+$/, ""); // bỏ ** nếu đã che
   parts[parts.length - 1] = (last.charAt(0) || "") + "**";
   return parts.join(" ");
+}
+
+// Che địa chỉ: giữ số nhà + đường/ấp đầu, ẩn phần còn lại để không lộ vị trí chính xác.
+// Chỉ hiện cụm đầu tiên (trước dấu phẩy) + "…".
+function maskDiaChi(dc) {
+  const s = (dc || "").toString().trim().replace(/\s+/g, " ");
+  if (!s) return "";
+  const first = s.split(",")[0].trim();
+  return s.indexOf(",") !== -1 ? first + ", …" : first;
 }
 
 function mapNhom(s) {

@@ -1,0 +1,44 @@
+# robots.txt — Công ty TNHH Cấp Thoát Nước Mỏ Cày
+# https://mocaywaco.com
+
+# Cho phép mọi công cụ tìm kiếm
+User-agent: *
+Allow: /
+Disallow: /admin/
+
+# Cho phép các trình thu thập của công cụ trả lời AI.
+# Đây là dịch vụ công ích, càng được trích dẫn đúng thì người dân càng dễ tìm ra thông tin chính xác.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Perplexity-User
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+Sitemap: https://mocaywaco.com/sitemap.xml
