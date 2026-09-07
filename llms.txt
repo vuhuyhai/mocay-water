@@ -59,3 +59,17 @@ Nhóm khách hàng gồm: sinh hoạt hộ dân, cơ quan hành chính sự nghi
 - [Công khai minh bạch](https://mocaywaco.com/cong-khai-minh-bach.html)
 - [Liên hệ](https://mocaywaco.com/lien-he.html)
 - [Hướng dẫn cho khách hàng](https://mocaywaco.com/huong-dan/)
+- [Bài viết chuyên sâu](https://mocaywaco.com/bai-viet/)
+
+## Bài viết chuyên sâu
+
+- [Phí bảo vệ môi trường đối với nước thải sinh hoạt từ năm 2026](https://mocaywaco.com/bai-viet/phi-bao-ve-moi-truong-nuoc-thai-2026.html): Nghị định 346/2025/NĐ-CP hiệu lực từ 01/01/2026, mức phí bằng 10% giá bán 1 m³ nước sạch chưa gồm thuế giá trị gia tăng, thu qua hóa đơn tiền nước.
+- [Thoát nước và xử lý nước thải ở Mỏ Cày](https://mocaywaco.com/bai-viet/thoat-nuoc-xu-ly-nuoc-thai-mo-cay.html)
+- [Đấu nối nước thải vào hệ thống thoát nước](https://mocaywaco.com/bai-viet/dau-noi-nuoc-thai.html)
+- [Sang tên hợp đồng nước](https://mocaywaco.com/bai-viet/sang-ten-hop-dong-nuoc.html)
+- [Đồng hồ nước: đọc chỉ số, kiểm định và xử lý khi hỏng](https://mocaywaco.com/bai-viet/dong-ho-nuoc-kiem-dinh.html)
+- [Tạm ngừng và mở lại dịch vụ cấp nước](https://mocaywaco.com/bai-viet/tam-ngung-mo-lai-cap-nuoc.html)
+- [Cách tiết kiệm nước cho gia đình](https://mocaywaco.com/bai-viet/cach-tiet-kiem-nuoc-gia-dinh.html)
+- [So sánh nước máy, nước giếng và nước mưa](https://mocaywaco.com/bai-viet/nuoc-may-nuoc-gieng-nuoc-mua.html)
+- [Vệ sinh bể chứa và đường ống nước trong nhà](https://mocaywaco.com/bai-viet/ve-sinh-be-chua-duong-ong.html)
+- [Nước cho hộ kinh doanh và cơ sở sản xuất](https://mocaywaco.com/bai-viet/nuoc-cho-kinh-doanh-san-xuat.html)
