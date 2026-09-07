@@ -469,3 +469,7 @@ td b{color:var(--ink)}td .muted{color:var(--muted)}
 a.topic:hover{border-color:var(--teal-line);color:var(--teal);background:var(--teal-dim)}
 .topic.off{color:var(--dim);font-weight:500;background:transparent}
 .topic .st{font-size:12px;font-weight:600;color:var(--dim)}
+
+/* Thanh tiêu đề gọn cho khối danh sách nằm ngay dưới hero */
+.sec-bar{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:20px}
+.sec-bar p{margin:0;color:var(--muted);font-size:15.5px;flex:1;min-width:240px}
