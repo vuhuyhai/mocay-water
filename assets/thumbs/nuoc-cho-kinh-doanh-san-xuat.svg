@@ -14,6 +14,6 @@
 <path d="M0 352 C 130 396 270 308 400 352 S 670 396 800 352 L800 450 L0 450 Z" fill="#fff" opacity="0.1"/>
 <path d="M0 386 C 130 310 270 462 400 386 S 670 310 800 386 L800 450 L0 450 Z" fill="#fff" opacity="0.13"/>
 <path d="M0 418 C 130 432 270 404 400 418 S 670 432 800 418 L800 450 L0 450 Z" fill="#fff" opacity="0.18"/>
-<g transform="translate(353.2 158.2) scale(3.9)" fill="none" stroke="#ffffff" stroke-width="1.6"
+<g transform="translate(332.8 137.8) scale(5.6)" fill="none" stroke="#ffffff" stroke-width="1.3"
    stroke-linecap="round" stroke-linejoin="round" opacity="0.96"><path d="M3 9h18l-1.2-4.2A1 1 0 0 0 18.8 4H5.2a1 1 0 0 0-1 .8Z"/><path d="M5 9v10a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V9"/><path d="M9 20v-6h6v6"/></g>
 </svg>
