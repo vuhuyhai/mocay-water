@@ -33,6 +33,9 @@ Website chính thức: https://mocaywaco.com
 
 - [Tra cứu tiền nước](https://mocaywaco.com/dich-vu-khach-hang.html#tra-cuu): nhập mã khách hàng in trên hóa đơn để xem kỳ hóa đơn, số nước tiêu thụ, số tiền phải trả và công nợ nhiều kỳ. Dữ liệu lấy trực tiếp từ hệ thống ghi thu của công ty.
 - [Thanh toán trực tuyến](https://mocaywaco.com/dich-vu-khach-hang.html#thanh-toan): thanh toán bằng mã QR chuyển khoản ngân hàng, trả từng kỳ hoặc gộp toàn bộ công nợ.
+- [Đóng tiền nước qua ví điện tử](https://mocaywaco.com/huong-dan/thanh-toan-tien-nuoc-vi-dien-tu.html): bốn ví đang liên kết là VNPT Money, MoMo, Viettel Money và Payoo. Vào mục thanh toán hóa đơn, chọn dịch vụ tiền nước, chọn nhà cung cấp là Công ty TNHH Cấp Thoát Nước Mỏ Cày rồi nhập mã khách hàng.
+- [Chuyển khoản ngân hàng đóng tiền nước](https://mocaywaco.com/huong-dan/thanh-toan-chuyen-khoan-ngan-hang.html): các ngân hàng đang liên kết gồm BIDV, Agribank, Sacombank và MB. Tài khoản công ty: 7290023381 tại BIDV Chi nhánh Bến Tre, Phòng giao dịch Mỏ Cày. Nội dung chuyển khoản ghi mã khách hàng và kỳ hóa đơn.
+- [Điểm thu hộ tiền nước](https://mocaywaco.com/huong-dan/diem-thu-ho-mo-cay.html): 9 điểm nhận tiền mặt tại Bách Hóa Xanh, Thế Giới Di Động, F88 và cửa hàng Điện thoại Phước Lộc, trải trên trung tâm Mỏ Cày và các xã An Định, An Thạnh, An Thới.
 - [Đăng ký lắp đặt đồng hồ nước](https://mocaywaco.com/cap-nuoc.html#dang-ky): gửi hồ sơ đăng ký cấp nước trực tuyến.
 - [Báo sự cố và phản ánh](https://mocaywaco.com/lien-he.html): báo vỡ ống, nước yếu, nước đục.
 - [Lịch tạm ngừng cấp nước và thông báo](https://mocaywaco.com/tin-tuc.html)

@@ -473,3 +473,11 @@ a.topic:hover{border-color:var(--teal-line);color:var(--teal);background:var(--t
 /* Thanh tiêu đề gọn cho khối danh sách nằm ngay dưới hero */
 .sec-bar{display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:20px}
 .sec-bar p{margin:0;color:var(--muted);font-size:15.5px;flex:1;min-width:240px}
+
+/* Lưới logo đối tác trên trang hướng dẫn thanh toán */
+.logos{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:20px 0 26px}
+.logo-tile{background:#fff;border:1px solid var(--border);border-radius:12px;height:80px;
+  display:grid;place-items:center;padding:14px;box-shadow:var(--sh-sm)}
+.logo-tile img{max-width:100%;max-height:100%;object-fit:contain;display:block}
+.logo-tile figcaption{display:none}
+@media(max-width:620px){.logos{grid-template-columns:repeat(2,1fr)}}
