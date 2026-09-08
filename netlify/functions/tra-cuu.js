@@ -13,7 +13,7 @@
      CITYWORK_LOOKUP_PATH   đường dẫn tra cứu (vd: /api/v1/hoa-don). Để trống nếu base đã đủ.
      CITYWORK_MA_PARAM      tên tham số mã KH trên URL (mặc định "ma")
 
-   Kiểu xác thực (chọn đúng theo tài liệu CityWork — bỏ hardcode Bearer):
+   Kiểu xác thực (chọn đúng theo tài liệu CityWork, bỏ hardcode Bearer):
      CITYWORK_AUTH_STYLE    "bearer" (mặc định) | "header" | "query"
        - bearer : gửi header  Authorization: Bearer <token>
        - header : gửi header  <CITYWORK_AUTH_HEADER>: <token>   (vd apikey: <token>)
@@ -21,7 +21,7 @@
      CITYWORK_AUTH_HEADER   tên header khi AUTH_STYLE=header (mặc định "apikey")
      CITYWORK_TOKEN_PARAM   tên tham số token khi AUTH_STYLE=query (mặc định "token")
 
-   Ánh xạ tên trường trong JSON response (tùy chọn — có thể là "dot path", vd "data.hoaDon.ky").
+   Ánh xạ tên trường trong JSON response (tùy chọn, có thể là "dot path", vd "data.hoaDon.ky").
    Nếu bỏ trống, dùng bộ tên đoán sẵn (đủ cho nhiều hệ). Chỉ đặt khi biết tên thật:
      CITYWORK_DATA_PATH     đường dẫn tới bản ghi hóa đơn trong response (vd "data" hoặc "result.hoaDon")
      CITYWORK_FIELD_TEN     trường tên khách hàng

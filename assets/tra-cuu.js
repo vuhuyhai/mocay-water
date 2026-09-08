@@ -1,5 +1,5 @@
 /* ============================================================
-   Tra cứu hóa đơn tiền nước — Cấp Thoát Nước Mỏ Cày
+   Tra cứu hóa đơn tiền nước · Cấp Thoát Nước Mỏ Cày
    Bản DEMO: dữ liệu mẫu nhúng sẵn. Khi tích hợp thật, thay
    hàm layHoaDon() bằng lời gọi API hệ thống ghi thu của công ty.
    Biểu giá theo QĐ 42/2020/QĐ-UBND; VAT 5%; phí BVMT nước thải 10%.

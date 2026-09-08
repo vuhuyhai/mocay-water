@@ -1,7 +1,7 @@
 /* ==========================================================================
-   CẤP THOÁT NƯỚC MỎ CÀY — Design System
+   CẤP THOÁT NƯỚC MỎ CÀY: Design System
    Phiên bản SÁNG · xanh blue nước (sang trọng). Sửa 1 nơi, áp cho mọi trang.
-   Giữ nguyên tên biến (--teal…) để tương thích inline cũ — giá trị đổi sang blue.
+   Giữ nguyên tên biến (--teal…) để tương thích inline cũ. Giá trị đổi sang blue.
    ========================================================================== */
 :root{
   /* Nền sáng */
@@ -13,7 +13,7 @@
   --border-soft:rgba(13,58,110,.07);
 
   /* Accent xanh blue (thay cho teal) */
-  --teal:#0b63c7;                     /* accent chính — xanh dương tin cậy */
+  --teal:#0b63c7;                     /* accent chính: xanh dương tin cậy */
   --teal-2:#1a7fe0;                   /* xanh sáng hơn cho gradient */
   --teal-ink:#ffffff;                 /* chữ TRÊN nền blue */
   --teal-dim:#e7f1fc;                 /* tint sáng cho icon/gradient highlight */
@@ -21,7 +21,7 @@
   --teal-glow:rgba(11,99,199,.13);    /* vệt sáng */
 
   /* Chữ */
-  --ink:#0a2e52;                      /* navy đậm — tiêu đề, sang trọng */
+  --ink:#0a2e52;                      /* navy đậm: tiêu đề, sang trọng */
   --text:#213e5b;                     /* chữ chính */
   --muted:#566d86;                    /* mô tả */
   --dim:#8496a9;                      /* chú thích mờ */
@@ -354,7 +354,7 @@ td b{color:var(--ink)}td .muted{color:var(--muted)}
   .logo .mark{width:40px;height:40px}
   .logo small{font-size:10px;margin-top:1px}
   .nav-cta{gap:6px}
-  .nav-cta .btn-white{display:none}      /* ẩn CTA header trên mobile — đã có ở hero + truy cập nhanh */
+  .nav-cta .btn-white{display:none}      /* ẩn CTA header trên mobile, đã có ở hero + truy cập nhanh */
   .nav-links{padding:6px 16px 14px}
   .nav-links a{font-size:16px}
 }
@@ -481,3 +481,11 @@ a.topic:hover{border-color:var(--teal-line);color:var(--teal);background:var(--t
 .logo-tile img{max-width:100%;max-height:100%;object-fit:contain;display:block}
 .logo-tile figcaption{display:none}
 @media(max-width:620px){.logos{grid-template-columns:repeat(2,1fr)}}
+
+/* Bảng địa chỉ điểm thu hộ: trên màn hình hẹp chỉ giữ tên điểm và địa chỉ */
+@media(max-width:620px){
+  .tbl-diem th:nth-child(1),.tbl-diem td:nth-child(1),
+  .tbl-diem th:nth-child(4),.tbl-diem td:nth-child(4){display:none}
+  .art table{font-size:14px}
+  .art th,.art td{padding:8px 10px}
+}

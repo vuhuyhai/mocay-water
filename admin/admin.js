@@ -1,4 +1,4 @@
-/* Trang quản trị — logic phía client. Gọi Netlify Functions (cùng domain). */
+/* Trang quản trị: logic phía client. Gọi Netlify Functions (cùng domain). */
 var API = "/.netlify/functions";
 var TKEY = "mc_admin_token";
 

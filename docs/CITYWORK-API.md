@@ -1,4 +1,4 @@
-# Tích hợp API CityWork (eKMap) — hướng dẫn go-live
+# Tích hợp API CityWork (eKMap): hướng dẫn go-live
 
 Tra cứu hóa đơn nước gọi qua Netlify Function `netlify/functions/tra-cuu.js` (proxy giữ token phía server).
 Chưa cấu hình đủ thì web tự lùi về **dữ liệu mẫu**. Muốn chạy thật: chỉ cần đặt biến môi trường trên
