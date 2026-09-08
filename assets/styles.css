@@ -139,14 +139,15 @@ h2{font-size:clamp(32px,4.5vw,52px);font-weight:800;line-height:1.08;letter-spac
 .mk-total .big{font-size:26px;font-weight:800;color:var(--teal)}
 
 /* Quick access */
-.quick{display:grid;grid-template-columns:repeat(6,1fr);gap:14px;margin-top:-40px;position:relative;z-index:2}
+.quick{display:grid;grid-template-columns:repeat(7,1fr);gap:12px;margin-top:-40px;position:relative;z-index:2}
 .qbtn{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:20px 14px;
   text-align:center;color:var(--ink);transition:.2s;display:block;box-shadow:var(--sh-sm)}
 .qbtn:hover{border-color:var(--teal-line);transform:translateY(-3px);box-shadow:var(--sh)}
 .qbtn .ic{width:40px;height:40px;margin:0 auto 10px;border-radius:11px;display:grid;place-items:center;
   background:var(--teal-dim);color:var(--teal)}
 .qbtn span{font-size:13.5px;font-weight:600;line-height:1.35;display:block}
-@media(max-width:900px){.quick{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:1080px){.quick{grid-template-columns:repeat(4,1fr)}}
+@media(max-width:760px){.quick{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:520px){.quick{grid-template-columns:repeat(2,1fr)}}
 
 /* Stats */
