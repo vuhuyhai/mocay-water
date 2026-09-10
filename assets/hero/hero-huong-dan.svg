@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 520" width="1600" height="520" role="img" preserveAspectRatio="xMidYMid slice">
+<defs>
+<linearGradient id="nen" x1="0" y1="0" x2="0.35" y2="1">
+<stop offset="0" stop-color="#ffffff"/><stop offset="1" stop-color="#86d6bd"/>
+</linearGradient>
+<radialGradient id="sang" cx="0.72" cy="0.16" r="0.72">
+<stop offset="0" stop-color="#ffffff" stop-opacity="0.85"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+</radialGradient>
+</defs>
+<rect width="1600" height="520" fill="url(#nen)"/>
+<circle cx="1290" cy="86" r="190" fill="#86d6bd" opacity="0.22"/>
+<circle cx="1290" cy="86" r="122" fill="#86d6bd" opacity="0.20"/>
+<path d="M0 268 C 200 210 400 326 600 268 S 1000 234 1200 268 S 1500 302 1600 245 L1600 520 L0 520 Z" fill="#86d6bd" opacity="0.55"/>
+<path d="M0 322 C 200 290 400 354 600 322 S 1000 278 1200 322 S 1500 366 1600 303 L1600 520 L0 520 Z" fill="#1f9d76" opacity="0.16"/>
+<path d="M0 372 C 200 310 400 434 600 372 S 1000 346 1200 372 S 1500 398 1600 350 L1600 520 L0 520 Z" fill="#86d6bd" opacity="0.72"/>
+<path d="M0 424 C 200 408 400 440 600 424 S 1000 372 1200 424 S 1500 476 1600 407 L1600 520 L0 520 Z" fill="#1f9d76" opacity="0.22"/>
+<path d="M0 470 C 200 436 400 504 600 470 S 1000 448 1200 470 S 1500 492 1600 456 L1600 520 L0 520 Z" fill="#1f9d76" opacity="0.34"/>
+<rect width="1600" height="520" fill="url(#sang)"/>
+</svg>
