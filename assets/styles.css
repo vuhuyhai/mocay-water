@@ -499,3 +499,14 @@ a.topic:hover{border-color:var(--teal-line);color:var(--teal);background:var(--t
   line-height:1.55;color:var(--muted);font-weight:400}
 .consent input[type=checkbox]{flex:none;width:18px;height:18px;margin-top:2px;accent-color:var(--teal);cursor:pointer}
 .consent span{flex:1}
+
+/* Ảnh minh họa các bước trong bài hướng dẫn */
+.hd-anh{margin:22px 0;border:1px solid var(--border);border-radius:14px;overflow:hidden;
+  background:var(--surface-2);box-shadow:var(--sh-sm)}
+.hd-anh img{display:block;width:100%;height:auto;background:#fff}
+.hd-anh figcaption{padding:11px 16px;font-size:13.5px;color:var(--muted);
+  border-top:1px solid var(--border-soft);background:var(--surface)}
+.hd-anh figcaption b{color:var(--ink)}
+/* Ảnh chụp màn hình điện thoại: giới hạn bề ngang cho khỏi phình to */
+.hd-anh.dt{max-width:380px;margin-left:auto;margin-right:auto}
+.hd-anh.dai img{max-height:620px;object-fit:cover;object-position:top}
