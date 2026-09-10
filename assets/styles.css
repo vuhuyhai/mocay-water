@@ -276,7 +276,11 @@ td b{color:var(--ink)}td .muted{color:var(--muted)}
 /* Form */
 .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
 @media(max-width:620px){.form-grid{grid-template-columns:1fr}}
-.field{display:flex;flex-direction:column;gap:6px}
+.field{display:flex;flex-direction:column;gap:6px;min-width:0}
+/* Ô lưới mặc định không co nhỏ hơn nội dung, mà thẻ select tự nong theo dòng
+   option dài nhất. Không khoá min-width:0 và max-width thì cả cột bị kéo rộng
+   ra ngoài thẻ trên màn hình hẹp. */
+.field input,.field select,.field textarea{width:100%;max-width:100%;min-width:0}
 .field.full{grid-column:1/-1}
 .field label{font-size:14px;color:var(--muted)}
 .field input,.field select,.field textarea{background:var(--surface);border:1px solid var(--border);
