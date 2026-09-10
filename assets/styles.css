@@ -523,6 +523,10 @@ a.topic:hover{border-color:var(--teal-line);color:var(--teal);background:var(--t
 .hero-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 42%;
   opacity:.15;filter:brightness(1.22) contrast(.82) saturate(1.05);
   pointer-events:none;user-select:none;z-index:0}
+/* Anh do hoa (SVG song nuoc) von da nhat, khong can loc sang va phai dam hon
+   anh chup thi moi nhin thay. */
+.hero-bg.do-hoa{opacity:.55;filter:saturate(1.04)}
+@media(max-width:860px){.hero-bg.do-hoa{opacity:.42}}
 .hero-anh::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
   background:linear-gradient(96deg,rgba(255,255,255,.86) 0%,rgba(255,255,255,.72) 26%,
     rgba(255,255,255,.30) 55%,rgba(255,255,255,.10) 100%)}
