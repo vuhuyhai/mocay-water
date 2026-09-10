@@ -27,3 +27,52 @@ function guiDangKy(e) {
   return false;
 }
 window.guiDangKy = guiDangKy;
+
+/* Đổi giữa cá nhân và tổ chức: hiện hoặc ẩn các ô riêng của tổ chức. */
+function doiLoaiKhach(loai) {
+  var toChuc = loai === 'Tổ chức, doanh nghiệp';
+  document.querySelectorAll('.to-chuc').forEach(function (o) {
+    o.hidden = !toChuc;
+    var input = o.querySelector('input');
+    if (!input) return;
+    // Người đại diện và Chức vụ bắt buộc với tổ chức, mã số thuế thì không
+    if (input.id === 'dk-daidien' || input.id === 'dk-chucvu') input.required = toChuc;
+    if (!toChuc) input.value = '';
+  });
+  document.getElementById('dk-ten-nhan').textContent = toChuc ? 'Tên cơ quan, doanh nghiệp *' : 'Họ tên chủ hộ *';
+  document.getElementById('dk-ten').placeholder = toChuc ? 'Công ty TNHH ABC' : 'Nguyễn Văn A';
+  document.getElementById('dk-thuongtru-nhan').textContent = toChuc ? 'Địa chỉ trụ sở *' : 'Địa chỉ thường trú *';
+}
+
+/* Tích vào ô trùng địa chỉ thì chép sang, bỏ tích thì cho nhập lại. */
+function chepDiaChi(trung) {
+  var tt = document.getElementById('dk-thuongtru');
+  var ld = document.getElementById('dk-lapdat');
+  if (trung) { ld.value = tt.value; ld.readOnly = true; ld.style.opacity = '.7'; }
+  else { ld.readOnly = false; ld.style.opacity = ''; }
+  nhacGiayTo();
+}
+
+/* Địa chỉ lắp khác địa chỉ thường trú thì nhắc mang thêm giấy tờ đất. */
+function nhacGiayTo() {
+  var tt = (document.getElementById('dk-thuongtru') || {}).value || '';
+  var ld = (document.getElementById('dk-lapdat') || {}).value || '';
+  var hop = document.getElementById('dk-nhac-giayto');
+  if (!hop) return;
+  var chuan = function (s) { return s.trim().toLowerCase().replace(/\s+/g, ' '); };
+  hop.hidden = !(chuan(tt) && chuan(ld) && chuan(tt) !== chuan(ld));
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  var tt = document.getElementById('dk-thuongtru');
+  var ld = document.getElementById('dk-lapdat');
+  if (!tt || !ld) return;
+  tt.addEventListener('input', function () {
+    if (document.getElementById('dk-trungdc').checked) ld.value = tt.value;
+    nhacGiayTo();
+  });
+  ld.addEventListener('input', nhacGiayTo);
+});
+
+window.doiLoaiKhach = doiLoaiKhach;
+window.chepDiaChi = chepDiaChi;

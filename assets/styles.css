@@ -490,3 +490,12 @@ a.topic:hover{border-color:var(--teal-line);color:var(--teal);background:var(--t
   .art table{font-size:14px}
   .art th,.art td{padding:8px 10px}
 }
+
+/* Form nhiều nhóm: tiêu đề nhóm và ô tích cam kết */
+.form-grid h4.fgroup{margin:18px 0 2px;font-size:14px;font-weight:700;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--teal)}
+.form-grid .field:first-child h4.fgroup{margin-top:0}
+.consent{display:flex;gap:11px;align-items:flex-start;cursor:pointer;font-size:14.5px;
+  line-height:1.55;color:var(--muted);font-weight:400}
+.consent input[type=checkbox]{flex:none;width:18px;height:18px;margin-top:2px;accent-color:var(--teal);cursor:pointer}
+.consent span{flex:1}
