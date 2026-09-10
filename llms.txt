@@ -15,6 +15,12 @@ Website chính thức: https://mocaywaco.com
 - Năm thành lập: 2011
 - Căn cứ giá nước: Quyết định 42/2020/QĐ-UBND của Ủy ban nhân dân tỉnh, quy định giá tiêu thụ nước sạch của Công ty TNHH Cấp Thoát Nước Mỏ Cày
 
+## Chất lượng nước
+
+Mẫu nước đã xử lý tại Nhà máy nước Mỏ Cày được gửi kiểm nghiệm tại Viện Y tế Công cộng Thành phố Hồ Chí Minh, đơn vị thuộc Bộ Y tế, phòng thử nghiệm được công nhận VILAS 219 theo ISO/IEC 17025:2017.
+
+Kỳ gần nhất đã công bố: kỳ 08/2026, phiếu số 044284/VYTCC, mẫu lấy ngày 05/08/2026, ký ngày 14/08/2026. Kết luận của đơn vị kiểm nghiệm: mẫu nước đã xử lý có các chỉ tiêu được kiểm nghiệm đạt QCVN 01-1:2024/BYT. Toàn bộ 98 chỉ tiêu đạt. Xem chi tiết và tải phiếu gốc tại https://mocaywaco.com/chat-luong-nuoc/ky-08-2026.html
+
 ## Năng lực hệ thống
 
 - Công suất cấp nước: 15.900 m³/ngày đêm
@@ -60,6 +66,7 @@ Nhóm khách hàng gồm: sinh hoạt hộ dân, cơ quan hành chính sự nghi
 - [Dịch vụ khách hàng](https://mocaywaco.com/dich-vu-khach-hang.html)
 - [Tin tức và thông báo](https://mocaywaco.com/tin-tuc.html)
 - [Công khai minh bạch](https://mocaywaco.com/cong-khai-minh-bach.html)
+- [Công bố kết quả kiểm nghiệm nước](https://mocaywaco.com/chat-luong-nuoc/): phiếu kết quả kiểm nghiệm định kỳ, công bố nguyên bản kèm file PDF gốc.
 - [Liên hệ](https://mocaywaco.com/lien-he.html)
 - [Hướng dẫn cho khách hàng](https://mocaywaco.com/huong-dan/)
 - [Bài viết chuyên sâu](https://mocaywaco.com/bai-viet/)
