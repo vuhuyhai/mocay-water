@@ -43,28 +43,29 @@
   .crumb{font-size:13.5px;color:var(--dim);margin-bottom:6px}
   .crumb a{color:var(--teal)}
 
-  .verdict{background:linear-gradient(135deg,#e7f6ee,#f2fbf6);border:1px solid #9fd9bb;border-radius:16px;
-    padding:26px 28px;margin:26px 0}
+  .verdict{background:linear-gradient(135deg,#e7f6ee,#f2fbf6);border:1px solid #9fd9bb;border-radius:16px;padding:26px 28px;margin:26px 0}
   .verdict .tick{display:inline-flex;align-items:center;gap:9px;color:#12724a;font-weight:800;font-size:19px}
   .verdict p{margin:12px 0 0;color:#245c44}
   .verdict .quote{border-left:3px solid #9fd9bb;padding-left:14px;margin-top:14px;font-style:italic}
-  .meta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--border);
-    border-radius:12px;overflow:hidden;margin:22px 0}
+  .meta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:22px 0}
   .meta-grid div{padding:12px 16px;border-bottom:1px solid var(--border-soft);font-size:14.5px}
   .meta-grid div:nth-child(odd){background:var(--surface-2);color:var(--muted);font-weight:600}
   .meta-grid div:nth-child(even){color:var(--ink)}
   @media(max-width:620px){.meta-grid{grid-template-columns:1fr}
-    .meta-grid div:nth-child(even){padding-top:0;border-bottom:1px solid var(--border-soft)}}
+    .meta-grid div:nth-child(even){padding-top:0}}
   .dat{color:#12724a;font-weight:700;white-space:nowrap}
-  .kn-list{display:grid;gap:14px;margin:22px 0}
+  .kn-nam{margin-top:34px}
+  .kn-nam h2{font-size:clamp(20px,2.6vw,25px);margin:0 0 14px;color:var(--ink)}
+  .kn-list{display:grid;gap:14px}
   .kn-item{display:flex;gap:18px;align-items:center;justify-content:space-between;background:var(--surface);
-    border:1px solid var(--border);border-radius:14px;padding:18px 22px;box-shadow:var(--sh-sm);
-    transition:.2s;color:var(--text)}
+    border:1px solid var(--border);border-radius:14px;padding:18px 22px;box-shadow:var(--sh-sm);transition:.2s;color:var(--text)}
   a.kn-item:hover{border-color:var(--teal-line);transform:translateY(-2px);box-shadow:var(--sh)}
   .kn-item h3{margin:0 0 4px;font-size:17.5px;color:var(--ink)}
   .kn-item p{margin:0;color:var(--muted);font-size:14.5px}
   .kn-item .pill{flex:none;background:#e7f6ee;color:#12724a;border:1px solid #9fd9bb;border-radius:999px;
     padding:6px 14px;font-size:13px;font-weight:700;white-space:nowrap}
+  .kn-loai{display:inline-block;font-size:11.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--teal);background:var(--teal-dim);border-radius:999px;padding:3px 10px;margin-bottom:7px}
   @media(max-width:620px){.kn-item{flex-direction:column;align-items:flex-start;gap:10px}}
 </style>
 <script type="application/ld+json">
@@ -152,17 +153,20 @@
 
 <section class="section"><div class="container">
 
-  <h2 style="margin-top:0">Các kỳ đã công bố</h2>
-  <div class="kn-list">
-    <a class="kn-item" href="ky-08-2026.html">
-      <div>
-        <h3>Kết quả kiểm nghiệm Kỳ 08/2026</h3>
-        <p>Mẫu nước đã xử lý lấy ngày 05/08/2026 tại Nhà máy nước Mỏ Cày. Viện Y tế Công cộng TP.HCM kiểm nghiệm, 98 chỉ tiêu.</p>
-      </div>
-      <span class="pill">Đạt 98/98</span>
-    </a>
+  <div class="kn-nam">
+    <h2>Năm 2026</h2>
+    <div class="kn-list">
+      <a class="kn-item" href="ky-08-2026.html">
+        <div>
+          <span class="kn-loai">Phiếu đầy đủ</span>
+          <h3>Kết quả kiểm nghiệm kỳ 08/2026</h3>
+          <p>Mẫu nước đã xử lý lấy ngày 05/08/2026 tại Nhà máy nước Mỏ Cày. Viện Y tế Công cộng Thành phố Hồ Chí Minh kiểm nghiệm, 98 chỉ tiêu.</p>
+        </div>
+        <span class="pill">Đạt 98/98</span>
+      </a>
+    </div>
   </div>
-  <p class="note">Các kỳ trước và kỳ tiếp theo sẽ được đăng bổ sung tại đây.</p>
+  <p class="note" style="margin-top:20px">Công ty kiểm nghiệm định kỳ hằng tháng, và mỗi năm một lần kiểm nghiệm đầy đủ với số chỉ tiêu nhiều nhất. Phiếu của các kỳ tiếp theo sẽ được đăng bổ sung tại đây.</p>
 
   <div class="grid-2" style="margin-top:44px;align-items:start">
     <div>
