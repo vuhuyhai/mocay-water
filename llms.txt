@@ -19,7 +19,11 @@ Website chính thức: https://mocaywaco.com
 
 Mẫu nước đã xử lý tại Nhà máy nước Mỏ Cày được gửi kiểm nghiệm tại Viện Y tế Công cộng Thành phố Hồ Chí Minh, đơn vị thuộc Bộ Y tế, phòng thử nghiệm được công nhận VILAS 219 theo ISO/IEC 17025:2017.
 
-Kỳ gần nhất đã công bố: kỳ 08/2026, phiếu số 044284/VYTCC, mẫu lấy ngày 05/08/2026, ký ngày 14/08/2026. Kết luận của đơn vị kiểm nghiệm: mẫu nước đã xử lý có các chỉ tiêu được kiểm nghiệm đạt QCVN 01-1:2024/BYT. Toàn bộ 98 chỉ tiêu đạt. Xem chi tiết và tải phiếu gốc tại https://mocaywaco.com/chat-luong-nuoc/ky-08-2026.html
+Công ty kiểm nghiệm theo hai chu kỳ. Hằng tháng: Trung tâm Kiểm soát Bệnh tật tỉnh Đồng Tháp (VILAS 502) thực hiện, đối chiếu QCĐP 01:2022/BTr, lấy mẫu tại nhà máy và trên mạng lưới cấp nước. Mỗi năm một lần: Viện Y tế Công cộng Thành phố Hồ Chí Minh thuộc Bộ Y tế (VILAS 219) thực hiện phiếu đầy đủ, đối chiếu QCVN 01-1:2024/BYT.
+
+Các kỳ đã công bố:
+- Kỳ 08/2026, phiếu đầy đủ, số 044284/VYTCC, mẫu lấy 05/08/2026, 98 chỉ tiêu, tất cả đạt QCVN 01-1:2024/BYT: https://mocaywaco.com/chat-luong-nuoc/ky-08-2026.html
+- Kỳ 07/2026, phiếu định kỳ, số 0229.26/KSBT-XN, mẫu lấy 21/07/2026 tại 3 điểm (Nhà máy nước Mỏ Cày, Bệnh viện Cù Lao Minh, Bến xe Mỏ Cày), 10 chỉ tiêu, tất cả đạt QCĐP 01:2022/BTr: https://mocaywaco.com/chat-luong-nuoc/ky-07-2026.html
 
 ## Năng lực hệ thống
 

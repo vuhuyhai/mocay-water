@@ -38,7 +38,7 @@ const NAV = `<nav class="nav"><div class="nav-inner">
 
 const CSS_THEM = `
   .verdict{background:linear-gradient(135deg,#e7f6ee,#f2fbf6);border:1px solid #9fd9bb;border-radius:16px;padding:26px 28px;margin:26px 0}
-  .verdict .tick{display:inline-flex;align-items:center;gap:9px;color:#12724a;font-weight:800;font-size:19px}
+  .verdict .tick{display:inline-flex;align-items:center;gap:9px;color:#12724a;font-weight:800;font-size:19px;line-height:1.3}
   .verdict p{margin:12px 0 0;color:#245c44}
   .verdict .quote{border-left:3px solid #9fd9bb;padding-left:14px;margin-top:14px;font-style:italic}
   .meta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:0;border:1px solid var(--border);border-radius:12px;overflow:hidden;margin:22px 0}
@@ -64,6 +64,7 @@ const CSS_THEM = `
 `;
 
 const tenLoai = k => k.loai === "day-du" ? "Phiếu đầy đủ" : "Phiếu định kỳ";
+const demChiTieu = k => k.phieu.reduce((n, p) => n + p.nhom.reduce((m, g) => m + g[1].length, 0), 0);
 
 function khung(p) {
   const bc = [
@@ -121,33 +122,58 @@ ${FOOTER}
 }
 
 /* ---------------- Trang chi tiết một kỳ ---------------- */
-function trangKy(k) {
-  const daChep = k.nhom.reduce((n, g) => n + g[1].length, 0);
-  const conLai = k.soChiTieu - daChep;
-  const pdfRel = "../tai-lieu/kiem-nghiem/" + k.pdf;
-  const pdfAbs = "https://mocaywaco.com/tai-lieu/kiem-nghiem/" + k.pdf;
-
-  const bang = k.nhom.map(([ten, rows]) =>
+function bangNhom(nhom) {
+  return nhom.map(([ten, rows]) =>
     "<h3>" + ten + "</h3>\n<table>\n" +
-    "  <thead><tr><th>Chỉ tiêu</th><th>Giới hạn cho phép</th><th>Kết quả</th><th>Đơn vị</th><th>Đánh giá</th></tr></thead>\n  <tbody>\n" +
+    '  <thead><tr><th>Chỉ tiêu</th><th>Giới hạn cho phép</th><th>Kết quả</th><th>Đơn vị</th><th>Đánh giá</th></tr></thead>\n  <tbody>\n' +
     rows.map(r => "    <tr><td>" + r[0] + "</td><td>" + r[1] + "</td><td><b>" + r[2] + "</b></td><td>" +
-      (r[3] || "/") + "</td><td class=\"dat\">Đạt</td></tr>").join("\n") +
+      (r[3] || "/") + '</td><td class="dat">Đạt</td></tr>').join("\n") +
     "\n  </tbody>\n</table>"
   ).join("\n\n");
+}
+
+function trangKy(k) {
+  const daChep = demChiTieu(k);
+  const conLai = k.chepDu ? 0 : k.soChiTieu - daChep;
+  const nhieuDiem = k.phieu.length > 1;
+  const pdfRel = "../tai-lieu/kiem-nghiem/" + k.pdf;
+  const pdfAbs = "https://mocaywaco.com/tai-lieu/kiem-nghiem/" + k.pdf;
+  const diemList = k.phieu.map(p => p.diem).join(", ");
+
+  const khoiPhieu = k.phieu.map((p, i) => {
+    const tieuDe = nhieuDiem
+      ? '<h2 id="diem-' + (i + 1) + '">Điểm lấy mẫu ' + (i + 1) + ": " + p.diem + "</h2>"
+      : '<h2 id="so-lieu">Số liệu từng chỉ tiêu</h2>';
+    const phu = nhieuDiem
+      ? "<p>Mã số mẫu " + p.maMau + ", lượng mẫu " + p.luongMau + ", " + p.diaChi + ".</p>"
+      : "<p>Bảng dưới chép lại " + daChep + " chỉ tiêu có con số đo được hoặc bà con hay nghe nhắc tới. Cột giới hạn cho phép là ngưỡng tối đa mà " +
+        k.quyChuan + " cho phép, cột kết quả là con số đo thật của mẫu nước Mỏ Cày.</p>";
+    return tieuDe + "\n" + phu + "\n" + bangNhom(p.nhom);
+  }).join("\n\n");
+
+  const dongNgayKy = k.ngayKy ? "\n  <div>Ngày ký phiếu</div><div>" + k.ngayKy + "</div>" : "";
+  const mucNhieuDiem = nhieuDiem
+    ? '\n<h2 id="so-lieu">Số liệu từng điểm lấy mẫu</h2>\n<p>Công ty lấy mẫu ở ' + k.phieu.length +
+      " điểm: tại nhà máy và trên mạng lưới cấp nước. Lấy thêm mẫu trên mạng lưới để kiểm tra nước có giữ được chất lượng trên đường ống tới nhà bà con hay không.</p>\n"
+    : "";
+  const hopConLai = conLai > 0
+    ? '\n<div class="callout"><b>' + conLai + ' chỉ tiêu còn lại đều là "Không phát hiện".</b> ' + k.conLai + " Chi tiết từng chỉ tiêu xem trong phiếu gốc.</div>"
+    : "";
 
   return khung({
     hepy: true,
     url: BASE + k.slug + ".html",
     ogType: "article",
     title: "Kết quả kiểm nghiệm nước Mỏ Cày " + k.nhan.toLowerCase() + ": đạt " + k.quyChuan,
-    desc: "Phiếu kết quả kiểm nghiệm nước sạch Nhà máy nước Mỏ Cày " + k.nhan.toLowerCase() + " do " +
-      k.donViKN.split(",")[0] + " thực hiện. Toàn bộ " + k.soChiTieu + " chỉ tiêu đạt " + k.quyChuan + ". Xem số liệu và tải phiếu gốc.",
+    desc: "Phiếu kết quả kiểm nghiệm nước sạch Mỏ Cày " + k.nhan.toLowerCase() + " do " + k.donViNgan +
+      " thực hiện. Toàn bộ " + k.soChiTieu + " chỉ tiêu đạt " + k.quyChuan + ". Xem số liệu và tải phiếu gốc.",
     ogTitle: "Kết quả kiểm nghiệm nước Mỏ Cày " + k.nhan.toLowerCase(),
     crumb3: k.nhan,
     badge: "Kết quả kiểm nghiệm",
     h1: "Kết quả kiểm nghiệm nước sạch " + k.nhan.toLowerCase(),
-    lead: "Mẫu " + k.tenMau.toLowerCase() + " tại " + k.diaDiem.split(",")[0] + ", lấy ngày " + k.ngayLay +
-      ", do " + k.donViKN.split(",")[0] + " kiểm nghiệm.",
+    lead: "Mẫu " + k.tenMau.toLowerCase() + " lấy ngày " + k.ngayLay +
+      (nhieuDiem ? " tại " + k.phieu.length + " điểm: " + diemList : " tại " + k.phieu[0].diem) +
+      ", do " + k.donViNgan + " thực hiện.",
     main: {
       "@type": "Article",
       headline: "Kết quả kiểm nghiệm nước sạch Mỏ Cày " + k.nhan.toLowerCase(),
@@ -165,60 +191,53 @@ function trangKy(k) {
     },
     them: [{
       "@type": "Dataset",
-      name: "Kết quả kiểm nghiệm nước sạch Nhà máy nước Mỏ Cày " + k.nhan.toLowerCase(),
+      name: "Kết quả kiểm nghiệm nước sạch Mỏ Cày " + k.nhan.toLowerCase(),
       description: "Kết quả " + k.soChiTieu + " chỉ tiêu chất lượng nước sạch, mẫu " + k.tenMau.toLowerCase() +
-        " lấy ngày " + k.ngayLay + " tại " + k.diaDiem + ", kiểm nghiệm bởi " + k.donViKN.split(",")[0] + ".",
+        " lấy ngày " + k.ngayLay + " tại " + diemList + ", kiểm nghiệm bởi " + k.donViNgan + ".",
       inLanguage: "vi-VN",
       datePublished: k.ngayKyISO,
       license: BASE,
-      creator: { "@type": "Organization", name: k.donViKN.split(",")[0] },
+      creator: { "@type": "Organization", name: k.donViNgan },
       publisher: { "@type": "Organization", name: "Công ty TNHH Cấp Thoát Nước Mỏ Cày", url: "https://mocaywaco.com/" },
-      spatialCoverage: { "@type": "Place", name: k.diaDiem },
+      spatialCoverage: { "@type": "Place", name: "Mỏ Cày, tỉnh Vĩnh Long" },
       distribution: { "@type": "DataDownload", encodingFormat: "application/pdf", contentUrl: pdfAbs }
     }],
     body: `
 <div class="verdict">
-  <span class="tick"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Đạt toàn bộ ${k.soChiTieu} chỉ tiêu</span>
+  <span class="tick"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Đạt toàn bộ ${k.soChiTieu} chỉ tiêu${nhieuDiem ? " tại " + k.phieu.length + " điểm lấy mẫu" : ""}</span>
   <p>Kết luận của đơn vị kiểm nghiệm, chép nguyên văn từ phiếu:</p>
   <p class="quote">${k.ketLuan}</p>
 </div>
 
 <div class="cta-box">
   <h3>Xem phiếu gốc có chữ ký và dấu đỏ</h3>
-  <p>Bản PDF đầy đủ do ${k.donViKN.split(",")[0]} phát hành. Đây là văn bản gốc, các số liệu trên trang này chép lại từ đó.</p>
+  <p>Bản PDF đầy đủ do ${k.donViNgan} phát hành. Đây là văn bản gốc, các số liệu trên trang này chép lại từ đó.</p>
   <a class="btn btn-primary" href="${pdfRel}" target="_blank" rel="noopener">Mở phiếu kiểm nghiệm (PDF) →</a>
 </div>
 
 <h2 id="nguon-goc">Phiếu này do ai làm</h2>
-<p>Công ty không tự kiểm nghiệm rồi tự công bố. Mẫu nước được gửi tới một đơn vị độc lập thuộc Bộ Y tế, có phòng thử nghiệm được công nhận theo chuẩn quốc tế.</p>
+<p>Công ty không tự kiểm nghiệm rồi tự công bố. Mẫu nước được gửi tới một đơn vị y tế độc lập, có phòng thử nghiệm được công nhận theo chuẩn quốc tế.</p>
 <div class="meta-grid">
   <div>Đơn vị kiểm nghiệm</div><div>${k.donViKN}</div>
   <div>Công nhận phòng thử nghiệm</div><div>${k.congNhan}</div>
   <div>Số phiếu</div><div>${k.soPhieu}</div>
-  <div>Mã số mẫu</div><div>${k.maMau}</div>
   <div>Tên mẫu</div><div>${k.tenMau}</div>
-  <div>Địa điểm lấy mẫu</div><div>${k.diaDiem}</div>
+  <div>Điểm lấy mẫu</div><div>${diemList}</div>
   <div>Ngày lấy mẫu</div><div>${k.ngayLay}</div>
-  <div>Thời gian thử nghiệm</div><div>${k.thoiGianThu}</div>
-  <div>Ngày ký phiếu</div><div>${k.ngayKy}</div>
-  <div>Quy chuẩn đối chiếu</div><div>${k.quyChuan}, Bộ Y tế</div>
+  <div>Thời gian thử nghiệm</div><div>${k.thoiGianThu}</div>${dongNgayKy}
+  <div>Quy chuẩn đối chiếu</div><div>${k.quyChuan}, ${k.quyChuanTen}</div>
 </div>
-
-<h2 id="so-lieu">Số liệu từng chỉ tiêu</h2>
-<p>Bảng dưới chép lại ${daChep} chỉ tiêu có con số đo được hoặc bà con hay nghe nhắc tới. Cột giới hạn cho phép là ngưỡng tối đa mà ${k.quyChuan} cho phép, cột kết quả là con số đo thật của mẫu nước Mỏ Cày.</p>
-
-${bang}
-${conLai > 0 ? `
-<div class="callout"><b>${conLai} chỉ tiêu còn lại đều là "Không phát hiện".</b> ${k.conLai} Chi tiết từng chỉ tiêu xem trong phiếu gốc.</div>` : ""}
+${mucNhieuDiem}
+${khoiPhieu}
+${hopConLai}
 
 <h2 id="doc-the-nao">Đọc bảng này thế nào cho đúng</h2>
 <ul>
   <li><b>Dấu nhỏ hơn, ví dụ &lt; 0,0005.</b> Nghĩa là nếu có thì cũng ít hơn con số đó, máy không đo được tới mức thấp hơn nữa.</li>
-  <li><b>Không phát hiện.</b> Máy không tìm thấy chất đó ở ngưỡng phát hiện của phương pháp. Trên phiếu gốc ghi kèm chữ LOD, tức ngưỡng phát hiện.</li>
-  <li><b>Kết quả vi sinh &lt; 1.</b> Theo ghi chú của đơn vị kiểm nghiệm, kết quả này được xem như không phát hiện.</li>
+  <li><b>Không phát hiện.</b> Máy không tìm thấy chất đó ở ngưỡng phát hiện của phương pháp.</li>
   <li><b>Số càng nhỏ càng tốt</b> với hầu hết chỉ tiêu. Riêng pH thì tốt nhất là nằm giữa khoảng 6,0 tới 8,5.</li>
 </ul>
-<div class="callout"><b>Một lưu ý của đơn vị kiểm nghiệm.</b> Phiếu ghi rõ kết quả chỉ có giá trị trên mẫu đã kiểm nghiệm, tức mẫu lấy ngày ${k.ngayLay} tại nhà máy. Đó là lý do công ty kiểm nghiệm định kỳ và công bố từng kỳ tại đây.</div>
+<div class="callout"><b>Một lưu ý của đơn vị kiểm nghiệm.</b> Phiếu ghi rõ kết quả chỉ có giá trị trên mẫu đã thử nghiệm, tức mẫu lấy ngày ${k.ngayLay}. Đó là lý do công ty kiểm nghiệm định kỳ và công bố từng kỳ tại đây.</div>
 
 <h2 id="tai-sao">Vì sao công ty công bố phiếu này</h2>
 <p>Nước là thứ bà con dùng mỗi ngày mà không nhìn thấy chất lượng bằng mắt thường. Công bố nguyên phiếu, kèm chữ ký và dấu của đơn vị kiểm nghiệm độc lập, là cách rõ ràng nhất để bà con tự kiểm chứng thay vì phải tin lời hứa.</p>
@@ -250,14 +269,20 @@ function trangLuuTru() {
     return `  <div class="kn-nam">
     <h2>Năm ${n}</h2>
     <div class="kn-list">
-` + ds.map(k => `      <a class="kn-item" href="${k.slug}.html">
+` + ds.map(k => {
+      const soDiem = k.phieu.length;
+      const moTa = soDiem > 1
+        ? "Lấy mẫu ngày " + k.ngayLay + " tại " + soDiem + " điểm: " + k.phieu.map(p => p.diem).join(", ") + ". " + k.donViNgan + " thực hiện."
+        : "Mẫu " + k.tenMau.toLowerCase() + " lấy ngày " + k.ngayLay + " tại " + k.phieu[0].diem + ". " + k.donViNgan + " thực hiện, " + k.soChiTieu + " chỉ tiêu.";
+      return `      <a class="kn-item" href="${k.slug}.html">
         <div>
           <span class="kn-loai">${tenLoai(k)}</span>
           <h3>Kết quả kiểm nghiệm ${k.nhan.toLowerCase()}</h3>
-          <p>Mẫu ${k.tenMau.toLowerCase()} lấy ngày ${k.ngayLay} tại ${k.diaDiem.split(",")[0]}. ${k.donViKN.split(",")[0]} kiểm nghiệm, ${k.soChiTieu} chỉ tiêu.</p>
+          <p>${moTa}</p>
         </div>
         <span class="pill">Đạt ${k.soChiTieu}/${k.soChiTieu}</span>
-      </a>`).join("\n") + `
+      </a>`;
+    }).join("\n") + `
     </div>
   </div>`;
   }).join("\n");
@@ -265,11 +290,11 @@ function trangLuuTru() {
   return khung({
     url: BASE,
     title: "Chất lượng nước · Công bố kết quả kiểm nghiệm định kỳ",
-    desc: "Công ty TNHH Cấp Thoát Nước Mỏ Cày công bố phiếu kết quả kiểm nghiệm nước sạch định kỳ do đơn vị độc lập thuộc Bộ Y tế thực hiện. Xem số liệu từng kỳ và tải phiếu gốc.",
+    desc: "Công ty TNHH Cấp Thoát Nước Mỏ Cày công bố phiếu kết quả kiểm nghiệm nước sạch định kỳ do đơn vị y tế độc lập thực hiện. Xem số liệu từng kỳ và tải phiếu gốc.",
     ogTitle: "Công bố kết quả kiểm nghiệm nước Mỏ Cày",
     badge: "Chất lượng nước",
     h1: "Kết quả kiểm nghiệm, công bố nguyên phiếu.",
-    lead: "Mỗi kỳ, mẫu nước tại nhà máy được gửi đi kiểm nghiệm tại đơn vị độc lập thuộc Bộ Y tế. Phiếu gốc có chữ ký và dấu đỏ được đăng đầy đủ tại đây để bà con tự kiểm chứng.",
+    lead: "Mỗi kỳ, mẫu nước được gửi đi kiểm nghiệm tại đơn vị y tế độc lập. Phiếu gốc có chữ ký và dấu đỏ được đăng đầy đủ tại đây để bà con tự kiểm chứng.",
     main: {
       "@type": "CollectionPage",
       name: "Công bố kết quả kiểm nghiệm chất lượng nước",
@@ -294,10 +319,11 @@ ${khoiNam}
   <div class="grid-2" style="margin-top:44px;align-items:start">
     <div>
       <span class="badge">Ai kiểm nghiệm</span>
-      <h2 style="font-size:clamp(24px,3.5vw,32px)">Đơn vị độc lập thuộc Bộ Y tế.</h2>
+      <h2 style="font-size:clamp(24px,3.5vw,32px)">Đơn vị y tế độc lập, không phải công ty tự kiểm.</h2>
       <div class="prose" style="max-width:60ch">
-        <p>Công ty không tự kiểm rồi tự công bố. Mẫu nước được gửi tới <b>Viện Y tế Công cộng Thành phố Hồ Chí Minh</b>, đơn vị thuộc Bộ Y tế, có phòng thử nghiệm được công nhận <b>VILAS 219</b> theo chuẩn <b>ISO/IEC 17025:2017</b>.</p>
-        <p>Kết quả được đối chiếu với <b>QCVN 01-1:2024/BYT</b>, Quy chuẩn kỹ thuật quốc gia về chất lượng nước sạch sử dụng cho mục đích sinh hoạt do Bộ Y tế ban hành.</p>
+        <p><b>Phiếu định kỳ hằng tháng</b> do <b>Trung tâm Kiểm soát Bệnh tật tỉnh Đồng Tháp</b> thực hiện, phòng thử nghiệm được công nhận <b>VILAS 502</b>, đối chiếu quy chuẩn kỹ thuật địa phương <b>QCĐP 01:2022/BTr</b>. Mẫu lấy cả tại nhà máy và trên mạng lưới cấp nước.</p>
+        <p><b>Phiếu đầy đủ mỗi năm một lần</b> do <b>Viện Y tế Công cộng Thành phố Hồ Chí Minh</b> thuộc Bộ Y tế thực hiện, phòng thử nghiệm được công nhận <b>VILAS 219</b>, đối chiếu <b>QCVN 01-1:2024/BYT</b> với gần một trăm chỉ tiêu.</p>
+        <p>Cả hai phòng thử nghiệm đều được công nhận theo chuẩn <b>ISO/IEC 17025</b>.</p>
       </div>
     </div>
     <div class="price-card">
@@ -306,7 +332,7 @@ ${khoiNam}
       <p style="color:var(--muted);margin:0 0 14px">Số liệu gõ lại có thể sai sót. Đăng nguyên phiếu có chữ ký và dấu đỏ để bà con, cơ quan quản lý và bất kỳ ai cũng đối chiếu được với bản gốc.</p>
       <div class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span>Phiếu đầy đủ, không cắt xén</span></div>
       <div class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span>Có số phiếu và mã số mẫu để tra lại</span></div>
-      <div class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span>Ghi rõ ngày lấy mẫu và ngày ký</span></div>
+      <div class="check"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg><span>Ghi rõ ngày lấy mẫu và thời gian thử nghiệm</span></div>
     </div>
   </div>
 
@@ -325,14 +351,17 @@ ${khoiNam}
 
 /* ---------------- Ghi file ---------------- */
 fs.mkdirSync(path.join(ROOT, "chat-luong-nuoc"), { recursive: true });
-const ra = [["chat-luong-nuoc/index.html", trangLuuTru()]];
-for (const k of KY) ra.push(["chat-luong-nuoc/" + k.slug + ".html", trangKy(k)]);
+const ra = [["chat-luong-nuoc/index.html", trangLuuTru(), null]];
+for (const k of KY) ra.push(["chat-luong-nuoc/" + k.slug + ".html", trangKy(k), k]);
 
-for (const [f, html] of ra) {
+for (const [f, html, k] of ra) {
   if (html.includes("—")) throw new Error("Con dau gach ngang dai trong " + f);
-  const pdf = f === "chat-luong-nuoc/index.html" ? null :
-    path.join(ROOT, "tai-lieu/kiem-nghiem", KY.find(k => f.endsWith(k.slug + ".html")).pdf);
-  if (pdf && !fs.existsSync(pdf)) throw new Error("THIEU FILE PDF: " + pdf);
+  if (k) {
+    const pdf = path.join(ROOT, "tai-lieu/kiem-nghiem", k.pdf);
+    if (!fs.existsSync(pdf)) throw new Error("THIEU FILE PDF: " + pdf);
+    if (k.chepDu && demChiTieu(k) !== k.soChiTieu)
+      throw new Error("LECH SO CHI TIEU o " + k.slug + ": khai " + k.soChiTieu + " nhung chep " + demChiTieu(k));
+  }
   fs.writeFileSync(path.join(ROOT, f), html, "utf8");
   console.log("Da ghi " + f + "  (" + Math.round(html.length / 1024) + " KB)");
 }
