@@ -13,3 +13,17 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy = "strict-origin-when-cross-origin"
     Permissions-Policy = "geolocation=(), microphone=(), camera=()"
+
+# Bai Bang gia nuoc da go khoi website. Chuyen huong URL cu ve bai cach tinh
+# tien nuoc de nguoi dang o ket qua tim kiem khong roi vao trang 404.
+[[redirects]]
+  from = "/huong-dan/bang-gia-nuoc-mo-cay"
+  to = "/huong-dan/cach-tinh-tien-nuoc"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/huong-dan/bang-gia-nuoc-mo-cay.html"
+  to = "/huong-dan/cach-tinh-tien-nuoc"
+  status = 301
+  force = true

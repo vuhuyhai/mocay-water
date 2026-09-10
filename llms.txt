@@ -50,17 +50,6 @@ Các kỳ đã công bố:
 - [Báo sự cố và phản ánh](https://mocaywaco.com/lien-he.html): báo vỡ ống, nước yếu, nước đục.
 - [Lịch tạm ngừng cấp nước và thông báo](https://mocaywaco.com/tin-tuc.html)
 
-## Cách tính tiền nước
-
-Tiền nước một kỳ được tính theo công thức:
-
-1. Tiền nước = số mét khối tiêu thụ nhân đơn giá theo nhóm khách hàng (giá chưa thuế).
-2. Thuế giá trị gia tăng: 5% trên tiền nước.
-3. Phí bảo vệ môi trường đối với nước thải: 10% trên tiền nước.
-4. Tổng phải trả = tiền nước cộng thuế giá trị gia tăng cộng phí bảo vệ môi trường.
-
-Nhóm khách hàng gồm: sinh hoạt hộ dân, cơ quan hành chính sự nghiệp, sản xuất vật chất, kinh doanh dịch vụ.
-
 ## Các trang chính
 
 - [Trang chủ](https://mocaywaco.com/)
