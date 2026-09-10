@@ -511,6 +511,6 @@ a.topic:hover{border-color:var(--teal-line);color:var(--teal);background:var(--t
 .hd-anh figcaption{padding:11px 16px;font-size:13.5px;color:var(--muted);
   border-top:1px solid var(--border-soft);background:var(--surface)}
 .hd-anh figcaption b{color:var(--ink)}
-/* Ảnh chụp màn hình điện thoại: giới hạn bề ngang cho khỏi phình to */
+/* Ảnh chụp màn hình điện thoại: giới hạn bề ngang cho khỏi phình to.
+   Không cắt bớt chiều cao ảnh, vì cắt kiểu đó hay chặt ngang giữa câu. */
 .hd-anh.dt{max-width:380px;margin-left:auto;margin-right:auto}
-.hd-anh.dai img{max-height:620px;object-fit:cover;object-position:top}
