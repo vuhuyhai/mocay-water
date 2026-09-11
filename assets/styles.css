@@ -163,6 +163,29 @@ h2{font-size:clamp(32px,4.5vw,52px);font-weight:800;line-height:1.08;letter-spac
   .qbtn:nth-child(5){grid-column:1/-1}
 }
 
+/* Hinh anh nha may: luoi 6 cot, anh ngang chiem 3 cot, anh dung chiem 2 cot,
+   nen hai anh ngang xep mot hang va ba anh dung xep mot hang, khong o trong. */
+.nm-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:18px}
+.nm-item{grid-column:span 2;margin:0;background:var(--surface);border:1px solid var(--border);
+  border-radius:var(--radius);overflow:hidden;box-shadow:var(--sh-sm)}
+.nm-item.ngang{grid-column:span 3}
+.nm-item img{display:block;width:100%;height:auto;aspect-ratio:3/4;object-fit:cover}
+.nm-item.ngang img{aspect-ratio:16/9}
+.nm-item figcaption{padding:18px 20px 20px}
+.nm-item h3{margin:0 0 6px;font-size:17px}
+.nm-item p{margin:0;color:var(--muted);font-size:14.5px;line-height:1.55}
+@media(max-width:860px){
+  .nm-grid{grid-template-columns:repeat(3,1fr);gap:14px}
+  .nm-item{grid-column:span 1}
+  .nm-item.ngang{grid-column:1/-1}
+  .nm-item.ngang img{aspect-ratio:2/1}
+}
+@media(max-width:560px){
+  .nm-grid{grid-template-columns:1fr}
+  .nm-item img{aspect-ratio:4/3}
+  .nm-item.ngang img{aspect-ratio:16/10}
+}
+
 /* Stats */
 .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
 .stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--sh-sm)}
