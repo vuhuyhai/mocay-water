@@ -537,6 +537,15 @@ a.topic:hover{border-color:var(--teal-line);color:var(--teal);background:var(--t
   pointer-events:none;user-select:none;z-index:0}
 /* Anh do hoa (SVG song nuoc) von da nhat, khong can loc sang va phai dam hon
    anh chup thi moi nhin thay. */
+/* Anh chup that cua cong ty: de hien ro, chi lam sang nhe. Lop phu trang ben
+   trai (hero-anh::after) van giu chu doc duoc. Neo anh xuong thap hon vi phan
+   troi phia tren trong hon, phan be va cay phia duoi moi la thu can thay. */
+.hero-bg.anh-that{opacity:.62;filter:brightness(1.06) saturate(1.02);object-position:center 58%}
+@media(max-width:860px){.hero-bg.anh-that{opacity:.34}}
+/* Voi anh that, doan dan chay qua vung nhieu chi tiet (tan cay) nen lop phu
+   trang o giua dam hon mot chut so voi mac dinh. */
+.hero-anh:has(.anh-that)::after{background:linear-gradient(96deg,rgba(255,255,255,.90) 0%,
+  rgba(255,255,255,.80) 28%,rgba(255,255,255,.46) 55%,rgba(255,255,255,.10) 100%)}
 .hero-bg.do-hoa{opacity:.55;filter:saturate(1.04)}
 @media(max-width:860px){.hero-bg.do-hoa{opacity:.42}}
 .hero-anh::after{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
