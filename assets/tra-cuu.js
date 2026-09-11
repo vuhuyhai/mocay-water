@@ -99,9 +99,14 @@ async function traCuuHoaDon(rawCode, elResult) {
         rec = res.data.rec; rec._api = true;
       } else { elResult.innerHTML = _khongThay(code); return; }
     }
-  } catch (e) { /* mạng lỗi -> rơi xuống dùng dữ liệu mẫu */ }
-  if (!rec) rec = layHoaDon(code);
-  if (!rec) { elResult.innerHTML = _khongThay(code); return; }
+  } catch (e) {
+    // Mang loi hoac may chu tra cuu ban: bao ro, KHONG hien du lieu mau
+    // (truoc day roi xuong HOA_DON mau, khach go trung ma mau se thay hoa don gia).
+    elResult.innerHTML = '<div class="tc-msg tc-err">Hệ thống tra cứu đang bận, vui lòng thử lại sau ít phút hoặc gọi tổng đài <b>(0275) 3662 893</b>.</div>';
+    return;
+  }
+  // May chu tra loi nhung chua cau hinh nguon du lieu: cung bao ro
+  if (!rec) { elResult.innerHTML = '<div class="tc-msg tc-err">Dịch vụ tra cứu tạm thời chưa sẵn sàng. Vui lòng gọi tổng đài <b>(0275) 3662 893</b>.</div>'; return; }
 
   // Số tiền: ưu tiên số chính thức từ CityWork; dữ liệu mẫu thì tự tính theo bậc.
   const tienNuoc = rec._api ? (Number(rec.tienNuoc) || 0) : tinhTienNuoc(rec.m3, rec.nhom);

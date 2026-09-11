@@ -24,7 +24,6 @@
     <div class="m-cta"><a href="dich-vu-khach-hang.html#tra-cuu">Tra cứu tiền nước →</a></div>
   </div>
   <div class="nav-cta">
-    <a class="login" href="dich-vu-khach-hang.html">Đăng nhập</a>
     <a class="btn btn-white" href="dich-vu-khach-hang.html#tra-cuu">Tra cứu tiền nước →</a>
     <button class="nav-toggle" aria-label="Menu" onclick="document.getElementById('navlinks').classList.toggle('open')"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M3 12h18M3 18h18"/></svg></button>
   </div>
@@ -82,17 +81,20 @@
       <span class="badge" style="color:var(--teal)">Gửi yêu cầu / phản ánh</span>
       <h3 style="font-size:22px;margin:14px 0 6px">Điền thông tin, chúng tôi liên hệ lại.</h3>
       <p style="color:var(--muted);margin:0 0 18px">Đăng ký dịch vụ, báo sự cố hoặc góp ý. Chúng tôi tiếp nhận và phản hồi trong thời gian sớm nhất.</p>
-      <form class="form-grid" onsubmit="return false">
-        <div class="field"><label>Họ tên</label><input type="text" placeholder="Nguyễn Văn A"></div>
-        <div class="field"><label>Số điện thoại</label><input type="tel" placeholder="09xx xxx xxx"></div>
-        <div class="field full"><label>Địa chỉ / mã khách hàng</label><input type="text" placeholder="MC-••••••• hoặc địa chỉ"></div>
-        <div class="field full"><label>Chủ đề</label>
-          <select><option>Báo sự cố</option><option>Đăng ký lắp đặt</option><option>Hỏi hóa đơn / giá nước</option><option>Góp ý</option></select>
+      <form name="phan-anh" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="form-grid" onsubmit="return guiPhanAnh(event)">
+        <input type="hidden" name="form-name" value="phan-anh">
+        <p class="hidden" style="display:none"><label>Không điền ô này: <input name="bot-field"></label></p>
+        <div class="field"><label for="pa-ten">Họ tên *</label><input id="pa-ten" name="hoten" type="text" placeholder="Nguyễn Văn A" required autocomplete="name"></div>
+        <div class="field"><label for="pa-sdt">Số điện thoại *</label><input id="pa-sdt" name="sodienthoai" type="tel" placeholder="09xx xxx xxx" required autocomplete="tel" pattern="[0-9 .+()-]{8,15}"></div>
+        <div class="field full"><label for="pa-dc">Địa chỉ hoặc mã khách hàng *</label><input id="pa-dc" name="diachi" type="text" placeholder="Mã khách hàng in trên hóa đơn, hoặc địa chỉ nơi xảy ra sự cố" required></div>
+        <div class="field full"><label for="pa-cd">Chủ đề *</label>
+          <select id="pa-cd" name="chude" required><option value="Báo sự cố">Báo sự cố (vỡ ống, nước yếu, nước đục)</option><option value="Đăng ký lắp đặt">Đăng ký lắp đặt</option><option value="Hỏi hóa đơn">Hỏi hóa đơn tiền nước</option><option value="Góp ý">Góp ý</option></select>
         </div>
-        <div class="field full"><label>Nội dung</label><textarea placeholder="Mô tả yêu cầu hoặc sự cố…"></textarea></div>
-        <div class="field full"><button class="btn btn-primary" style="width:100%;justify-content:center">Gửi yêu cầu →</button></div>
+        <div class="field full"><label for="pa-nd">Nội dung *</label><textarea id="pa-nd" name="noidung" placeholder="Mô tả yêu cầu hoặc sự cố, càng cụ thể càng dễ xử lý" required minlength="10"></textarea></div>
+        <div class="field full"><button type="submit" class="btn btn-primary" style="width:100%;justify-content:center">Gửi yêu cầu →</button></div>
       </form>
-      <p class="note" style="margin-top:12px">Biểu mẫu mẫu: cần nối về email/hệ thống nội bộ để nhận yêu cầu thật.</p>
+      <div id="phanAnhResult"></div>
+      <p class="note" style="margin-top:12px">Sự cố khẩn cấp (vỡ ống lớn, mất nước cả khu), gọi thẳng <a href="tel:02753843993"><b>(0275) 3843 993</b></a> để được xử lý ngay, không cần chờ gửi biểu mẫu.</p>
     </div>
   </div>
 </div></section>
@@ -109,8 +111,9 @@
     <div><h4>Dịch vụ</h4><a href="cap-nuoc.html">Cấp nước</a><a href="thoat-nuoc.html">Thoát nước</a><a href="thoat-nuoc.html#xu-ly">Xử lý nước thải</a><a href="cap-nuoc.html#dang-ky">Đăng ký lắp đặt</a></div>
     <div><h4>Hỗ trợ</h4><a href="dich-vu-khach-hang.html#tra-cuu">Tra cứu hóa đơn</a><a href="https://capnuocmocay-tt78.vnpt-invoice.com.vn/" target="_blank" rel="noopener">Hóa đơn điện tử</a><a href="dich-vu-khach-hang.html#thanh-toan">Thanh toán online</a><a href="lien-he.html">Báo sự cố</a><a href="tin-tuc.html">Lịch cúp nước</a><a href="dich-vu-khach-hang.html#hoi-dap">Hỏi đáp</a><a href="huong-dan/">Hướng dẫn</a></div>
   </div>
-  <div class="foot-bottom"><span>© 2026 Công ty TNHH Cấp Thoát Nước Mỏ Cày. Email: mocaywaco@gmail.com</span><span><a href="#">Điều khoản</a> · <a href="#">Chính sách bảo mật</a></span></div>
+  <div class="foot-bottom"><span>© 2026 Công ty TNHH Cấp Thoát Nước Mỏ Cày. Email: mocaywaco@gmail.com</span><span><a href="chinh-sach-bao-mat.html">Chính sách bảo mật</a></span></div>
 </div></footer>
 
+<script src="assets/dang-ky.js"></script>
 </body>
 </html>

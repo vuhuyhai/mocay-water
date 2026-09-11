@@ -28,6 +28,34 @@ function guiDangKy(e) {
 }
 window.guiDangKy = guiDangKy;
 
+/* Form phan anh / bao su co o trang Lien he: gui len Netlify Forms nhu form dang ky. */
+function guiPhanAnh(e) {
+  e.preventDefault();
+  var form = e.target;
+  var btn = form.querySelector('button[type=submit]');
+  var result = document.getElementById('phanAnhResult');
+  var body = new URLSearchParams(new FormData(form)).toString();
+  var oldLabel = btn.textContent;
+  btn.disabled = true; btn.textContent = 'Đang gửi...';
+  fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body })
+    .then(function (r) {
+      if (!r.ok) throw new Error('HTTP ' + r.status);
+      form.style.display = 'none';
+      result.innerHTML =
+        '<div class="tc-msg" style="color:#0e9f6e;background:rgba(14,159,110,.08);border-color:rgba(14,159,110,.28)">' +
+        '<b>Đã nhận yêu cầu của quý khách.</b> Công ty sẽ liên hệ lại theo số điện thoại đã ghi. Sự cố khẩn cấp xin gọi (0275) 3843 993.</div>';
+      result.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    })
+    .catch(function (err) {
+      btn.disabled = false; btn.textContent = oldLabel;
+      result.innerHTML =
+        '<div class="tc-msg tc-err">Gửi chưa được (' + err.message +
+        '). Vui lòng thử lại, hoặc gọi <b>(0275) 3843 993</b>.</div>';
+    });
+  return false;
+}
+window.guiPhanAnh = guiPhanAnh;
+
 /* Đổi giữa cá nhân và tổ chức: hiện hoặc ẩn các ô riêng của tổ chức. */
 function doiLoaiKhach(loai) {
   var toChuc = loai === 'Tổ chức, doanh nghiệp';
