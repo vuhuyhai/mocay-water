@@ -27,3 +27,16 @@
   to = "/huong-dan/cach-tinh-tien-nuoc"
   status = 301
   force = true
+
+# Trinh duyet va Zalo hay tu goi /favicon.ico. Tra ve logo PNG thay vi 404.
+[[redirects]]
+  from = "/favicon.ico"
+  to = "/assets/logo-mo-cay.png"
+  status = 200
+
+# Ten mien phu cua Netlify tro ve ten mien chinh, tranh hai ban trung noi dung.
+[[redirects]]
+  from = "https://mocay-water.netlify.app/*"
+  to = "https://mocaywaco.com/:splat"
+  status = 301
+  force = true

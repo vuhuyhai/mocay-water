@@ -5,5 +5,8 @@
   "description": "Website Cong ty TNHH Cap Thoat Nuoc Mo Cay",
   "dependencies": {
     "@netlify/blobs": "^8.1.0"
+  },
+  "devDependencies": {
+    "puppeteer-core": "^25.11.0"
   }
 }
