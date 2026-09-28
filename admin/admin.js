@@ -35,7 +35,7 @@ async function dangNhap() {
     var j = await r.json();
     if (j.configured === false) { msg(box, "Chưa đặt mật khẩu. Công ty cần đặt biến ADMIN_PASSWORD trên Netlify."); return; }
     if (r.status === 429 || j.khoa) { msg(box, j.error || "Sai quá nhiều lần, tạm khóa. Thử lại sau ít phút."); return; }
-    if (!j.ok) { msg(box, "Sai mật khẩu."); return; }
+    if (!j.ok) { msg(box, j.error || "Sai mật khẩu."); return; }
     setToken(j.token);
     hienDashboard();
   } catch (e) { msg(box, "Lỗi kết nối. Thử lại."); }

@@ -58,14 +58,23 @@ export default async (req) => {
   try { body = await req.json(); } catch (e) {}
 
   if (!auth.checkPassword(body.password)) {
+    let conLai = null;
     if (store) {
       try {
         const dem = await docDem(store, key);
-        const truoc = dem && Date.now() - dem.moc < KHOA_MS ? dem.n : 0;
-        await store.setJSON(key, { n: truoc + 1, moc: Date.now() });
-      } catch (e) { /* không ghi được thì thôi, vẫn báo sai mật khẩu */ }
+        const n = (dem ? dem.n : 0) + 1;
+        await store.setJSON(key, { n, moc: Date.now() });
+        conLai = Math.max(0, SO_LAN_TOI_DA - n);
+      } catch (e) {
+        console.error("dem dang nhap sai", e && e.message);   // hỏng thì vẫn cho gõ tiếp
+      }
     }
-    return json({ configured: true, ok: false }, 401);
+    return json({
+      configured: true, ok: false, conLai,
+      error: conLai === null ? "Sai mật khẩu."
+        : conLai > 0 ? "Sai mật khẩu. Còn " + conLai + " lần trước khi tạm khóa 15 phút."
+        : "Sai mật khẩu. Tạm khóa 15 phút."
+    }, 401);
   }
 
   if (store) { try { await store.delete(key); } catch (e) {} }
