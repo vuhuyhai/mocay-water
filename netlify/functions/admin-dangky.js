@@ -1,15 +1,12 @@
-/* Đọc hồ sơ khách gửi từ Netlify Forms. Cần token admin.
-   Hai biểu mẫu đang chạy trên web:
-     - dang-ky-lap-dat : đăng ký lắp đồng hồ nước (trang Dịch vụ)
-     - phan-anh        : phản ánh, báo sự cố (trang Liên hệ)
+/* Đọc hồ sơ khách gửi cho trang quản trị. Cần token admin.
+   Hai biểu mẫu: dang-ky-lap-dat (đăng ký lắp đồng hồ), phan-anh (phản ánh, báo sự cố).
    Gọi: /admin-dangky?form=dang-ky-lap-dat | phan-anh
 
-   Mã của biểu mẫu do Netlify sinh ra và ĐỔI mỗi khi biểu mẫu được dựng lại, nên
-   ở đây tra mã theo TÊN biểu mẫu thay vì ghi cứng một chuỗi. Bản cũ ghi cứng một
-   mã từ tháng 8, sau khi biểu mẫu đăng ký được dựng lại thì mã đó không còn đúng.
-
-   Cần env NETLIFY_API_TOKEN (Personal Access Token của Netlify). SITE_ID do
-   Netlify tự đặt lúc chạy. */
+   Hai nguồn, gộp lại và bỏ trùng:
+   1. Kho "ho-so" (Netlify Blobs): hàm submission-created tự chép vào mỗi khi có
+      người gửi. Không cần cài gì thêm. Chỉ có hồ sơ gửi SAU khi hàm đó chạy.
+   2. Netlify Forms API: chỉ dùng khi có env NETLIFY_API_TOKEN. Có cả hồ sơ cũ.
+      Mã biểu mẫu tra theo TÊN qua SITE_ID, không ghi cứng. */
 const { verifyToken, bearer } = require("./_lib/auth");
 
 const TEN_FORM = ["dang-ky-lap-dat", "phan-anh"];
@@ -22,18 +19,27 @@ async function goiNetlify(duongDan, token) {
   return r.json();
 }
 
-/* Tra mã biểu mẫu theo tên. Hỏng thì lùi về env NETLIFY_FORM_ID (nếu có). */
-async function timMaForm(ten, token) {
+async function tuKho(event, ten) {
+  const { getStore, connectLambda } = await import("@netlify/blobs");
+  connectLambda(event);
+  const store = getStore("ho-so");
+  const { blobs } = await store.list({ prefix: ten + "/" });
+  const ds = await Promise.all((blobs || []).map((b) => store.get(b.key, { type: "json" }).catch(() => null)));
+  return ds.filter(Boolean).map((x) => ({ id: x.id, ngay: x.ngay, data: x.data || {} }));
+}
+
+async function tuNetlifyForms(ten, token) {
   const siteId = process.env.SITE_ID;
+  let id = null;
   if (siteId) {
     const ds = await goiNetlify("/sites/" + siteId + "/forms", token);
-    const ds2 = Array.isArray(ds) ? ds : [];
-    const f = ds2.find((x) => x && x.name === ten);
-    if (f) return { id: f.id, nguon: "ten" };
-    if (ds2.length) return { id: null, nguon: "ten", coTen: ds2.map((x) => x.name) };
+    const f = (Array.isArray(ds) ? ds : []).find((x) => x && x.name === ten);
+    if (f) id = f.id;
   }
-  if (process.env.NETLIFY_FORM_ID) return { id: process.env.NETLIFY_FORM_ID, nguon: "env" };
-  return { id: null, nguon: "khong-co" };
+  if (!id && ten === "dang-ky-lap-dat" && process.env.NETLIFY_FORM_ID) id = process.env.NETLIFY_FORM_ID;
+  if (!id) return [];
+  const arr = await goiNetlify("/forms/" + id + "/submissions?per_page=100", token);
+  return (Array.isArray(arr) ? arr : []).map((s) => ({ id: s.id, ngay: s.created_at, data: s.data || {} }));
 }
 
 exports.handler = async (event) => {
@@ -42,32 +48,27 @@ exports.handler = async (event) => {
 
   if (!verifyToken(bearer(event))) return tra({ error: "Chưa đăng nhập" }, 401);
 
-  const token = process.env.NETLIFY_API_TOKEN;
-  if (!token) return tra({ configured: false, formUrl: FORM_URL });
-
-  const q = (event.queryStringParameters || {});
+  const q = event.queryStringParameters || {};
   const ten = TEN_FORM.includes(q.form) ? q.form : TEN_FORM[0];
+  const token = process.env.NETLIFY_API_TOKEN;
 
-  try {
-    const { id, coTen } = await timMaForm(ten, token);
-    if (!id) {
-      return tra({
-        configured: true, items: [], formUrl: FORM_URL, form: ten,
-        error: "Không tìm thấy biểu mẫu tên \"" + ten + "\" trên Netlify" +
-          (coTen && coTen.length ? ". Các biểu mẫu đang có: " + coTen.join(", ") : "")
-      });
-    }
-    const arr = await goiNetlify("/forms/" + id + "/submissions?per_page=100", token);
-    const items = (Array.isArray(arr) ? arr : []).map((s) => ({
-      id: s.id, ngay: s.created_at, data: s.data || {}
-    }));
-    return tra({ configured: true, form: ten, items, formUrl: FORM_URL });
-  } catch (e) {
-    console.error("admin-dangky", ten, e && e.message);
-    return tra({
-      configured: true, items: [], form: ten, formUrl: FORM_URL,
-      error: "Không lấy được dữ liệu từ Netlify" + (e && e.status ? " (" + e.status + ")" : "") +
-        ". Mở thẳng Netlify Forms để xem."
-    });
+  const loi = [];
+  let tuKhoDs = [], tuApiDs = [];
+  try { tuKhoDs = await tuKho(event, ten); }
+  catch (e) { console.error("admin-dangky kho", e && e.message); loi.push("kho hồ sơ"); }
+  if (token) {
+    try { tuApiDs = await tuNetlifyForms(ten, token); }
+    catch (e) { console.error("admin-dangky api", e && e.message); loi.push("Netlify Forms"); }
   }
+
+  // Gộp, bỏ trùng theo mã hồ sơ, mới nhất lên đầu
+  const theoId = new Map();
+  for (const x of tuApiDs.concat(tuKhoDs)) if (x && x.id && !theoId.has(x.id)) theoId.set(x.id, x);
+  const items = [...theoId.values()].sort((a, b) => String(b.ngay).localeCompare(String(a.ngay)));
+
+  return tra({
+    configured: true, form: ten, items, formUrl: FORM_URL,
+    coLichSu: !!token,
+    error: !items.length && loi.length ? "Không đọc được " + loi.join(" và ") + ". Mở thẳng Netlify Forms để xem." : undefined
+  });
 };

@@ -297,9 +297,13 @@ async function taiDangKy() {
       box.innerHTML = '<div class="card"><p style="margin:0 0 12px;color:var(--muted)">' + esc(j.error) + '</p>' + linkNetlify + '</div>';
       return;
     }
-    if (!items.length) { box.innerHTML = '<p class="muted-note">Chưa có hồ sơ nào ở mục này.</p>'; return; }
+    // Chưa có mã truy cập Netlify thì chỉ thấy hồ sơ gửi từ 28/09/2026, ngày bật chức năng tự cất
+    var ghiChuCu = j.coLichSu ? "" :
+      '<p class="muted-note" style="margin-top:12px">Hồ sơ gửi trước ngày 28/09/2026 xem trong ' +
+      '<a target="_blank" href="' + esc(j.formUrl || "#") + '" style="color:var(--teal);font-weight:600">Netlify Forms ↗</a>.</p>';
+    if (!items.length) { box.innerHTML = '<p class="muted-note">Chưa có hồ sơ mới nào ở mục này.</p>' + ghiChuCu; return; }
     box.innerHTML = items.map(function (s) { return theHoSo(s, form); }).join("") +
-      '<p class="muted-note" style="margin-top:10px">Tổng: ' + items.length + ' hồ sơ.</p>';
+      '<p class="muted-note" style="margin-top:10px">Tổng: ' + items.length + ' hồ sơ.</p>' + ghiChuCu;
   } catch (e) { box.innerHTML = '<p class="muted-note">Lỗi kết nối.</p>'; }
 }
 
