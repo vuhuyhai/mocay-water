@@ -42,3 +42,4 @@ User-agent: CCBot
 Allow: /
 
 Sitemap: https://mocaywaco.com/sitemap.xml
+Sitemap: https://mocaywaco.com/sitemap-tin.xml

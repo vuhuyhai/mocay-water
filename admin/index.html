@@ -40,23 +40,50 @@
   table.adm{width:100%;border-collapse:collapse;min-width:640px}
   table.adm th,table.adm td{text-align:left;padding:11px 12px;font-size:14px;border-bottom:1px solid var(--border-soft);vertical-align:top}
   table.adm th{color:var(--dim);font-size:12px;text-transform:uppercase;letter-spacing:.03em;background:var(--surface-2)}
-  /* Trình soạn thảo */
-  .editor{border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--surface)}
-  .ed-toolbar{display:flex;flex-wrap:wrap;gap:4px;padding:8px;border-bottom:1px solid var(--border-soft);background:var(--surface-2)}
-  .ed-toolbar button{background:var(--surface);border:1px solid var(--border);border-radius:7px;min-width:32px;height:30px;padding:0 9px;
-    cursor:pointer;color:var(--text);font-size:14px;font-family:inherit;display:inline-flex;align-items:center;justify-content:center}
-  .ed-toolbar button:hover{background:var(--teal-dim);border-color:var(--teal-line)}
-  .ed-sep{width:1px;background:var(--border);margin:2px 3px}
-  .ed-area{min-height:190px;max-height:460px;overflow:auto;padding:14px 16px;color:var(--text);font-size:15px;line-height:1.65;outline:none}
-  .ed-area:empty::before{content:attr(data-ph);color:var(--dim)}
-  .ed-area h2{font-size:20px;margin:.6em 0 .3em;color:var(--ink)}
-  .ed-area h3{font-size:17px;margin:.6em 0 .3em;color:var(--ink)}
-  .ed-area blockquote{border-left:3px solid var(--teal);margin:.6em 0;padding:6px 14px;background:var(--teal-dim);border-radius:0 8px 8px 0}
-  .ed-area ul,.ed-area ol{padding-left:1.4em;margin:.5em 0}
-  .ed-area img{max-width:100%;border-radius:8px}
-  .ed-area a{color:var(--teal)}
-  .edit-flag{display:inline-block;background:#fff6e0;color:#8a5a00;border:1px solid #f0d488;border-radius:999px;
-    font-size:12px;font-weight:600;padding:3px 10px;margin-left:8px}
+  /* ===== Bài viết, bố cục kiểu WordPress ===== */
+  .wp-dau{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+  .wp-dau h2{margin:0;font-size:24px;color:var(--ink)}
+  .wp-loc{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+  .wp-loc .l{font-size:14px;color:var(--dim)}
+  .wp-loc .l a{color:var(--teal)}.wp-loc .l a.on{color:var(--ink);font-weight:700}
+  .wp-loc .l span{color:var(--dim);font-weight:400}
+  .wp-loc input{max-width:260px}
+  .wp-bang td{vertical-align:top}
+  .wp-td{font-weight:700;color:var(--ink);font-size:15px}
+  .wp-td:hover{color:var(--teal)}
+  .wp-nhan{font-size:12px;color:#8a5a00;background:#fff6e0;border:1px solid #f0d488;border-radius:999px;padding:1px 8px;margin-left:6px}
+  .wp-hanh-dong{font-size:13px;color:var(--dim);margin-top:5px;visibility:hidden}
+  .wp-hanh-dong a{color:var(--teal)}.wp-hanh-dong a.xoa{color:#b3312f}
+  .wp-bang tr:hover .wp-hanh-dong{visibility:visible}
+  @media(hover:none){.wp-hanh-dong{visibility:visible}}
+  .wp-trong{padding:40px 20px;text-align:center;color:var(--muted);background:var(--surface);border:1px dashed var(--border);border-radius:12px}
+  .wp-soan{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:22px;align-items:start}
+  @media(max-width:960px){.wp-soan{grid-template-columns:1fr}}
+  .wp-tieude{width:100%;font:inherit;font-size:28px;font-weight:700;color:var(--ink);padding:12px 14px;border:1px solid var(--border);
+    border-radius:10px;background:var(--surface);outline:none}
+  .wp-tieude:focus{border-color:var(--teal-line);box-shadow:0 0 0 3px var(--teal-glow)}
+  .wp-duongdan{font-size:13.5px;color:var(--dim);margin:8px 2px 16px;word-break:break-all}
+  .wp-duongdan b{color:var(--ink);font-weight:600}
+  .wp-duongdan button{background:none;border:1px solid var(--border);border-radius:6px;padding:1px 8px;font:inherit;font-size:12.5px;cursor:pointer;color:var(--teal);margin-left:6px}
+  #f-noidung{width:100%;min-height:380px;display:none;font:inherit;padding:12px}
+  .tox-tinymce{border-radius:10px !important;border-color:var(--border) !important}
+  .wp-hop{background:var(--surface);border:1px solid var(--border);border-radius:12px;margin-bottom:16px;overflow:hidden}
+  .wp-hop h4{margin:0;padding:12px 16px;font-size:14.5px;color:var(--ink);border-bottom:1px solid var(--border-soft);background:var(--surface-2)}
+  .wp-hop .n{padding:14px 16px}
+  .wp-hop .dong{display:flex;justify-content:space-between;gap:8px;font-size:14px;color:var(--muted);margin-bottom:10px}
+  .wp-hop .dong b{color:var(--ink)}
+  .wp-hop .chan{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 16px;border-top:1px solid var(--border-soft);background:var(--surface-2)}
+  .wp-hop label.r{display:flex;gap:8px;align-items:center;font-size:14.5px;color:var(--text);padding:4px 0;cursor:pointer}
+  .wp-hop .goi-y{font-size:12.5px;color:var(--dim);margin-top:6px}
+  #anhBiaXem img{display:block;width:100%;height:auto;border-radius:8px;border:1px solid var(--border);margin-bottom:10px}
+  .lnk-do{background:none;border:0;padding:0;font:inherit;font-size:13.5px;color:#b3312f;cursor:pointer;text-decoration:underline}
+  .btn-nho{padding:8px 14px;font-size:14px}
+  .xt-hop{position:fixed;inset:0;background:rgba(10,37,70,.55);z-index:100;display:flex;align-items:flex-start;justify-content:center;padding:4vh 16px;overflow:auto}
+  .xt-khung{background:var(--bg);border-radius:16px;max-width:880px;width:100%;box-shadow:var(--sh-lg)}
+  .xt-dau{display:flex;justify-content:space-between;align-items:center;padding:12px 18px;border-bottom:1px solid var(--border);
+    background:var(--surface);border-radius:16px 16px 0 0;position:sticky;top:0;z-index:1}
+  .xt-dau b{color:var(--ink)}
+  #xtThan{padding:28px 24px 40px}
 </style>
 </head>
 <body>
@@ -87,63 +114,106 @@
 
   <div class="wrap">
     <div class="tabs">
-      <button class="tab active" id="tabTb" onclick="chonTab('tb')">Thông báo / Lịch cúp nước</button>
+      <button class="tab active" id="tabTb" onclick="chonTab('tb')">Bài viết</button>
       <button class="tab" id="tabDk" onclick="chonTab('dk')">Hồ sơ khách gửi</button>
     </div>
 
-    <!-- TAB THÔNG BÁO -->
+    <!-- TAB BÀI VIẾT -->
     <div id="paneTb">
-      <div class="card" id="tbFormCard" style="margin-bottom:22px">
-        <h3 style="margin:0 0 4px;color:var(--ink)" id="tbFormTitle">Đăng bài / thông báo mới <span id="editFlag" class="edit-flag hidden">Đang sửa</span></h3>
-        <p class="muted-note" style="margin:0 0 16px">Bài đăng hiện ngay trên trang chủ và trang Tin tức. Tin mới nhất là thẻ nổi bật.</p>
-        <div class="grid-form">
-          <div class="field"><label for="f-loai">Loại</label>
-            <select id="f-loai" class="mk-field">
-              <option value="thong-bao">Thông báo khách hàng</option>
-              <option value="lich-cup-nuoc">Lịch cúp nước</option>
-              <option value="kiem-nghiem">Kết quả kiểm nghiệm nước</option>
-              <option value="hoat-dong">Hoạt động công ty</option>
-              <option value="dau-thau">Chào hàng – Đấu thầu</option>
-            </select>
-          </div>
-          <div class="field"><label for="f-ngay">Ngày</label><input id="f-ngay" class="mk-field" placeholder="dd/mm/yyyy"></div>
-          <div class="field" style="grid-column:1/-1"><label for="f-tieude">Tiêu đề *</label><input id="f-tieude" class="mk-field" placeholder="VD: Tạm ngừng cấp nước khu vực ấp Phú Quới"></div>
-          <div class="field" style="grid-column:1/-1"><label for="f-khuvuc">Khu vực ảnh hưởng (nếu có)</label><input id="f-khuvuc" class="mk-field" placeholder="VD: Ấp Phú Quới, xã Mỏ Cày"></div>
-          <div class="field" style="grid-column:1/-1"><label for="f-anhbia">Ảnh bìa: URL (không bắt buộc)</label><input id="f-anhbia" class="mk-field" placeholder="https://…/anh.jpg"></div>
-          <div class="field" style="grid-column:1/-1">
-            <label>Nội dung</label>
-            <div class="editor">
-              <div class="ed-toolbar">
-                <button type="button" title="Đậm" onclick="ed('bold')"><b>B</b></button>
-                <button type="button" title="Nghiêng" onclick="ed('italic')"><i>I</i></button>
-                <button type="button" title="Gạch chân" onclick="ed('underline')"><u>U</u></button>
-                <span class="ed-sep"></span>
-                <button type="button" title="Tiêu đề" onclick="edBlock('H2')">H2</button>
-                <button type="button" title="Tiêu đề phụ" onclick="edBlock('H3')">H3</button>
-                <button type="button" title="Đoạn thường" onclick="edBlock('P')">¶</button>
-                <span class="ed-sep"></span>
-                <button type="button" title="Danh sách chấm" onclick="ed('insertUnorderedList')">• </button>
-                <button type="button" title="Danh sách số" onclick="ed('insertOrderedList')">1. </button>
-                <button type="button" title="Trích dẫn" onclick="edBlock('BLOCKQUOTE')">❝</button>
-                <span class="ed-sep"></span>
-                <button type="button" title="Chèn liên kết" onclick="edLink()">🔗</button>
-                <button type="button" title="Chèn ảnh" onclick="edImg()">🖼</button>
-                <span class="ed-sep"></span>
-                <button type="button" title="Xóa định dạng" onclick="ed('removeFormat')">✕</button>
-              </div>
-              <div id="f-editor" class="ed-area" contenteditable="true" data-ph="Nhập nội dung bài viết / thông báo…"></div>
-            </div>
-          </div>
-          <div class="field" style="grid-column:1/-1;flex-direction:row;gap:10px">
-            <button class="btn btn-primary" id="btnSave" style="flex:1;justify-content:center" onclick="dangThongBao()">Đăng bài →</button>
-            <button class="btn btn-ghost hidden" id="btnCancel" style="justify-content:center" onclick="huySua()">Hủy sửa</button>
-          </div>
+
+      <!-- Tất cả bài viết -->
+      <div id="vDanhSach">
+        <div class="wp-dau"><h2>Bài viết</h2><button class="btn btn-primary btn-nho" onclick="vietBaiMoi()">Viết bài mới</button></div>
+        <div class="wp-loc">
+          <div class="l" id="tbLoc"></div>
+          <input id="tbTim" class="mk-field" placeholder="Tìm theo tiêu đề…" oninput="veDanhSach()">
         </div>
-        <div id="tbFormMsg" style="margin-top:12px"></div>
+        <div id="tbList"><p class="muted-note">Đang tải…</p></div>
       </div>
 
-      <h3 style="color:var(--ink)">Thông báo đã đăng</h3>
-      <div id="tbList" style="margin-top:12px"><p class="muted-note">Đang tải…</p></div>
+      <!-- Soạn bài -->
+      <div id="vSoan" class="hidden">
+        <div class="wp-dau">
+          <h2 id="soanTieuDe">Viết bài mới</h2>
+          <button class="btn btn-ghost btn-nho" onclick="moDanhSach()">← Tất cả bài viết</button>
+        </div>
+        <div class="wp-soan">
+          <div>
+            <input id="f-tieude" class="wp-tieude" placeholder="Thêm tiêu đề" autocomplete="off">
+            <div class="wp-duongdan">Đường dẫn: mocaywaco.com/tin/<b id="dsSlug">…</b><button type="button" onclick="suaDuongDan()">Sửa</button></div>
+            <input id="f-slug" type="hidden">
+            <textarea id="f-noidung"></textarea>
+            <div class="wp-hop" style="margin-top:16px">
+              <h4>Tóm tắt</h4>
+              <div class="n">
+                <textarea id="f-tomtat" class="mk-field" rows="3" maxlength="400" placeholder="Một hai câu nói bài này về việc gì. Hiện ở thẻ bài trên trang chủ và khi chia sẻ Zalo, Facebook."></textarea>
+                <div class="goi-y">Để trống thì web tự lấy đoạn đầu bài.</div>
+              </div>
+            </div>
+          </div>
+
+          <aside>
+            <div class="wp-hop">
+              <h4>Đăng</h4>
+              <div class="n">
+                <div style="display:flex;gap:8px;margin-bottom:14px;flex-wrap:wrap">
+                  <button class="btn btn-ghost btn-nho" id="btnNhap" onclick="bamNhap()">Lưu nháp</button>
+                  <button class="btn btn-ghost btn-nho" onclick="xemTruoc()">Xem trước</button>
+                </div>
+                <div class="dong"><span>Trạng thái</span><b id="hopTrangThai">Bản nháp</b></div>
+                <div class="field" style="margin:0"><label for="f-ngay" style="font-size:14px">Ngày đăng hiển thị</label>
+                  <input id="f-ngay" class="mk-field" placeholder="dd/mm/yyyy"></div>
+                <a id="lnkXemBai" class="hidden" target="_blank" style="display:inline-block;margin-top:10px;font-size:13.5px;color:var(--teal)">Xem bài trên web ↗</a>
+              </div>
+              <div class="chan">
+                <button class="lnk-do hidden" id="btnXoa" onclick="xoaBaiDangSoan()">Xóa bài</button><span></span>
+                <button class="btn btn-primary btn-nho" id="btnDang" onclick="bamDang()">Đăng</button>
+              </div>
+            </div>
+            <div id="tbFormMsg" style="margin:-4px 0 16px"></div>
+
+            <div class="wp-hop">
+              <h4>Chuyên mục</h4>
+              <div class="n">
+              <label class="r"><input type="radio" name="f-loai" value="tin-tuc" checked> Tin tức</label>
+              <label class="r"><input type="radio" name="f-loai" value="thong-bao"> Thông báo khách hàng</label>
+              <label class="r"><input type="radio" name="f-loai" value="lich-cup-nuoc"> Lịch cúp nước</label>
+              <label class="r"><input type="radio" name="f-loai" value="kiem-nghiem"> Kết quả kiểm nghiệm nước</label>
+              <label class="r"><input type="radio" name="f-loai" value="hoat-dong"> Hoạt động công ty</label>
+              <label class="r"><input type="radio" name="f-loai" value="dau-thau"> Chào hàng, đấu thầu</label>
+              </div>
+            </div>
+
+            <div class="wp-hop">
+              <h4>Khu vực ảnh hưởng</h4>
+              <div class="n">
+                <input id="f-khuvuc" class="mk-field" placeholder="VD: Ấp Phú Quới, xã Mỏ Cày">
+                <div class="goi-y">Dùng cho lịch cúp nước, sự cố. Bài tin thường thì để trống.</div>
+              </div>
+            </div>
+
+            <div class="wp-hop">
+              <h4>Ảnh đại diện</h4>
+              <div class="n">
+                <div id="anhBiaXem"></div>
+                <input id="f-anhbia" type="hidden">
+                <input id="fileAnhBia" type="file" accept="image/jpeg,image/png,image/webp,image/gif" class="hidden" onchange="taiAnhBia(this)">
+                <button class="btn btn-ghost btn-nho" id="btnDatAnh" onclick="chonAnhBia()" style="width:100%;justify-content:center">Đặt ảnh đại diện</button>
+                <button class="lnk-do hidden" id="btnBoAnh" onclick="boAnhBia()" style="margin-top:10px">Xóa ảnh đại diện</button>
+                <div class="goi-y">Ảnh ngang đẹp nhất. Ảnh lớn được tự thu nhỏ trước khi tải lên.</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </div>
+
+    <!-- XEM TRƯỚC -->
+    <div id="xtHop" class="xt-hop hidden" onclick="if(event.target===this)dongXemTruoc()">
+      <div class="xt-khung">
+        <div class="xt-dau"><b>Xem trước bài viết</b><button class="btn btn-ghost btn-nho" onclick="dongXemTruoc()">Đóng</button></div>
+        <div id="xtThan"></div>
+      </div>
     </div>
 
     <!-- TAB HỒ SƠ KHÁCH GỬI -->
@@ -160,6 +230,8 @@
   </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/tinymce@7.9.3/tinymce.min.js" referrerpolicy="origin"></script>
 <script src="admin.js"></script>
+<script src="bai-viet.js"></script>
 </body>
 </html>
