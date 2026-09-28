@@ -193,6 +193,11 @@ h2{font-size:clamp(32px,4.5vw,52px);font-weight:800;line-height:1.08;letter-spac
 .stat .num .u{font-size:16px;color:var(--muted);font-weight:600;margin-left:4px}
 .stat .lab{color:var(--muted);font-size:14px;margin-top:10px}
 @media(max-width:860px){.stats{grid-template-columns:1fr 1fr}}
+/* Bang gia tren trang chu: so tien kem don vi (13.000 d/m3) qua rong cho hai cot
+   tren dien thoai, cot phai tran ra ngoai man hinh. Xuong mot cot, va cho o luoi
+   duoc co nho hon noi dung de khong bao gio day tran. */
+.stats > *{min-width:0}
+@media(max-width:560px){#gia-nuoc .stats{grid-template-columns:1fr}}
 
 /* Grids & cards */
 .grid-2{display:grid;grid-template-columns:1fr 1fr;gap:20px}
