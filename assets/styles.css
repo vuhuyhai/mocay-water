@@ -585,3 +585,14 @@ a.topic:hover{border-color:var(--teal-line);color:var(--teal);background:var(--t
   .hero-anh::after{background:linear-gradient(180deg,rgba(255,255,255,.80) 0%,
     rgba(255,255,255,.62) 55%,rgba(255,255,255,.34) 100%)}
 }
+
+/* ============ Ảnh nền mờ cho một khối nội dung ============
+   Ảnh thật của nhà máy nằm dưới cùng, phủ một lớp màu nền của khối để chữ và thẻ
+   số liệu vẫn đọc rõ. Hai mép trên dưới đậm hơn cho khối liền mạch với khối kề. */
+.khoi-anh{position:relative;overflow:hidden;isolation:isolate}
+.khoi-anh-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 35%;
+  z-index:-2;opacity:.5;filter:saturate(.55) contrast(.9);pointer-events:none;user-select:none}
+.khoi-anh::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(238,245,252,.95) 0%,rgba(238,245,252,.72) 30%,
+    rgba(238,245,252,.72) 70%,rgba(238,245,252,.95) 100%)}
+@media(max-width:860px){.khoi-anh-bg{opacity:.35}}
